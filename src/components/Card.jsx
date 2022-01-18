@@ -27,18 +27,18 @@ const Wrapper = styled.article`
   }
 `;
 
-const Card = () => {
+const Card = ({ img, title, description, date }) => {
   return (
     <Wrapper>
       <header>
         <img src={avatar} alt="avatar" />
         <p role="link">nasa</p>
       </header>
-      <div>Image</div>
+      <img src={img} alt={title} />
       <button>Like Button</button>
-      <h2>Title</h2>
-      <p>Description</p>
-      <p>Date</p>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <p>{date}</p>
     </Wrapper>
   );
 };

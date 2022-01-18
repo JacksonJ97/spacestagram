@@ -16,12 +16,13 @@ const Wrapper = styled.main`
   }
 `;
 
-const Main = () => {
+const Main = ({ data }) => {
   return (
     <Wrapper>
       <section className="card-container">
-        <Card />
-        <Card />
+        {data.map((item) => (
+          <Card img={item.url} title={item.title} description={item.explanation} date={item.date} key={item.date} />
+        ))}
       </section>
     </Wrapper>
   );

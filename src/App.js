@@ -15,7 +15,7 @@ const App = () => {
     <>
       <GlobalStyles />
       <Header />
-      <Main />
+      <Main data={data} />
     </>
   );
 };
