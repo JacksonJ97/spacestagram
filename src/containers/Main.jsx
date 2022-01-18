@@ -20,9 +20,13 @@ const Main = ({ data }) => {
   return (
     <Wrapper>
       <section className="card-container">
-        {data.map((item) => (
-          <Card img={item.url} title={item.title} description={item.explanation} date={item.date} key={item.date} />
-        ))}
+        {data.map((item) => {
+          if (item.media_type === "image") {
+            return <Card img={item.url} title={item.title} description={item.explanation} date={item.date} key={item.date} />;
+          } else {
+            return null;
+          }
+        })}
       </section>
     </Wrapper>
   );

@@ -9,7 +9,7 @@ const useFetch = () => {
   useEffect(() => {
     const getData = async () => {
       setIsLoading(true);
-      const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&start_date=2022-01-16`);
+      const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&start_date=2022-01-07`);
       const data = await response.json();
       setData(data);
     };
