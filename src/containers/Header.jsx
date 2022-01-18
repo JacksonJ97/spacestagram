@@ -6,18 +6,22 @@ const Wrapper = styled.header`
   align-items: center;
   background-color: #ffffff;
   border-bottom: 1px solid #dbdbdb;
+  position: sticky;
+  top: 0;
   height: 60px; /* Test */
 
-  .logo {
+  h1 {
     font-family: "Lobster Two", cursive;
     font-size: 1.75rem;
+    font-weight: 400;
+    cursor: pointer;
   }
 `;
 
 const Header = () => {
   return (
     <Wrapper>
-      <div className="logo">Spacestagram</div>
+      <h1>Spacestagram</h1>
     </Wrapper>
   );
 };

@@ -6,6 +6,11 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
+
+  body {
+    font-family: -apple-system, system-ui ,BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #262626;
+  }
 `;
 
 export default GlobalStyles;
