@@ -6,7 +6,7 @@ const Wrapper = styled.article`
   background-color: #ffffff;
   border: 1px solid #dbdbdb;
   margin-bottom: 1em;
-  width: 650px;
+  width: 614px;
 
   header {
     display: flex;
@@ -29,11 +29,12 @@ const Wrapper = styled.article`
   figure {
     img {
       width: 100%;
+      display: block;
     }
   }
 
   .actions-container {
-    padding: 10px 16px;
+    padding: 16px 16px 4px 16px;
 
     button {
       border: none;
@@ -68,6 +69,9 @@ const Wrapper = styled.article`
 
     .date {
       padding-top: 0;
+      padding-bottom: 16px;
+      color: #8e8e8e;
+      font-size: 12px;
     }
   }
 `;
@@ -77,7 +81,7 @@ const Card = ({ img, title, description, date }) => {
     <Wrapper>
       <header>
         <img src={avatar} alt="avatar" />
-        <p role="link">nasa</p>
+        <p>nasa</p>
       </header>
 
       <figure>
