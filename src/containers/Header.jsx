@@ -8,7 +8,12 @@ const Wrapper = styled.header`
   border-bottom: 1px solid #dbdbdb;
   position: sticky;
   top: 0;
-  height: 60px; /* Test */
+  height: 60px;
+
+  .container {
+    width: 614px;
+    margin: 0 auto;
+  }
 
   h1 {
     font-family: "Lobster Two", cursive;
@@ -21,7 +26,9 @@ const Wrapper = styled.header`
 const Header = () => {
   return (
     <Wrapper>
-      <h1>Spacestagram</h1>
+      <div className="container">
+        <h1>Spacestagram</h1>
+      </div>
     </Wrapper>
   );
 };
