@@ -10,7 +10,6 @@ const Wrapper = styled.footer`
   justify-content: flex-end;
   position: sticky;
   bottom: 0;
-  /* height: 60px; */
 `;
 
 const Footer = () => {

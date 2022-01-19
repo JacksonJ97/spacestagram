@@ -7,9 +7,10 @@ import LikeButton from "./LikeButton";
 // Styles
 const Wrapper = styled.article`
   background-color: #ffffff;
-  border: 1px solid #dbdbdb;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
   margin-bottom: 24px;
-  width: 614px;
+  width: 100%;
 
   header {
     display: flex;
@@ -55,6 +56,11 @@ const Wrapper = styled.article`
       padding-bottom: 16px;
       font-size: 12px;
     }
+  }
+
+  @media (min-width: 635px) {
+    width: 614px;
+    border: 1px solid #dbdbdb;
   }
 `;
 
