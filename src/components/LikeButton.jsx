@@ -5,6 +5,7 @@ import { useState } from "react";
 const Wrapper = styled.button`
   border: none;
   background-color: transparent;
+  padding: 8px;
   cursor: pointer;
 
   .pulsate-fwd {

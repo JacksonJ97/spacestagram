@@ -3,6 +3,7 @@ import avatar from "../assets/images/nasa-avatar.jpg";
 
 // Components
 import LikeButton from "./LikeButton";
+import ShareButton from "./ShareButton";
 
 // Styles
 const Wrapper = styled.article`
@@ -38,7 +39,7 @@ const Wrapper = styled.article`
   }
 
   .actions-container {
-    padding: 16px 16px 4px 16px;
+    padding: 8px 8px 0px 8px;
   }
 
   .details-container {
@@ -78,6 +79,7 @@ const Card = ({ img, title, description, date }) => {
 
       <section className="actions-container">
         <LikeButton />
+        <ShareButton />
       </section>
 
       <section className="details-container">
