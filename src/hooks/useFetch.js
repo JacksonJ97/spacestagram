@@ -4,44 +4,42 @@ import { useState, useEffect } from "react";
 import getStartDate from "../helpers/getStartDate";
 
 const API_KEY = "vpfxs1OC6eDlkX7dTgWIOefdmQ6R81WZ48g4LneR";
-const BASE_URL = "https://api.nasa.gov/planetary/apod";
+const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
 
 const useFetch = () => {
-  const [initialStartDate, initialStartDateString] = getStartDate(new Date());
+  const [initialStartDate, initialStartDateParam] = getStartDate(new Date());
+  const [newStartDate, newStartDateParam] = getStartDate(initialStartDate);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [startDate, setStartDate] = useState(initialStartDate);
+  const [startDate, setStartDate] = useState([newStartDate, newStartDateParam]);
 
   useEffect(() => {
-    let controller = new AbortController();
-
     const getData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}?api_key=${API_KEY}&start_date=${initialStartDateString}`, { signal: controller.signal });
+        const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${initialStartDateParam}`);
         const data = await response.json();
         setData(data.reverse());
       } catch (error) {
-        if (controller.signal.abort) {
-          console.log(error);
-        }
         setError(error);
       } finally {
         setLoading(false);
       }
     };
 
-    // getData();
-
-    return () => controller.abort();
-  }, [initialStartDateString]);
+    getData();
+  }, [initialStartDateParam]);
 
   const getMoreData = async () => {
     try {
-      const response = await fetch(`${BASE_URL}?api_key=${API_KEY}&start_date=2022-01-05`);
+      const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${startDate[1]}`);
       const data = await response.json();
       setData(data.reverse());
+      setStartDate((prevState) => {
+        const [newStartDate, newStartDateParam] = getStartDate(prevState[0]);
+        return [newStartDate, newStartDateParam];
+      });
     } catch (error) {
       setError(error);
     }
