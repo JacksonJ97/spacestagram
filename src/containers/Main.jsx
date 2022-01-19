@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 // Components
 import Card from "../components/Card";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "../components/Loader";
 
 // Styles
 const Wrapper = styled.main`
@@ -16,17 +18,16 @@ const Wrapper = styled.main`
   }
 `;
 
-const Main = ({ data }) => {
+const Main = ({ data, getMoreData }) => {
   return (
     <Wrapper>
       <section className="card-container">
-        {data.map((item) => {
-          if (item.media_type === "image") {
+        <InfiniteScroll style={{ overflow: "hidden" }} dataLength={data.length} next={getMoreData} hasMore={true} loader={<Loader />}>
+          {data.map((item) => {
+            if (item.media_type !== "image") return null;
             return <Card img={item.url} title={item.title} description={item.explanation} date={item.date} key={item.date} />;
-          } else {
-            return null;
-          }
-        })}
+          })}
+        </InfiniteScroll>
       </section>
     </Wrapper>
   );
