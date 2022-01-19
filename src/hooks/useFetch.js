@@ -11,7 +11,7 @@ const useFetch = () => {
   const [newStartDate, newStartDateParam] = getStartDate(initialStartDate);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [startDate, setStartDate] = useState([newStartDate, newStartDateParam]);
 
   useEffect(() => {
@@ -25,8 +25,8 @@ const useFetch = () => {
         } else {
           console.log(response.status, response.statusText);
         }
-      } catch (error) {
-        setError(error);
+      } catch (e) {
+        setError(e);
       } finally {
         setLoading(false);
       }
@@ -48,8 +48,8 @@ const useFetch = () => {
       } else {
         console.log(response.status, response.statusText);
       }
-    } catch (error) {
-      setError(error);
+    } catch (e) {
+      setError(e);
     }
   };
 

@@ -1,7 +1,7 @@
 // Components
 import Header from "./containers/Header";
 import Main from "./containers/Main";
-import Loader from "./components/Loader";
+import Error from "./components/Error";
 
 // Hooks
 import useFetch from "./hooks/useFetch";
@@ -10,15 +10,15 @@ import useFetch from "./hooks/useFetch";
 import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
-  const { data, loading, error, getMoreData } = useFetch();
+  const { data, error, getMoreData } = useFetch();
   console.log(data);
 
   return (
     <>
       <GlobalStyles />
       <Header />
-      {loading ? <Loader /> : <Main data={data} getMoreData={getMoreData} />}
-      {error ? <h1>Error</h1> : null}
+      {error && <Error />}
+      <Main data={data} getMoreData={getMoreData} />
     </>
   );
 };
