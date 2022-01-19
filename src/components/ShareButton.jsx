@@ -9,8 +9,12 @@ const Wrapper = styled.button`
   cursor: pointer;
 `;
 
-const ShareButton = () => {
+const ShareButton = ({ url }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = () => {
+    navigator.clipboard.writeText(url);
+  };
 
   const handleMouseEnter = () => {
     setIsHovered((prevState) => !prevState);
@@ -21,7 +25,7 @@ const ShareButton = () => {
   };
 
   return (
-    <Wrapper type="button" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <Wrapper type="button" onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <svg
         aria-label="Share Post"
         color={isHovered ? "#8e8e8e" : "#262626"}

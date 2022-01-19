@@ -79,7 +79,7 @@ const Card = ({ img, title, description, date }) => {
 
       <section className="actions-container">
         <LikeButton />
-        <ShareButton />
+        <ShareButton url={img} />
       </section>
 
       <section className="details-container">
