@@ -20,14 +20,19 @@ const Wrapper = styled.header`
     font-size: 1.75rem;
     font-weight: 400;
     cursor: pointer;
+    width: max-content;
   }
 `;
 
 const Header = () => {
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <Wrapper>
       <div className="container">
-        <h1>Spacestagram</h1>
+        <h1 onClick={handleClick}>Spacestagram</h1>
       </div>
     </Wrapper>
   );
