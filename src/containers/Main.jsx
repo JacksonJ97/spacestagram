@@ -6,7 +6,7 @@ import Card from "../components/Card";
 // Styles
 const Wrapper = styled.main`
   background-color: #fafafa;
-  min-height: 100vh; /* Test */
+  min-height: 100vh;
 
   .card-container {
     display: flex;

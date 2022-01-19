@@ -4,12 +4,17 @@ import useFetch from "./hooks/useFetch";
 import Header from "./containers/Header";
 import Main from "./containers/Main";
 
+// Helpers
+import getStartDate from "./helpers/getStartDate";
+
 // Global Styles
 import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
-  const [data] = useFetch();
+  const startDate = getStartDate(new Date(), 7);
+  const [data] = useFetch(startDate);
   console.log(data);
+  console.log(startDate);
 
   return (
     <>

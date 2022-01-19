@@ -8,7 +8,7 @@ import LikeButton from "./LikeButton";
 const Wrapper = styled.article`
   background-color: #ffffff;
   border: 1px solid #dbdbdb;
-  margin-bottom: 1em;
+  margin-bottom: 24px;
   width: 614px;
 
   header {
@@ -53,7 +53,6 @@ const Wrapper = styled.article`
     .date {
       padding-top: 0;
       padding-bottom: 16px;
-      color: #8e8e8e;
       font-size: 12px;
     }
   }
