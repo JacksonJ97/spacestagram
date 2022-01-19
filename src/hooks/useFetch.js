@@ -5,21 +5,44 @@ const BASE_URL = "https://api.nasa.gov/planetary/apod";
 
 const useFetch = (startDate) => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    let controller = new AbortController();
+
     const getData = async () => {
-      setIsLoading(true);
+      setLoading(true);
+      try {
+        const response = await fetch(`${BASE_URL}?api_key=${API_KEY}&start_date=${startDate}`, { signal: controller.signal });
+        const data = await response.json();
+        setData(data.reverse());
+      } catch (error) {
+        if (controller.signal.abort) {
+          console.log(error);
+        }
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
+
+    return () => controller.abort();
+  }, [startDate]);
+
+  const refetch = async (startDate) => {
+    try {
       const response = await fetch(`${BASE_URL}?api_key=${API_KEY}&start_date=${startDate}`);
       const data = await response.json();
       setData(data.reverse());
-    };
+    } catch (error) {
+      setError(error);
+    }
+  };
 
-    setIsLoading(false);
-    getData();
-  }, [startDate]);
-
-  return [data, isLoading];
+  return [data, loading, error, refetch];
 };
 
 export default useFetch;
