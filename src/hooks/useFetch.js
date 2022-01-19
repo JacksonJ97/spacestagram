@@ -16,11 +16,15 @@ const useFetch = () => {
 
   useEffect(() => {
     const getData = async () => {
-      setLoading(true);
       try {
+        setLoading(true);
         const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${initialStartDateParam}`);
-        const data = await response.json();
-        setData(data.reverse());
+        if (response.status >= 200 && response.status <= 299) {
+          const data = await response.json();
+          setData(data.reverse());
+        } else {
+          console.log(response.status, response.statusText);
+        }
       } catch (error) {
         setError(error);
       } finally {
@@ -34,12 +38,16 @@ const useFetch = () => {
   const getMoreData = async () => {
     try {
       const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${startDate[1]}`);
-      const data = await response.json();
-      setData(data.reverse());
-      setStartDate((prevState) => {
-        const [newStartDate, newStartDateParam] = getStartDate(prevState[0]);
-        return [newStartDate, newStartDateParam];
-      });
+      if (response.status >= 200 && response.status <= 299) {
+        const data = await response.json();
+        setData(data.reverse());
+        setStartDate((prevState) => {
+          const [newStartDate, newStartDateParam] = getStartDate(prevState[0]);
+          return [newStartDate, newStartDateParam];
+        });
+      } else {
+        console.log(response.status, response.statusText);
+      }
     } catch (error) {
       setError(error);
     }

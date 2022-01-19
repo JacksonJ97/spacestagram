@@ -13,13 +13,12 @@ const App = () => {
   const { data, loading, error, getMoreData } = useFetch();
   console.log(data);
 
-  if (error) console.log(error);
-
   return (
     <>
       <GlobalStyles />
       <Header />
       {loading ? <Loader /> : <Main data={data} getMoreData={getMoreData} />}
+      {error ? <h1>Error</h1> : null}
     </>
   );
 };
