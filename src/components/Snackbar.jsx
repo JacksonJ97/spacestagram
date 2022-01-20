@@ -11,12 +11,12 @@ const Wrapper = styled.div`
   color: #ffffff;
   background-color: #262626;
   padding: 14px 16px;
-  width: 90%;
+  width: 80%;
   border-radius: 4px;
   box-shadow: 0px 3px 5px -1px rgb(0, 0, 0, 0.2), 0px 6px 10px 0px rgb(0, 0, 0, 0.14), 0px 1px 18px 0px rgb(0, 0, 0, 0.12);
   visibility: ${(props) => (props.showSnackbar ? "visible" : "hidden")};
-  /* -webkit-animation: "fade-in 0.5s, fade-out 0.5s 0.9s";
-  animation: "fade-in 0.5s, fade-out 0.5s 0.9s";
+  -webkit-animation: ${(props) => props.showSnackbar && "fade-in 0.5s, fade-out 0.5s 2s"};
+  animation: ${(props) => props.showSnackbar && "fade-in 0.5s, fade-out 0.5s 2s"};
 
   @keyframes fade-in {
     0% {
@@ -32,15 +32,15 @@ const Wrapper = styled.div`
 
   @keyframes fade-out {
     0% {
-      bottom: 0;
-      opacity: 0;
-    }
-
-    100% {
       bottom: 6%;
       opacity: 1;
     }
-  } */
+
+    100% {
+      bottom: 0;
+      opacity: 0;
+    }
+  }
 
   @media (min-width: 635px) {
     width: 360px;
@@ -55,7 +55,7 @@ const Snackbar = forwardRef((props, ref) => {
       setShowSnackbar((prevState) => !prevState);
       setTimeout(() => {
         setShowSnackbar((prevState) => !prevState);
-      }, 2000);
+      }, 2500);
     },
   }));
 
