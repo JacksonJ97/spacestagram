@@ -15,8 +15,8 @@ const Wrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0px 3px 5px -1px rgb(0, 0, 0, 0.2), 0px 6px 10px 0px rgb(0, 0, 0, 0.14), 0px 1px 18px 0px rgb(0, 0, 0, 0.12);
   visibility: ${(props) => (props.showSnackbar ? "visible" : "hidden")};
-  -webkit-animation: ${(props) => props.showSnackbar && "fade-in 0.5s, fade-out 0.5s 2s"};
-  animation: ${(props) => props.showSnackbar && "fade-in 0.5s, fade-out 0.5s 2s"};
+  -webkit-animation: ${(props) => props.showSnackbar && "fade-in 0.5s, fade-out 0.5s 1.6s"};
+  animation: ${(props) => props.showSnackbar && "fade-in 0.5s, fade-out 0.5s 1.6s"};
 
   @keyframes fade-in {
     0% {
@@ -55,7 +55,7 @@ const Snackbar = forwardRef((props, ref) => {
       setShowSnackbar((prevState) => !prevState);
       setTimeout(() => {
         setShowSnackbar((prevState) => !prevState);
-      }, 2500);
+      }, 2000);
     },
   }));
 

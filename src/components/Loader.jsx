@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 // Styles
 const Wrapper = styled.div`
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #8e8e8e;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #8e8e8e;
   border-radius: 50%;
-  margin: 24px auto;
-  width: 60px;
-  height: 60px;
+  margin: 60px auto 24px auto;
+  width: 48px;
+  height: 48px;
   animation: spin 1.25s linear infinite;
 
   @keyframes spin {
