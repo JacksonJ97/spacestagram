@@ -9,11 +9,12 @@ const Wrapper = styled.button`
   cursor: pointer;
 `;
 
-const ShareButton = ({ url }) => {
+const ShareButton = ({ url, snackbarRef }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
     navigator.clipboard.writeText(url);
+    snackbarRef.current.show();
   };
 
   const handleMouseEnter = () => {

@@ -65,7 +65,7 @@ const Wrapper = styled.article`
   }
 `;
 
-const Card = ({ img, title, description, date }) => {
+const Card = ({ img, title, description, date, snackbarRef }) => {
   return (
     <Wrapper>
       <header>
@@ -79,7 +79,7 @@ const Card = ({ img, title, description, date }) => {
 
       <section className="actions-container">
         <LikeButton />
-        <ShareButton url={img} />
+        <ShareButton url={img} snackbarRef={snackbarRef} />
       </section>
 
       <section className="details-container">
