@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/spacestagram/static/js/main.76f0e7ce.js",
+    "main.js": "/spacestagram/static/js/main.a886f0fb.js",
     "static/media/nasa-avatar.jpg": "/spacestagram/static/media/nasa-avatar.e0fd1fce6433a2b33270.jpg",
     "index.html": "/spacestagram/index.html",
-    "main.76f0e7ce.js.map": "/spacestagram/static/js/main.76f0e7ce.js.map"
+    "main.a886f0fb.js.map": "/spacestagram/static/js/main.a886f0fb.js.map"
   },
   "entrypoints": [
-    "static/js/main.76f0e7ce.js"
+    "static/js/main.a886f0fb.js"
   ]
 }
