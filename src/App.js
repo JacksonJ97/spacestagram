@@ -11,14 +11,14 @@ import useFetch from "./hooks/useFetch";
 import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
-  const { data, error, getMoreData } = useFetch();
+  const { data, setData, error, getMoreData } = useFetch();
   console.log(data);
   return (
     <>
       <GlobalStyles />
       <Header />
       {error && <Error />}
-      <Main data={data} getMoreData={getMoreData} />
+      <Main data={data} setData={setData} getMoreData={getMoreData} />
       {data.length && <Footer />}
     </>
   );

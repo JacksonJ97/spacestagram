@@ -57,7 +57,7 @@ const useFetch = () => {
     }
   };
 
-  return { data, error, getMoreData };
+  return { data, setData, error, getMoreData };
 };
 
 export default useFetch;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 
 // Components
 import Card from "../components/Card";
@@ -20,36 +20,8 @@ const Wrapper = styled.main`
   }
 `;
 
-const Main = ({ data, getMoreData }) => {
-  // const [isLiked, setIsLiked] = useState(false);
-  const [savedCards, setSavedCards] = useState([]);
-
+const Main = ({ data, setData, getMoreData }) => {
   const snackbarRef = useRef(null);
-  // const card = { img, title, description, date, isLiked: !isLiked };
-
-  useEffect(() => {
-    console.log(savedCards);
-    localStorage.setItem("liked", JSON.stringify(savedCards));
-  }, [savedCards]);
-
-  // const handleClick = () => {
-  //   setIsLiked((prevState) => !prevState);
-
-  //   if (!isLiked) {
-  //     setSavedCards((prevState) => [...prevState, card]);
-  //   } else {
-  //     setSavedCards((prevState) => {
-  //       if (prevState.find((item) => item.date === date)) {
-  //         let newSavedCards = prevState.filter((item) => item.date !== date);
-  //         return newSavedCards;
-  //       }
-  //     });
-  //   }
-  // };
-
-  // const handleClick = () => {
-  //   setIsLiked((prevState) => !prevState);
-  // };
 
   return (
     <Wrapper>
@@ -57,7 +29,7 @@ const Main = ({ data, getMoreData }) => {
         <InfiniteScroll style={{ overflow: "hidden" }} dataLength={data.length} next={getMoreData} hasMore={true} loader={<Loader />}>
           {data.map((item) => {
             if (item.media_type !== "image") return null;
-            return <Card item={item} setSavedCards={setSavedCards} snackbarRef={snackbarRef} key={item.date} />;
+            return <Card item={item} setData={setData} snackbarRef={snackbarRef} key={item.date} />;
           })}
         </InfiniteScroll>
       </section>

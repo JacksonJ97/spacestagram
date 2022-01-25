@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import avatar from "../assets/images/nasa-avatar.jpg";
-import { useState } from "react";
 
 // Components
 import LikeButton from "./LikeButton";
@@ -66,41 +65,19 @@ const Wrapper = styled.article`
   }
 `;
 
-const Card = ({ item, setSavedCards, snackbarRef }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const card = { img: item.url, title: item.title, explanation: item.explanation, date: item.date, isLiked: !isLiked };
-  // const likedCards = localStorage.getItem(JSON.parse("liked"));
-  // console.log(likedCards);
-
+const Card = ({ item, setData, snackbarRef }) => {
   const handleClick = () => {
-    setIsLiked((prevState) => !prevState);
-
-    if (!isLiked) {
-      setSavedCards((prevState) => [...prevState, card]);
-    } else {
-      setSavedCards((prevState) => {
-        if (prevState.find((element) => element.date === item.date)) {
-          let newSavedCards = prevState.filter((element) => element.date !== item.date);
-          return newSavedCards;
+    setData((prevState) => {
+      const newState = prevState.map((element) => {
+        if (element.date === item.date) {
+          return { ...element, liked: !element.liked };
         }
+        return element;
       });
-    }
+
+      return newState;
+    });
   };
-
-  // const handleClick = () => {
-  //   setIsLiked((prevState) => !prevState);
-
-  //   if (!isLiked) {
-  //     setSavedCards((prevState) => [...prevState, card]);
-  //   } else {
-  //     setSavedCards((prevState) => {
-  //       if (prevState.find((item) => item.date === date)) {
-  //         let newSavedCards = prevState.filter((item) => item.date !== date);
-  //         return newSavedCards;
-  //       }
-  //     });
-  //   }
-  // };
 
   return (
     <Wrapper>
@@ -114,7 +91,7 @@ const Card = ({ item, setSavedCards, snackbarRef }) => {
       </figure>
 
       <section className="actions-container">
-        <LikeButton isLiked={isLiked} handleClick={handleClick} />
+        <LikeButton isLiked={item.liked} handleClick={handleClick} />
         <ShareButton url={item.url} snackbarRef={snackbarRef} />
       </section>
 
