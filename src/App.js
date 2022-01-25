@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 // Components
 import Header from "./containers/Header";
 import Main from "./containers/Main";
@@ -12,6 +14,14 @@ import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
   const { data, error, getMoreData } = useFetch();
+
+  // useEffect(() => {
+  //   localStorage.setItem("data", JSON.stringify(data));
+  // }, [data]);
+  // localStorage.clear();
+
+  // const storedData = JSON.parse(localStorage.getItem("data"));
+  // console.log(storedData);
 
   return (
     <>
