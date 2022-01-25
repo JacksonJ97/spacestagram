@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 // Helpers
 import getStartDate from "../helpers/getStartDate";
+import formatData from "../helpers/formatData";
 
 const API_KEY = "vpfxs1OC6eDlkX7dTgWIOefdmQ6R81WZ48g4LneR";
 const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
@@ -19,7 +20,8 @@ const useFetch = () => {
 
         if (response.status >= 200 && response.status <= 299) {
           const fetchedData = await response.json();
-          setData(fetchedData.reverse());
+          const formattedData = formatData(fetchedData);
+          setData(formattedData.reverse());
           setStartDate((prevState) => {
             const [newStartDate, newStartDateString] = getStartDate(prevState[0]);
             return [newStartDate, newStartDateString];
@@ -41,7 +43,8 @@ const useFetch = () => {
 
       if (response.status >= 200 && response.status <= 299) {
         const fetchedData = await response.json();
-        setData(fetchedData.reverse());
+        const formattedData = formatData(fetchedData);
+        setData(formattedData.reverse());
         setStartDate((prevState) => {
           const [newStartDate, newStartDateString] = getStartDate(prevState[0]);
           return [newStartDate, newStartDateString];

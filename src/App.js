@@ -12,7 +12,7 @@ import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
   const { data, error, getMoreData } = useFetch();
-
+  console.log(data);
   return (
     <>
       <GlobalStyles />

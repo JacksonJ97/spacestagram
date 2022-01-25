@@ -7,6 +7,7 @@ const formatData = (data) => {
     date: item.date,
     liked: false,
   }));
+
   return formattedData;
 };
 
