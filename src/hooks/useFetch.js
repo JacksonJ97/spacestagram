@@ -2,51 +2,49 @@ import { useState, useEffect } from "react";
 
 // Helpers
 import getStartDate from "../helpers/getStartDate";
-import formatData from "../helpers/formatData";
 
 const API_KEY = "vpfxs1OC6eDlkX7dTgWIOefdmQ6R81WZ48g4LneR";
 const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
 
 const useFetch = () => {
-  const [initialStartDate, initialStartDateParam] = getStartDate(new Date());
-  const [newStartDate, newStartDateParam] = getStartDate(initialStartDate);
+  const [initialStartDate, initialStartDateString] = getStartDate(new Date());
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [startDate, setStartDate] = useState([newStartDate, newStartDateParam]);
+  const [startDate, setStartDate] = useState([initialStartDate, initialStartDateString]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        setLoading(true);
-        const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${initialStartDateParam}`);
+        const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${initialStartDateString}`);
+
         if (response.status >= 200 && response.status <= 299) {
           const fetchedData = await response.json();
-          const formattedData = formatData(fetchedData);
-          setData(formattedData.reverse());
+          setData(fetchedData.reverse());
+          setStartDate((prevState) => {
+            const [newStartDate, newStartDateString] = getStartDate(prevState[0]);
+            return [newStartDate, newStartDateString];
+          });
         } else {
           console.log(response.status, response.statusText);
         }
       } catch (e) {
         setError(e);
-      } finally {
-        setLoading(false);
       }
     };
 
     getData();
-  }, [initialStartDateParam]);
+  }, [initialStartDateString]);
 
   const getMoreData = async () => {
     try {
       const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${startDate[1]}`);
+
       if (response.status >= 200 && response.status <= 299) {
         const fetchedData = await response.json();
-        const formattedData = formatData(fetchedData);
-        setData(formattedData.reverse());
+        setData(fetchedData.reverse());
         setStartDate((prevState) => {
-          const [newStartDate, newStartDateParam] = getStartDate(prevState[0]);
-          return [newStartDate, newStartDateParam];
+          const [newStartDate, newStartDateString] = getStartDate(prevState[0]);
+          return [newStartDate, newStartDateString];
         });
       } else {
         console.log(response.status, response.statusText);
@@ -56,7 +54,7 @@ const useFetch = () => {
     }
   };
 
-  return { data, loading, error, getMoreData };
+  return { data, error, getMoreData };
 };
 
 export default useFetch;

@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   border: 4px solid #f3f3f3;
   border-top: 4px solid #8e8e8e;
   border-radius: 50%;
-  margin: 60px auto 24px auto;
+  margin: 60px auto 32px auto;
   width: 48px;
   height: 48px;
   animation: spin 1.25s linear infinite;
