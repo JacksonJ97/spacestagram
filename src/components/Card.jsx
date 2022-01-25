@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import avatar from "../assets/images/nasa-avatar.jpg";
+import { useState } from "react";
 
 // Components
 import LikeButton from "./LikeButton";
@@ -65,7 +66,42 @@ const Wrapper = styled.article`
   }
 `;
 
-const Card = ({ img, title, description, date, snackbarRef }) => {
+const Card = ({ item, setSavedCards, snackbarRef }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const card = { img: item.url, title: item.title, explanation: item.explanation, date: item.date, isLiked: !isLiked };
+  // const likedCards = localStorage.getItem(JSON.parse("liked"));
+  // console.log(likedCards);
+
+  const handleClick = () => {
+    setIsLiked((prevState) => !prevState);
+
+    if (!isLiked) {
+      setSavedCards((prevState) => [...prevState, card]);
+    } else {
+      setSavedCards((prevState) => {
+        if (prevState.find((element) => element.date === item.date)) {
+          let newSavedCards = prevState.filter((element) => element.date !== item.date);
+          return newSavedCards;
+        }
+      });
+    }
+  };
+
+  // const handleClick = () => {
+  //   setIsLiked((prevState) => !prevState);
+
+  //   if (!isLiked) {
+  //     setSavedCards((prevState) => [...prevState, card]);
+  //   } else {
+  //     setSavedCards((prevState) => {
+  //       if (prevState.find((item) => item.date === date)) {
+  //         let newSavedCards = prevState.filter((item) => item.date !== date);
+  //         return newSavedCards;
+  //       }
+  //     });
+  //   }
+  // };
+
   return (
     <Wrapper>
       <header>
@@ -74,18 +110,18 @@ const Card = ({ img, title, description, date, snackbarRef }) => {
       </header>
 
       <figure>
-        <img src={img} alt={title} />
+        <img src={item.url} alt={item.title} />
       </figure>
 
       <section className="actions-container">
-        <LikeButton />
-        <ShareButton url={img} snackbarRef={snackbarRef} />
+        <LikeButton isLiked={isLiked} handleClick={handleClick} />
+        <ShareButton url={item.url} snackbarRef={snackbarRef} />
       </section>
 
       <section className="details-container">
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <p className="date">{date}</p>
+        <h2>{item.title}</h2>
+        <p>{item.explanation}</p>
+        <p className="date">{item.date}</p>
       </section>
     </Wrapper>
   );
