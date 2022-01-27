@@ -9,9 +9,9 @@ const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
 
 const useFetch = () => {
   const { date, param } = getStartDate(new Date());
+  const [startDate, setStartDate] = useState({ date, param });
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const [startDate, setStartDate] = useState({ date, param });
 
   useEffect(() => {
     const getData = async () => {

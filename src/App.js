@@ -12,6 +12,7 @@ import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
   const { data, setData, error, getMoreData } = useFetch();
+  // localStorage.clear();
 
   return (
     <>
