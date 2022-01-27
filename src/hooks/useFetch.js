@@ -8,52 +8,52 @@ const API_KEY = "vpfxs1OC6eDlkX7dTgWIOefdmQ6R81WZ48g4LneR";
 const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
 
 const useFetch = () => {
-  const [initialStartDate, initialStartDateString] = getStartDate(new Date());
+  const { date, param } = getStartDate(new Date());
   const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [startDate, setStartDate] = useState([initialStartDate, initialStartDateString]);
+  const [error, setError] = useState(null);
+  const [startDate, setStartDate] = useState({ date, param });
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${initialStartDateString}`);
+        const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${param}`);
 
         if (response.status >= 200 && response.status <= 299) {
           const fetchedData = await response.json();
           const formattedData = formatData(fetchedData);
           setData(formattedData.reverse());
           setStartDate((prevState) => {
-            const [newStartDate, newStartDateString] = getStartDate(prevState[0]);
-            return [newStartDate, newStartDateString];
+            const { date, param } = getStartDate(prevState.date);
+            return { date, param };
           });
         } else {
           console.log(response.status, response.statusText);
         }
-      } catch (e) {
-        setError(e);
+      } catch (error) {
+        setError(error);
       }
     };
 
     getData();
-  }, [initialStartDateString]);
+  }, [param]);
 
   const getMoreData = async () => {
     try {
-      const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${startDate[1]}`);
+      const response = await fetch(`${BASE_URL}${API_KEY}&start_date=${startDate.param}`);
 
       if (response.status >= 200 && response.status <= 299) {
         const fetchedData = await response.json();
         const formattedData = formatData(fetchedData);
         setData(formattedData.reverse());
         setStartDate((prevState) => {
-          const [newStartDate, newStartDateString] = getStartDate(prevState[0]);
-          return [newStartDate, newStartDateString];
+          const { date, param } = getStartDate(prevState.date);
+          return { date, param };
         });
       } else {
         console.log(response.status, response.statusText);
       }
-    } catch (e) {
-      setError(e);
+    } catch (error) {
+      setError(error);
     }
   };
 

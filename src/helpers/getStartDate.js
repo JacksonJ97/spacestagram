@@ -1,10 +1,10 @@
 import { format, subDays } from "date-fns";
 
 const getStartDate = (date) => {
-  const startDate = subDays(date, 7);
-  const startDateString = format(startDate, "yyyy-MM-dd");
+  const startDate = subDays(date, 5);
+  const startDateParam = format(startDate, "yyyy-MM-dd");
 
-  return [startDate, startDateString];
+  return { date: startDate, param: startDateParam };
 };
 
 export default getStartDate;
