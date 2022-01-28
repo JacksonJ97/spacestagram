@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
+
+// Context
+import { MainContext } from "../App";
 
 // Components
 import Card from "../components/Card";
@@ -9,6 +12,9 @@ import Snackbar from "../components/Snackbar";
 
 // Helpers
 import getStartDate from "../helpers/getStartDate";
+
+// Config
+import { BASE_URL } from "../config";
 
 // Styles
 const Wrapper = styled.main`
@@ -23,19 +29,18 @@ const Wrapper = styled.main`
   }
 `;
 
-const API_KEY = "vpfxs1OC6eDlkX7dTgWIOefdmQ6R81WZ48g4LneR";
-const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
-
-const Main = ({ data, startDate, setStartDate, setData, getMoreData }) => {
+const Main = () => {
+  const { data, startDate, setStartDate, getMoreData } = useContext(MainContext);
   const snackbarRef = useRef(null);
 
   const handleNext = () => {
+    const url = `${BASE_URL}${startDate.param}`;
+    getMoreData(url);
+
     setStartDate((prevState) => {
       const { date: nextStartDate, param: nextStartDateParam } = getStartDate(prevState.date);
       return { date: nextStartDate, param: nextStartDateParam };
     });
-    const url = `${BASE_URL}${API_KEY}&start_date=${startDate.param}`;
-    getMoreData(url);
   };
 
   return (
@@ -44,7 +49,7 @@ const Main = ({ data, startDate, setStartDate, setData, getMoreData }) => {
         <section className="card-container">
           {data.map((item) => {
             if (item.media_type !== "image") return null;
-            return <Card item={item} setData={setData} snackbarRef={snackbarRef} key={item.date} />;
+            return <Card item={item} snackbarRef={snackbarRef} key={item.date} />;
           })}
         </section>
       </InfiniteScroll>

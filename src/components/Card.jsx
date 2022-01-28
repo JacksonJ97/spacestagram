@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import avatar from "../assets/images/nasa-avatar.jpg";
+import { useContext } from "react";
+
+// Context
+import { MainContext } from "../App";
 
 // Components
 import LikeButton from "./LikeButton";
@@ -62,10 +66,19 @@ const Wrapper = styled.article`
   @media (min-width: 635px) {
     width: 614px;
     border: 1px solid #dbdbdb;
+
+    figure {
+      img {
+        width: 612px;
+        display: block;
+      }
+    }
   }
 `;
 
-const Card = ({ item, setData, snackbarRef }) => {
+const Card = ({ item, snackbarRef }) => {
+  const { setData } = useContext(MainContext);
+
   const handleClick = () => {
     setData((prevState) => {
       const newState = prevState.map((element) => {
