@@ -7,6 +7,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../components/Loader";
 import Snackbar from "../components/Snackbar";
 
+// Helpers
+import getStartDate from "../helpers/getStartDate";
+
 // Styles
 const Wrapper = styled.main`
   background-color: #fafafa;
@@ -20,19 +23,32 @@ const Wrapper = styled.main`
   }
 `;
 
-const Main = ({ data, setData, getMoreData }) => {
+const API_KEY = "vpfxs1OC6eDlkX7dTgWIOefdmQ6R81WZ48g4LneR";
+const BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
+
+const Main = ({ data, startDate, setStartDate, setData, getMoreData }) => {
   const snackbarRef = useRef(null);
+
+  const handleNext = () => {
+    setStartDate((prevState) => {
+      const { date: nextStartDate, param: nextStartDateParam } = getStartDate(prevState.date);
+      return { date: nextStartDate, param: nextStartDateParam };
+    });
+    const url = `${BASE_URL}${API_KEY}&start_date=${startDate.param}`;
+    getMoreData(url);
+  };
 
   return (
     <Wrapper>
-      <section className="card-container">
-        <InfiniteScroll style={{ overflow: "hidden" }} dataLength={data.length} next={getMoreData} hasMore={true} loader={<Loader />}>
+      <InfiniteScroll dataLength={data.length} next={handleNext} hasMore={true} loader={<Loader />}>
+        <section className="card-container">
           {data.map((item) => {
             if (item.media_type !== "image") return null;
             return <Card item={item} setData={setData} snackbarRef={snackbarRef} key={item.date} />;
           })}
-        </InfiniteScroll>
-      </section>
+        </section>
+      </InfiniteScroll>
+
       <Snackbar ref={snackbarRef} />
     </Wrapper>
   );

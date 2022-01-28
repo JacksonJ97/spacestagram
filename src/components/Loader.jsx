@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   margin: 60px auto 32px auto;
   width: 48px;
   height: 48px;
+  overflow: hidden;
   animation: spin 1.25s linear infinite;
 
   @keyframes spin {
