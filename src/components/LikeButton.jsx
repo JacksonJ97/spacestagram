@@ -58,15 +58,11 @@ const LikeButton = ({ isLiked, handleClick }) => {
   );
 
   const handleMouseEnter = () => {
-    if (!isLiked) {
-      setIsHovered((prevState) => !prevState);
-    }
+    setIsHovered((prevState) => !prevState);
   };
 
   const handleMouseLeave = () => {
-    if (!isLiked) {
-      setIsHovered((prevState) => !prevState);
-    }
+    setIsHovered((prevState) => !prevState);
   };
 
   return (

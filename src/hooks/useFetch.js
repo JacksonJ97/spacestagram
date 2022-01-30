@@ -1,23 +1,33 @@
 import { useState, useEffect } from "react";
 
+// Hooks
+import useLocalStorage from "./useLocalStorage";
+
 // Helpers
 import formatData from "../helpers/formatData";
+import getStartDate from "../helpers/getStartDate";
 
 const useFetch = (url) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useLocalStorage("data", []);
   const [error, setError] = useState(null);
+  const { param } = getStartDate(new Date());
+  const storedDate = localStorage.getItem("date");
+  const checkStrings = param.localeCompare(storedDate);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(url);
+        if (checkStrings !== 0) {
+          const response = await fetch(url);
+          localStorage.setItem("date", param);
 
-        if (response.status >= 200 && response.status <= 299) {
-          const fetchedData = await response.json();
-          const formattedData = formatData(fetchedData);
-          setData(formattedData);
-        } else {
-          console.log(response.status, response.statusText);
+          if (response.status >= 200 && response.status <= 299) {
+            const fetchedData = await response.json();
+            const formattedData = formatData(fetchedData);
+            setData(formattedData);
+          } else {
+            console.log(response.status, response.statusText);
+          }
         }
       } catch (error) {
         setError(error);
@@ -25,7 +35,7 @@ const useFetch = (url) => {
     };
 
     getData();
-  }, [url]);
+  }, [url, checkStrings, param, setData]);
 
   const getMoreData = async (url) => {
     try {
