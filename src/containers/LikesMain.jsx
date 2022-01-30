@@ -40,11 +40,8 @@ const LikesMain = () => {
     <Wrapper>
       <section className="cards-container">
         {data.map((item) => {
-          if (item.liked) {
-            return <PreviewCard url={item.url} title={item.title} key={item.date} />;
-          } else {
-            return null;
-          }
+          if (!item.liked) return null;
+          return <PreviewCard url={item.url} title={item.title} key={item.date} />;
         })}
       </section>
     </Wrapper>
