@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 // Components
 import NavBar from "../components/NavBar";
@@ -21,24 +22,26 @@ const Wrapper = styled.header`
     margin: 0 auto;
   }
 
+  a {
+    text-decoration: none;
+    color: #262626;
+  }
+
   h1 {
     font-family: "Lobster Two", cursive;
     font-size: 1.75rem;
     font-weight: 400;
-    cursor: pointer;
     width: max-content;
   }
 `;
 
 const Header = () => {
-  const handleClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <Wrapper>
       <div className="container">
-        <h1 onClick={handleClick}>Spacestagram</h1>
+        <NavLink to="/">
+          <h1>Spacestagram</h1>
+        </NavLink>
         <NavBar />
       </div>
     </Wrapper>
