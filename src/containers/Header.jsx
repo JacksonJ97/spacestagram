@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+// Components
+import NavBar from "../components/NavBar";
+
 // Styles
 const Wrapper = styled.header`
   display: flex;
@@ -11,6 +14,9 @@ const Wrapper = styled.header`
   height: 60px;
 
   .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 614px;
     margin: 0 auto;
   }
@@ -33,6 +39,7 @@ const Header = () => {
     <Wrapper>
       <div className="container">
         <h1 onClick={handleClick}>Spacestagram</h1>
+        <NavBar />
       </div>
     </Wrapper>
   );
