@@ -29,7 +29,7 @@ const Wrapper = styled.main`
   }
 `;
 
-const Main = () => {
+const HomeMain = () => {
   const { data, startDate, setStartDate, getMoreData } = useContext(MainContext);
   const snackbarRef = useRef(null);
 
@@ -59,4 +59,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default HomeMain;
