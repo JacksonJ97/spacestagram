@@ -15,7 +15,7 @@ const useFetch = (url) => {
         if (response.status >= 200 && response.status <= 299) {
           const fetchedData = await response.json();
           const formattedData = formatData(fetchedData);
-          setData(formattedData.reverse());
+          setData(formattedData);
         } else {
           console.log(response.status, response.statusText);
         }
@@ -34,7 +34,7 @@ const useFetch = (url) => {
       if (response.status >= 200 && response.status <= 299) {
         const fetchedData = await response.json();
         const formattedData = formatData(fetchedData);
-        setData(formattedData.reverse());
+        setData(formattedData);
       } else {
         console.log(response.status, response.statusText);
       }

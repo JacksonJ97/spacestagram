@@ -8,7 +8,7 @@ const formatData = (data) => {
     liked: false,
   }));
 
-  return formattedData;
+  return formattedData.reverse();
 };
 
 export default formatData;
