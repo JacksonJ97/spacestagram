@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 // Components
 import Header from "./containers/Header";
 import Homepage from "./pages/Homepage";
+import LikesPage from "./pages/LikesPage";
 import Error from "./components/Error";
 
 // Hooks
@@ -45,7 +46,7 @@ const App = () => {
       <MainContext.Provider value={{ data, setData, startDate, setStartDate, getMoreData }}>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="likes" element={<main>Likes</main>}>
+          <Route path="likes" element={<LikesPage />}>
             <Route path=":id" element={<div>Picture</div>} />
           </Route>
           <Route path="error" element={<Error />} />

@@ -21,7 +21,7 @@ const Wrapper = styled.main`
   background-color: #fafafa;
   min-height: 100vh;
 
-  .card-container {
+  .cards-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +46,7 @@ const HomeMain = () => {
   return (
     <Wrapper>
       <InfiniteScroll dataLength={data.length} next={handleNext} hasMore={true} loader={<Loader />}>
-        <section className="card-container">
+        <section className="cards-container">
           {data.map((item) => {
             if (item.media_type !== "image") return null;
             return <Card item={item} snackbarRef={snackbarRef} key={item.date} />;
