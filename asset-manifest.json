@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/spacestagram/static/js/main.efccd1e9.js",
+    "main.js": "/spacestagram/static/js/main.8acefeb9.js",
     "static/media/nasa-avatar.jpg": "/spacestagram/static/media/nasa-avatar.e0fd1fce6433a2b33270.jpg",
     "index.html": "/spacestagram/index.html",
     "static/media/left-arrow-icon.svg": "/spacestagram/static/media/left-arrow-icon.6b1c357bc81ff40d3f6c85c0a3d8b390.svg",
-    "main.efccd1e9.js.map": "/spacestagram/static/js/main.efccd1e9.js.map"
+    "main.8acefeb9.js.map": "/spacestagram/static/js/main.8acefeb9.js.map"
   },
   "entrypoints": [
-    "static/js/main.efccd1e9.js"
+    "static/js/main.8acefeb9.js"
   ]
 }
