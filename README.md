@@ -11,16 +11,13 @@ An image sharing application that displays NASA's Astronomy Picture of the Day i
 - NASA APOD API
 - date-fns
 - react-infinite-scroll-component
+- Context API
+- Local Storage
+- React Router
 
 ### What I learned
 
-In this project, I learned how to create a snackbar component using the useImperativeHandle and useRef hook. Since useRef cannot be used on components, I used forwardRef to access the reference of the snackbar component and then used the useImperativeHandle hook to create a function that is to be passed down the component tree. I also, learned how to error handle an API call by checking the response status. Since the fetch API only handles network errors, the HTTP errors are not caught in the catch block. To fix this we have to check the status of the response and if it is successful we should set the data received. I also learned how to use the react-infinite-scroll-component to fetch more data that is to be displayed in an feed-like style.
-
-## Upcoming features
-
-- The state of the liked pictures will persist when users leave or reload the webpage
-- A webpage that stores the pictures that the user liked
-- A component that displays the number of likes in a picture
+In this project, I learned how to create a snackbar component using the useImperativeHandle and useRef hook. Since useRef cannot be used on components, I used forwardRef to access the reference of the snackbar component and then used the useImperativeHandle hook to create a function that is to be passed down the component tree. I also learned how to error handle an API call by checking the response status. Since the fetch API only handles network errors, the HTTP errors are not caught in the catch block. To fix this we have to check the status of the response and if it is successful we should set the data received. I also learned how to use the react-infinite-scroll-component to fetch more data that is to be displayed in an feed-like style. I learned how to use local storage to store state variables so that when users reload or leave the page the state still persists. I also learned how to use the Context API to pass state down the component tree without passing it down as props.
 
 ### Live URL
 
