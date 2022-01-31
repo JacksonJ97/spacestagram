@@ -17,6 +17,7 @@ const Wrapper = styled.main`
     grid-template-columns: 1fr 1fr 1fr;
     gap: 3px;
     padding-top: 60px;
+    padding-bottom: 60px;
     width: 100%;
     margin: 0 auto;
   }

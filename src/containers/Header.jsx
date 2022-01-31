@@ -12,6 +12,7 @@ const Wrapper = styled.header`
   border-bottom: 1px solid #dbdbdb;
   position: sticky;
   top: 0;
+  z-index: 10;
   height: 60px;
 
   .container {

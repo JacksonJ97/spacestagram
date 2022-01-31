@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left-arrow-icon.svg";
 
@@ -8,6 +8,7 @@ import { MainContext } from "../App";
 
 // Components
 import Card from "../components/Card";
+import Snackbar from "../components/Snackbar";
 
 // Styles
 const Wrapper = styled.main`
@@ -52,6 +53,7 @@ const Wrapper = styled.main`
 
 const LikesDetailMain = () => {
   const navigate = useNavigate();
+  const snackbarRef = useRef(null);
   const { id } = useParams();
   const { data } = useContext(MainContext);
   const item = data.find((element) => element.date === id);
@@ -61,7 +63,8 @@ const LikesDetailMain = () => {
       <button className="back-button" type="button" aria-label="Back button" onClick={() => navigate(-1)}>
         <img src={leftArrow} alt="Back button" height="48" width="68" />
       </button>
-      <Card item={item} />
+      <Card item={item} snackbarRef={snackbarRef} />
+      <Snackbar ref={snackbarRef} />
     </Wrapper>
   );
 };

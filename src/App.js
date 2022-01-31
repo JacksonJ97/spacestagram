@@ -26,10 +26,10 @@ import { BASE_URL } from "./config";
 export const MainContext = createContext(null);
 
 const App = () => {
+  const navigate = useNavigate();
   const { date: initialStartDate, param: initialStartDateParam } = getStartDate(new Date());
   const url = `${BASE_URL}${initialStartDateParam}`;
   const { data, setData, error, getMoreData } = useFetch(url);
-  const navigate = useNavigate();
 
   const [startDate, setStartDate] = useState(() => {
     const { date: nextStartDate, param: nextStartDateParam } = getStartDate(initialStartDate);
