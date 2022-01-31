@@ -37,15 +37,13 @@ const HomeMain = () => {
     const url = `${BASE_URL}${startDate.param}`;
     getMoreData(url);
 
-    setStartDate((prevState) => {
-      const { date: nextStartDate, param: nextStartDateParam } = getStartDate(prevState.date);
-      return { date: nextStartDate, param: nextStartDateParam };
-    });
+    const { date: nextStartDate, param: nextStartDateParam } = getStartDate(new Date(startDate.date));
+    setStartDate({ date: nextStartDate, param: nextStartDateParam });
   };
 
   return (
     <Wrapper>
-      <InfiniteScroll dataLength={data.length} next={handleNext} hasMore={true} loader={<Loader />}>
+      <InfiniteScroll dataLength={data.length} next={handleNext} hasMore={true} scrollThreshold={0.9} loader={<Loader />}>
         <section className="cards-container">
           {data.map((item) => {
             if (item.media_type !== "image") return null;
@@ -53,7 +51,6 @@ const HomeMain = () => {
           })}
         </section>
       </InfiniteScroll>
-
       <Snackbar ref={snackbarRef} />
     </Wrapper>
   );

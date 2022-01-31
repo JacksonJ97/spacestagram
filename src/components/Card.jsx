@@ -16,6 +16,7 @@ const Wrapper = styled.article`
   border-bottom: 1px solid #dbdbdb;
   margin-bottom: 24px;
   width: 100%;
+  height: max-content;
 
   header {
     display: flex;
