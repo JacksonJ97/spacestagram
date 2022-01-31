@@ -6,32 +6,28 @@ import leftArrow from "../assets/images/left-arrow-icon.svg";
 const Wrapper = styled.button`
   position: absolute;
   left: 0;
-  top: 0;
+  top: 6px;
   height: 48px;
   width: 68px;
   border: none;
   background: transparent;
   cursor: pointer;
 
-  @media (min-width: 790px) {
-    left: 1%;
-    top: 5%;
+  @media (min-width: 1150px) {
+    left: 2%;
+    top: 65px;
   }
 
-  @media (min-width: 950px) {
-    left: 5%;
-  }
-
-  @media (min-width: 1600px) {
-    left: 10%;
+  @media (min-width: 1500px) {
+    left: 12%;
   }
 `;
 
-const BackButton = () => {
+const BackButton = ({ to }) => {
   const navigate = useNavigate();
 
   return (
-    <Wrapper className="back-button" type="button" aria-label="Back button" onClick={() => navigate(-1)}>
+    <Wrapper type="button" aria-label="Back button" onClick={() => navigate(to)}>
       <img src={leftArrow} alt="Back button" height="48" width="68" />
     </Wrapper>
   );

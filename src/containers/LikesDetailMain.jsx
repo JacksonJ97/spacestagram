@@ -17,7 +17,7 @@ const Wrapper = styled.main`
   position: relative;
   background-color: #fafafa;
   min-height: calc(100vh - 60px);
-  padding-top: 48px;
+  padding-top: 60px;
   padding-bottom: 24px;
 `;
 
@@ -29,7 +29,7 @@ const LikesDetailMain = () => {
 
   return (
     <Wrapper>
-      <BackButton />
+      <BackButton to={-1} />
       <Card item={item} snackbarRef={snackbarRef} />
       <Snackbar ref={snackbarRef} />
     </Wrapper>

@@ -6,9 +6,11 @@ import { MainContext } from "../App";
 
 // Components
 import PreviewCard from "../components/PreviewCard";
+import BackButton from "../components/BackButton";
 
 // Styles
 const Wrapper = styled.main`
+  position: relative;
   background-color: #fafafa;
   min-height: calc(100vh - 60px);
 
@@ -40,6 +42,7 @@ const LikesMain = () => {
 
   return (
     <Wrapper>
+      <BackButton to="/" />
       <section className="cards-container">
         {data.map((item) => {
           if (!item.liked) return null;
