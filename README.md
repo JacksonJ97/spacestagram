@@ -1,6 +1,6 @@
 # Spacestagram
 
-An image sharing application that displays NASA's Astronomy Picture of the Day in the style of an instagram feed. Users can like the pictures and click the share button to copy the link to the image. Users can also keep scrolling down the feed to see more pictures.
+An image sharing application that displays NASA's Astronomy Picture of the Day in the style of an instagram feed. Users can like the pictures and click the share button to copy the link of the image. Users can also keep scrolling down the feed to see more pictures. The liked pictures are saved into a different tab where users can see all the pictures that they liked. The state also persists when users reload or leave the page.
 
 ## My process
 
