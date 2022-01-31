@@ -46,9 +46,8 @@ const App = () => {
       <MainContext.Provider value={{ data, setData, startDate, setStartDate, getMoreData }}>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="likes" element={<LikesPage />}>
-            <Route path=":id" element={<div>Picture</div>} />
-          </Route>
+          <Route path="/likes" element={<LikesPage />} />
+          <Route path="/likes/:id" element={<div>Liked Picture</div>} />
           <Route path="error" element={<Error />} />
         </Routes>
       </MainContext.Provider>

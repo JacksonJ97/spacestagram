@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 // Styles
 const Wrapper = styled.div`
@@ -45,11 +46,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const PreviewCard = ({ url, title }) => {
+const PreviewCard = ({ item }) => {
   return (
     <Wrapper>
-      <div className="hover"></div>
-      <img src={url} alt={title} />
+      <Link to={`/likes/${item.date}`}>
+        <div className="hover"></div>
+        <img src={item.url} alt={item.title} />
+      </Link>
     </Wrapper>
   );
 };

@@ -36,12 +36,13 @@ const Wrapper = styled.main`
 
 const LikesMain = () => {
   const { data } = useContext(MainContext);
+
   return (
     <Wrapper>
       <section className="cards-container">
         {data.map((item) => {
           if (!item.liked) return null;
-          return <PreviewCard url={item.url} title={item.title} key={item.date} />;
+          return <PreviewCard item={item} key={item.date} />;
         })}
       </section>
     </Wrapper>
