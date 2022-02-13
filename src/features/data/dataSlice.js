@@ -15,6 +15,13 @@ export const fetchData = createAsyncThunk("data/fetchData", async () => {
   return data;
 });
 
+export const fetchMoreData = createAsyncThunk("data/fetchMoreData", async () => {
+  const response = await fetch(`${BASE_URL}2022-02-03`);
+  const fetchedData = await response.json();
+  const data = formatData(fetchedData);
+  return data;
+});
+
 const dataSlice = createSlice({
   name: "data",
   initialState: dataAdapter.getInitialState(),
@@ -24,9 +31,13 @@ const dataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchData.fulfilled, (state, action) => {
-      dataAdapter.upsertMany(state, action.payload);
-    });
+    builder
+      .addCase(fetchData.fulfilled, (state, action) => {
+        dataAdapter.upsertMany(state, action.payload);
+      })
+      .addCase(fetchMoreData.fulfilled, (state, action) => {
+        dataAdapter.upsertMany(state, action.payload);
+      });
   },
 });
 

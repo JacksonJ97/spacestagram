@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { useRef, useContext } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // Selectors
 import { selectAllData } from "../features/data/dataSlice";
+
+// Actions
+import { fetchMoreData } from "../features/data/dataSlice";
 
 // Context
 import { MainContext } from "../App";
@@ -34,6 +37,7 @@ const Wrapper = styled.main`
 `;
 
 const HomeMain = () => {
+  const dispatch = useDispatch();
   const data = useSelector(selectAllData);
   console.log(data);
   // const { data, startDate, setStartDate, getMoreData } = useContext(MainContext);
@@ -57,11 +61,19 @@ const HomeMain = () => {
           })}
         </section>
       </InfiniteScroll> */}
-      <section className="cards-container">
-        {data.map((item) => (
-          <Card item={item} snackbarRef={snackbarRef} key={item.date} />
-        ))}
-      </section>
+      <InfiniteScroll
+        dataLength={data.length}
+        next={() => dispatch(fetchMoreData())}
+        hasMore={true}
+        scrollThreshold={0.9}
+        loader={<Loader />}>
+        <section className="cards-container">
+          {data.map((item) => (
+            <Card item={item} snackbarRef={snackbarRef} key={item.date} />
+          ))}
+        </section>
+      </InfiniteScroll>
+
       <Snackbar ref={snackbarRef} />
     </Wrapper>
   );

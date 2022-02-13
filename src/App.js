@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
+// Actions
 import { fetchData } from "./features/data/dataSlice";
 
 // Components
