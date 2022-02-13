@@ -1,14 +1,15 @@
 const formatData = (data) => {
-  const formattedData = data.map((item) => ({
-    media_type: item.media_type,
-    url: item.url,
-    title: item.title,
-    explanation: item.explanation,
+  const filteredData = data.filter((item) => item.media_type === "image");
+
+  const formattedData = filteredData.map((item) => ({
     date: item.date,
+    title: item.title,
+    url: item.url,
     liked: false,
+    explanation: item.explanation,
   }));
 
-  return formattedData.reverse();
+  return formattedData;
 };
 
 export default formatData;

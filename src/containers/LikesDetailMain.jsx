@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useContext, useRef } from "react";
+import { useRef } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-// Context
-import { MainContext } from "../App";
+// Selectors
+import { selectByDataId } from "../features/data/dataSlice";
 
 // Components
 import Card from "../components/Card";
@@ -22,10 +23,9 @@ const Wrapper = styled.main`
 `;
 
 const LikesDetailMain = () => {
-  const snackbarRef = useRef(null);
   const { id } = useParams();
-  const { data } = useContext(MainContext);
-  const item = data.find((element) => element.date === id);
+  const item = useSelector((state) => selectByDataId(state, id));
+  const snackbarRef = useRef(null);
 
   return (
     <Wrapper>

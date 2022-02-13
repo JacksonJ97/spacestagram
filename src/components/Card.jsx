@@ -1,9 +1,5 @@
 import styled from "styled-components";
 import avatar from "../assets/images/nasa-avatar.jpg";
-import { useContext } from "react";
-
-// Context
-import { MainContext } from "../App";
 
 // Components
 import LikeButton from "./LikeButton";
@@ -78,21 +74,6 @@ const Wrapper = styled.article`
 `;
 
 const Card = ({ item, snackbarRef }) => {
-  // const { setData } = useContext(MainContext);
-
-  // const handleClick = () => {
-  //   setData((prevState) => {
-  //     const newState = prevState.map((element) => {
-  //       if (element.date === item.date) {
-  //         return { ...element, liked: !element.liked };
-  //       }
-  //       return element;
-  //     });
-
-  //     return newState;
-  //   });
-  // };
-
   return (
     <Wrapper>
       <header>

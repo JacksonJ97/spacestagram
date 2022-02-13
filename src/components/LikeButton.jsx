@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+// Actions
 import { toggleLike } from "../features/data/dataSlice";
-import { isLeapYear } from "date-fns";
 
 // Styles
 const Wrapper = styled.button`

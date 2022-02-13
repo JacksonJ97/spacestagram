@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useRef, useContext } from "react";
 import { useSelector } from "react-redux";
+
+// Selectors
 import { selectAllData } from "../features/data/dataSlice";
 
 // Context

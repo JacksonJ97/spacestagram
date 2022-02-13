@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 
 // Helpers
-import testFormatData from "../../helpers/testFormatData";
+import formatData from "../../helpers/formatData";
 
 // Config
 import { BASE_URL } from "../../config";
@@ -11,7 +11,7 @@ const dataAdapter = createEntityAdapter({ selectId: (entity) => entity.date, sor
 export const fetchData = createAsyncThunk("data/fetchData", async () => {
   const response = await fetch(`${BASE_URL}2022-02-08`);
   const fetchedData = await response.json();
-  const data = testFormatData(fetchedData);
+  const data = formatData(fetchedData);
   return data;
 });
 
@@ -31,6 +31,6 @@ const dataSlice = createSlice({
 });
 
 export const { toggleLike } = dataSlice.actions;
-export const { selectAll: selectAllData } = dataAdapter.getSelectors((state) => state.data);
+export const { selectAll: selectAllData, selectById: selectByDataId } = dataAdapter.getSelectors((state) => state.data);
 
 export default dataSlice.reducer;

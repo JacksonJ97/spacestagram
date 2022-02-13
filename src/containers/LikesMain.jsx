@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 
-// Context
-import { MainContext } from "../App";
+// Selectors
+import { selectAllData } from "../features/data/dataSlice";
 
 // Components
 import PreviewCard from "../components/PreviewCard";
@@ -38,7 +38,7 @@ const Wrapper = styled.main`
 `;
 
 const LikesMain = () => {
-  const { data } = useContext(MainContext);
+  const data = useSelector(selectAllData);
 
   return (
     <Wrapper>
