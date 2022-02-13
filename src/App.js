@@ -1,5 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchData } from "./features/data/dataSlice";
 
 // Components
 import Header from "./containers/Header";
@@ -35,6 +37,12 @@ const App = () => {
   const [shouldFetch, setShouldFetch] = useState(false);
 
   const checkStrings = initialStartDateParam.localeCompare(date);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
 
   useEffect(() => {
     if (checkStrings !== 0) {

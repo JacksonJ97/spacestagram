@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useRef, useContext } from "react";
+import { useSelector } from "react-redux";
 
 // Context
 import { MainContext } from "../App";
