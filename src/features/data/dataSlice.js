@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
-import { BASE_URL } from "../../config";
+
+// Helpers
 import testFormatData from "../../helpers/testFormatData";
+
+// Config
+import { BASE_URL } from "../../config";
 
 const dataAdapter = createEntityAdapter({ selectId: (entity) => entity.date, sortComparer: (a, b) => b.date.localeCompare(a.date) });
 
@@ -14,12 +18,19 @@ export const fetchData = createAsyncThunk("data/fetchData", async () => {
 const dataSlice = createSlice({
   name: "data",
   initialState: dataAdapter.getInitialState(),
-  reducers: {},
+  reducers: {
+    toggleLike: (state, action) => {
+      dataAdapter.updateOne(state, action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchData.fulfilled, (state, action) => {
       dataAdapter.upsertMany(state, action.payload);
     });
   },
 });
+
+export const { toggleLike } = dataSlice.actions;
+export const { selectAll: selectAllData } = dataAdapter.getSelectors((state) => state.data);
 
 export default dataSlice.reducer;

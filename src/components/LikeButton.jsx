@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toggleLike } from "../features/data/dataSlice";
+import { isLeapYear } from "date-fns";
 
 // Styles
 const Wrapper = styled.button`
@@ -48,7 +51,8 @@ const Wrapper = styled.button`
   }
 `;
 
-const LikeButton = ({ isLiked, handleClick }) => {
+const LikeButton = ({ id, isLiked }) => {
+  const dispatch = useDispatch();
   const [isHovered, setIsHovered] = useState(false);
 
   const svgPath = isLiked ? (
@@ -66,7 +70,11 @@ const LikeButton = ({ isLiked, handleClick }) => {
   };
 
   return (
-    <Wrapper type="button" onClick={handleClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <Wrapper
+      type="button"
+      onClick={() => dispatch(toggleLike({ id, changes: { liked: !isLiked } }))}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}>
       {isLiked ? (
         <svg
           aria-label="Unlike"

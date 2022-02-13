@@ -5,8 +5,8 @@ const testFormatData = (data) => {
     date: item.date,
     title: item.title,
     url: item.url,
-    explanation: item.explanation,
     liked: false,
+    explanation: item.explanation,
   }));
 
   return formattedData;

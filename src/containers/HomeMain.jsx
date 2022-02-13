@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useRef, useContext } from "react";
 import { useSelector } from "react-redux";
+import { selectAllData } from "../features/data/dataSlice";
 
 // Context
 import { MainContext } from "../App";
@@ -31,27 +32,34 @@ const Wrapper = styled.main`
 `;
 
 const HomeMain = () => {
-  const { data, startDate, setStartDate, getMoreData } = useContext(MainContext);
+  const data = useSelector(selectAllData);
+  console.log(data);
+  // const { data, startDate, setStartDate, getMoreData } = useContext(MainContext);
   const snackbarRef = useRef(null);
 
-  const handleNext = () => {
-    const url = `${BASE_URL}${startDate.param}`;
-    getMoreData(url);
+  // const handleNext = () => {
+  //   const url = `${BASE_URL}${startDate.param}`;
+  //   getMoreData(url);
 
-    const { date: nextStartDate, param: nextStartDateParam } = getStartDate(new Date(startDate.date));
-    setStartDate({ date: nextStartDate, param: nextStartDateParam });
-  };
+  //   const { date: nextStartDate, param: nextStartDateParam } = getStartDate(new Date(startDate.date));
+  //   setStartDate({ date: nextStartDate, param: nextStartDateParam });
+  // };
 
   return (
     <Wrapper>
-      <InfiniteScroll dataLength={data.length} next={handleNext} hasMore={true} scrollThreshold={0.9} loader={<Loader />}>
+      {/* <InfiniteScroll dataLength={data.length} next={handleNext} hasMore={true} scrollThreshold={0.9} loader={<Loader />}>
         <section className="cards-container">
           {data.map((item) => {
             if (item.media_type !== "image") return null;
             return <Card item={item} snackbarRef={snackbarRef} key={item.date} />;
           })}
         </section>
-      </InfiniteScroll>
+      </InfiniteScroll> */}
+      <section className="cards-container">
+        {data.map((item) => (
+          <Card item={item} snackbarRef={snackbarRef} key={item.date} />
+        ))}
+      </section>
       <Snackbar ref={snackbarRef} />
     </Wrapper>
   );

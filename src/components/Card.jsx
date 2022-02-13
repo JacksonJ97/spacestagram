@@ -78,20 +78,20 @@ const Wrapper = styled.article`
 `;
 
 const Card = ({ item, snackbarRef }) => {
-  const { setData } = useContext(MainContext);
+  // const { setData } = useContext(MainContext);
 
-  const handleClick = () => {
-    setData((prevState) => {
-      const newState = prevState.map((element) => {
-        if (element.date === item.date) {
-          return { ...element, liked: !element.liked };
-        }
-        return element;
-      });
+  // const handleClick = () => {
+  //   setData((prevState) => {
+  //     const newState = prevState.map((element) => {
+  //       if (element.date === item.date) {
+  //         return { ...element, liked: !element.liked };
+  //       }
+  //       return element;
+  //     });
 
-      return newState;
-    });
-  };
+  //     return newState;
+  //   });
+  // };
 
   return (
     <Wrapper>
@@ -105,7 +105,7 @@ const Card = ({ item, snackbarRef }) => {
       </figure>
 
       <section className="actions-container">
-        <LikeButton isLiked={item.liked} handleClick={handleClick} />
+        <LikeButton id={item.date} isLiked={item.liked} />
         <ShareButton url={item.url} snackbarRef={snackbarRef} />
       </section>
 
