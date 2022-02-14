@@ -8,15 +8,15 @@ import { BASE_URL } from "../../config";
 
 const dataAdapter = createEntityAdapter({ selectId: (entity) => entity.date, sortComparer: (a, b) => b.date.localeCompare(a.date) });
 
-export const fetchData = createAsyncThunk("data/fetchData", async () => {
-  const response = await fetch(`${BASE_URL}2022-02-08`);
+export const fetchData = createAsyncThunk("data/fetchData", async (startDate) => {
+  const response = await fetch(`${BASE_URL}${startDate}`);
   const fetchedData = await response.json();
   const data = formatData(fetchedData);
   return data;
 });
 
-export const fetchMoreData = createAsyncThunk("data/fetchMoreData", async () => {
-  const response = await fetch(`${BASE_URL}2022-02-03`);
+export const fetchMoreData = createAsyncThunk("data/fetchMoreData", async (startDate) => {
+  const response = await fetch(`${BASE_URL}${startDate}`);
   const fetchedData = await response.json();
   const data = formatData(fetchedData);
   return data;
