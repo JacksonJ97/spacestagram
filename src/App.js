@@ -22,16 +22,17 @@ const App = () => {
   const navigate = useNavigate();
 
   const { param: startDateParam } = useSelector((state) => state.startDate);
+  const error = useSelector((state) => state.data.error);
 
   useEffect(() => {
     dispatch(fetchData(startDateParam));
   }, [dispatch, startDateParam]);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     navigate("error");
-  //   }
-  // }, [error, navigate]);
+  useEffect(() => {
+    if (error) {
+      navigate("/error");
+    }
+  }, [navigate, error]);
 
   return (
     <>
@@ -41,7 +42,7 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/likes" element={<LikesPage />} />
         <Route path="/likes/:id" element={<LikesDetailPage />} />
-        <Route path="error" element={<Error />} />
+        <Route path="/error" element={<Error />} />
       </Routes>
     </>
   );
