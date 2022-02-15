@@ -9,20 +9,14 @@ import { BASE_URL } from "../../config";
 const dataAdapter = createEntityAdapter({ selectId: (entity) => entity.date, sortComparer: (a, b) => b.date.localeCompare(a.date) });
 
 export const fetchData = createAsyncThunk("data/fetchData", async (startDate) => {
-  try {
-    const response = await fetch(`${BASE_URL}${startDate}`);
+  const response = await fetch(`${BASE_URL}${startDate}`);
 
-    // console.log(response);
-
-    if (response.status >= 200 && response.status <= 299) {
-      const fetchedData = await response.json();
-      const data = formatData(fetchedData);
-      return data;
-    } else {
-      console.log(response.status, response.statusText);
-    }
-  } catch (error) {
-    console.log(error);
+  if (response.ok) {
+    const fetchedData = await response.json();
+    const data = formatData(fetchedData);
+    return data;
+  } else {
+    return Promise.reject();
   }
 });
 

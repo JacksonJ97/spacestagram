@@ -12,7 +12,7 @@ const startDateSlice = createSlice({
   name: "date",
   initialState: { timestamp: initialStartDateTimestamp, param: initialStartDateParam },
   reducers: {
-    nextStartDate: (state, action) => {
+    nextStartDate: (state) => {
       const { timestamp: nextStartDateTimestamp, param: nextStartDateParam } = getStartDate(state.timestamp);
       state.timestamp = nextStartDateTimestamp;
       state.param = nextStartDateParam;
