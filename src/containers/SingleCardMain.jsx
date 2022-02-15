@@ -22,7 +22,7 @@ const Wrapper = styled.main`
   padding-bottom: 24px;
 `;
 
-const LikesDetailMain = () => {
+const SingleCardMain = () => {
   const { id } = useParams();
   const item = useSelector((state) => selectByDataId(state, id));
   const snackbarRef = useRef(null);
@@ -36,4 +36,4 @@ const LikesDetailMain = () => {
   );
 };
 
-export default LikesDetailMain;
+export default SingleCardMain;
