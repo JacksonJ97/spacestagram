@@ -13,12 +13,7 @@ const Wrapper = styled.button`
   background: transparent;
   cursor: pointer;
 
-  @media (min-width: 1150px) {
-    left: 2%;
-    top: 65px;
-  }
-
-  @media (min-width: 1500px) {
+  @media (min-width: 1400px) {
     left: 12%;
   }
 `;
