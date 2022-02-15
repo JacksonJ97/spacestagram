@@ -12,6 +12,8 @@ export const fetchData = createAsyncThunk("data/fetchData", async (startDate) =>
   try {
     const response = await fetch(`${BASE_URL}${startDate}`);
 
+    // console.log(response);
+
     if (response.status >= 200 && response.status <= 299) {
       const fetchedData = await response.json();
       const data = formatData(fetchedData);

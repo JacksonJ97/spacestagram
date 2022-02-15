@@ -1,17 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getUnixTime } from "date-fns";
 
 // Helpers
 import getStartDate from "../../helpers/getStartDate";
 
-const { date: initialStartDate, param: initialStartDateParam } = getStartDate(new Date());
+const currentDate = new Date();
+const currentTimestamp = getUnixTime(currentDate);
+const { timestamp: initialStartDateTimestamp, param: initialStartDateParam } = getStartDate(currentTimestamp);
 
 const startDateSlice = createSlice({
   name: "date",
-  initialState: { date: initialStartDate, param: initialStartDateParam },
+  initialState: { timestamp: initialStartDateTimestamp, param: initialStartDateParam },
   reducers: {
     nextStartDate: (state, action) => {
-      const { date: nextStartDate, param: nextStartDateParam } = getStartDate(state.date);
-      return { date: nextStartDate, param: nextStartDateParam };
+      const { timestamp: nextStartDateTimestamp, param: nextStartDateParam } = getStartDate(state.timestamp);
+      state.timestamp = nextStartDateTimestamp;
+      state.param = nextStartDateParam;
     },
   },
 });
