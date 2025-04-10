@@ -1,19 +1,5 @@
-import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router";
-
-// Styles
-const Wrapper = styled.nav`
-  ul {
-    display: flex;
-    list-style: none;
-
-    li {
-      margin-left: 22px;
-      height: 24px;
-    }
-  }
-`;
 
 const NavBar = () => {
   const location = useLocation();
@@ -90,7 +76,7 @@ const NavBar = () => {
   );
 
   return (
-    <Wrapper>
+    <nav>
       <ul>
         <li>
           <NavLink to="/">{homeIcon}</NavLink>
@@ -99,7 +85,7 @@ const NavBar = () => {
           <NavLink to="likes">{likesIcon}</NavLink>
         </li>
       </ul>
-    </Wrapper>
+    </nav>
   );
 };
 

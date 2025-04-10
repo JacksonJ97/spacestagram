@@ -1,8 +1,7 @@
 import { useState } from "react";
-import styled from "styled-components";
 
 // Styles
-const Wrapper = styled.button`
+const Wrapper = `
   border: none;
   background-color: transparent;
   padding: 8px;
@@ -71,7 +70,7 @@ const LikeButton = ({ id, isLiked }) => {
   };
 
   return (
-    <Wrapper
+    <button
       type="button"
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
@@ -103,7 +102,7 @@ const LikeButton = ({ id, isLiked }) => {
           {svgPath}
         </svg>
       )}
-    </Wrapper>
+    </button>
   );
 };
 

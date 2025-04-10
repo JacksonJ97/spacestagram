@@ -1,8 +1,7 @@
-import styled from "styled-components";
 import { Link } from "react-router";
 
 // Styles
-const Wrapper = styled.div`
+const Wrapper = `
   position: relative;
   padding-top: 100%;
   user-select: none;
@@ -48,12 +47,12 @@ const Wrapper = styled.div`
 
 const PreviewCard = ({ item }) => {
   return (
-    <Wrapper>
+    <div>
       <Link to={`/likes/${item.date}`}>
         <div className="hover"></div>
         <img src={item.url} alt={item.title} />
       </Link>
-    </Wrapper>
+    </div>
   );
 };
 

@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import avatar from "../assets/images/nasa-avatar.jpg";
 
 // Components
@@ -6,7 +5,7 @@ import LikeButton from "./LikeButton";
 import ShareButton from "./ShareButton";
 
 // Styles
-const Wrapper = styled.article`
+const Wrapper = `
   background-color: #ffffff;
   border-top: 1px solid #dbdbdb;
   border-bottom: 1px solid #dbdbdb;
@@ -75,7 +74,7 @@ const Wrapper = styled.article`
 
 const Card = ({ item, snackbarRef }) => {
   return (
-    <Wrapper>
+    <article>
       <header>
         <img src={avatar} alt="avatar" />
         <p>nasa</p>
@@ -95,7 +94,7 @@ const Card = ({ item, snackbarRef }) => {
         <p>{item.explanation}</p>
         <p className="date">{item.date}</p>
       </section>
-    </Wrapper>
+    </article>
   );
 };
 
