@@ -1,10 +1,5 @@
-import styled from "styled-components";
 import { useRef } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-
-// Selectors
-import { selectByDataId } from "../features/data/dataSlice";
+import styled from "styled-components";
 
 // Components
 import Card from "../components/Card";
@@ -23,9 +18,16 @@ const Wrapper = styled.main`
 `;
 
 const SingleCardMain = () => {
-  const { id } = useParams();
-  const item = useSelector((state) => selectByDataId(state, id));
   const snackbarRef = useRef(null);
+
+  const item = {
+    url: "https://example.com/image.jpg",
+    title: "Sample Title",
+    date: "2023-10-01",
+    liked: false,
+    description: "Sample Description",
+    explaination: "Sample Explanation",
+  };
 
   return (
     <Wrapper>

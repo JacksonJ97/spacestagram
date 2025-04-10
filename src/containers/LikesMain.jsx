@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-
-// Selectors
-import { selectAllData } from "../features/data/dataSlice";
 
 // Components
 import PreviewCard from "../components/PreviewCard";
@@ -38,7 +34,8 @@ const Wrapper = styled.main`
 `;
 
 const LikesMain = () => {
-  const data = useSelector(selectAllData);
+  // Placeholder for data
+  const data = [];
 
   return (
     <Wrapper>

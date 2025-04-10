@@ -1,12 +1,5 @@
 import styled from "styled-components";
 import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-// Selectors
-import { selectAllData } from "../features/data/dataSlice";
-
-// Actions
-import { nextStartDate } from "../features/startDate/startDateSlice";
 
 // Components
 import Card from "../components/Card";
@@ -28,17 +21,24 @@ const Wrapper = styled.main`
 `;
 
 const HomeMain = () => {
-  const dispatch = useDispatch();
-  const data = useSelector(selectAllData);
+  // Placeholder for data
+  const data = [];
   const snackbarRef = useRef(null);
 
   const handleNext = () => {
-    dispatch(nextStartDate());
+    // Implement logic for fetching next data
+    console.log("Fetch next data...");
   };
 
   return (
     <Wrapper>
-      <InfiniteScroll dataLength={data.length} next={handleNext} scrollThreshold={0.9} hasMore={true} loader={<Loader />}>
+      <InfiniteScroll
+        dataLength={data.length}
+        next={handleNext}
+        scrollThreshold={0.9}
+        hasMore={true}
+        loader={<Loader />}
+      >
         <section className="cards-container">
           {data.map((item) => (
             <Card item={item} snackbarRef={snackbarRef} key={item.date} />

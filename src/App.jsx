@@ -1,9 +1,4 @@
-import { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
-// Actions
-import { fetchData } from "./features/data/dataSlice";
 
 // Components
 import Header from "./containers/Header";
@@ -18,22 +13,6 @@ import SingleCardPage from "./pages/SingleCardPage";
 import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { param: startDateParam } = useSelector((state) => state.startDate);
-  const error = useSelector((state) => state.data.error);
-
-  useEffect(() => {
-    dispatch(fetchData(startDateParam));
-  }, [dispatch, startDateParam]);
-
-  useEffect(() => {
-    if (error) {
-      navigate("/error");
-    }
-  }, [navigate, error]);
-
   return (
     <>
       <GlobalStyles />
