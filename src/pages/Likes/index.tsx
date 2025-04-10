@@ -1,4 +1,4 @@
-import PostPreviewCard from "../../components/PostPreviewCard";
+import PostPreviewCard from "components/PostPreviewCard";
 
 export default function Likes() {
   const data = [] as {

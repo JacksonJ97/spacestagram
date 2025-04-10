@@ -1,8 +1,8 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 
 // Components
-import PostCard from "../../components/PostCard";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import PostCard from "components/PostCard";
+import LoadingSpinner from "components/LoadingSpinner";
 
 export default function Home() {
   const data = [] as {

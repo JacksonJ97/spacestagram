@@ -1,4 +1,4 @@
-import avatar from "../../assets/images/nasa-avatar.jpg";
+import avatar from "assets/images/nasa-avatar.jpg";
 
 type Post = {
   date: string;
