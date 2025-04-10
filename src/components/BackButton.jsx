@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import leftArrow from "../assets/images/left-arrow-icon.svg";
 
 // Styles
@@ -22,7 +22,11 @@ const BackButton = ({ to }) => {
   const navigate = useNavigate();
 
   return (
-    <Wrapper type="button" aria-label="Back button" onClick={() => navigate(to)}>
+    <Wrapper
+      type="button"
+      aria-label="Back button"
+      onClick={() => navigate(to)}
+    >
       <img src={leftArrow} alt="Back button" height="48" width="68" />
     </Wrapper>
   );
