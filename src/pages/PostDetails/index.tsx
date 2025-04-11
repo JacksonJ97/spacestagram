@@ -1,17 +1,42 @@
+import { useParams } from "react-router";
+import { usePost } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
+import PageContent from "components/PageContent";
+import LoadingSpinner from "components/LoadingSpinner";
+import ErrorPage from "components/ErrorPage";
 
 export default function PostDetails() {
-  const post = {
-    url: "https://example.com/image.jpg",
-    title: "Sample Title",
-    date: "2023-10-01",
-    liked: false,
-    explanation: "Sample Explanation",
-  };
+  const params = useParams();
+
+  const {
+    data: post,
+    isPending: isPostPending,
+    isError: isPostError,
+  } = usePost({ date: params.date! }); // The `date` parameter is always defined in the route pattern (e.g., /posts/:date)
+
+  if (isPostPending) {
+    return (
+      <PageContent>
+        <div className="flex justify-center">
+          <LoadingSpinner />
+        </div>
+      </PageContent>
+    );
+  }
+
+  if (isPostError) {
+    return (
+      <PageContent>
+        <ErrorPage message="We couldn't load the post. Please try again shortly." />
+      </PageContent>
+    );
+  }
 
   return (
-    <main className="min-h-[calc(100vh-60px)] bg-(--background-color) px-4 py-8">
-      <PostCard post={post} />
-    </main>
+    <PageContent>
+      <div className="flex flex-col items-center">
+        <PostCard post={post} />
+      </div>
+    </PageContent>
   );
 }
