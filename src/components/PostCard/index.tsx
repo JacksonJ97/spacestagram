@@ -4,7 +4,7 @@ import type { Post } from "data/nasa/types";
 // TODO: Implement own toast component
 export default function PostCard({ post }: { post: Post }) {
   return (
-    <article className="bg-(--background-color max-w-xl rounded-xs border border-(--separator-color)">
+    <article className="bg-(--background-color max-w-xl rounded-xs border border-(--border-color)">
       <header className="flex items-center gap-3 p-4">
         <img className="h-8 w-8" src={avatar} alt="User avatar" />
         <p className="text-sm font-medium text-(--text-color)">nasa</p>
