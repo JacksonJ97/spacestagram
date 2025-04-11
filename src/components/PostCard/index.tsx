@@ -1,36 +1,30 @@
 import avatar from "assets/images/nasa-avatar.jpg";
+import type { Post } from "data/nasa/types";
 
-type Post = {
-  date: string;
-  url: string;
-  title: string;
-  liked: boolean;
-  explanation: string;
-};
-
-// TODO: Style this when data is available
 // TODO: Implement own toast component
 export default function PostCard({ post }: { post: Post }) {
   return (
-    <article>
-      <header>
-        <img src={avatar} alt="avatar" />
-        <p>nasa</p>
+    <article className="bg-(--background-color max-w-xl rounded-xs border border-(--separator-color)">
+      <header className="flex items-center gap-3 p-4">
+        <img className="h-8 w-8" src={avatar} alt="User avatar" />
+        <p className="text-sm font-medium text-(--text-color)">nasa</p>
       </header>
 
       <figure>
         <img src={post.url} alt={post.title} />
       </figure>
 
-      <section className="actions-container">
-        <span>Like</span>
-        <span>Share</span>
-      </section>
+      <section className="p-4">
+        <div className="flex items-center gap-4">
+          <span>Like</span>
+          <span>Share</span>
+        </div>
 
-      <section className="details-container">
-        <h2>{post.title}</h2>
-        <p>{post.explanation}</p>
-        <p className="date">{post.date}</p>
+        <h2 className="mt-2 text-2xl font-medium text-(--text-color)">
+          {post.title}
+        </h2>
+        <p className="mt-4 text-sm text-(--text-color)">{post.explanation}</p>
+        <p className="mt-4 text-xs text-(--text-color)">{post.date}</p>
       </section>
     </article>
   );
