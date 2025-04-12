@@ -16,4 +16,19 @@
 
 @theme {
   --font-lobster: "Lobster", cursive;
+  --animate-pulsate-fwd: pulsate-fwd 0.3s ease-in-out;
+
+  @keyframes pulsate-fwd {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.25);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
 }

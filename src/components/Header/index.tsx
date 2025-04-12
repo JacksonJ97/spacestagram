@@ -1,4 +1,8 @@
 import { NavLink } from "react-router";
+import HomeIcon from "components/Icons/Home";
+import FilledHomeIcon from "components/Icons/FilledHome";
+import HeartIcon from "components/Icons/Heart";
+import FilledHeartIcon from "components/Icons/FilledHeart";
 
 export default function Header() {
   return (
@@ -11,11 +15,27 @@ export default function Header() {
         </NavLink>
         <nav>
           <ul className="flex gap-4">
-            <li className="text-(--text-color)">
-              <NavLink to="/">Home</NavLink>
+            <li>
+              <NavLink to="/" className="text-(--text-color)">
+                {({ isActive }) =>
+                  isActive ? (
+                    <FilledHomeIcon width={24} height={24} />
+                  ) : (
+                    <HomeIcon width={24} height={24} />
+                  )
+                }
+              </NavLink>
             </li>
-            <li className="text-(--text-color)">
-              <NavLink to="/likes">Likes</NavLink>
+            <li>
+              <NavLink to="/likes" className="text-(--text-color)">
+                {({ isActive }) =>
+                  isActive ? (
+                    <FilledHeartIcon width={24} height={24} />
+                  ) : (
+                    <HeartIcon width={24} height={24} />
+                  )
+                }
+              </NavLink>
             </li>
           </ul>
         </nav>
