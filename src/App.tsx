@@ -3,21 +3,30 @@ import { Routes, Route } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Header from "components/Header";
+import ProtectedRoute from "components/ProtectedRoute";
 import Home from "pages/Home";
-import Likes from "pages/Likes";
 import PostDetails from "pages/PostDetails";
+import Likes from "pages/Likes";
 import NotFound from "pages/NotFound";
 
 const client = new QueryClient();
 
 export default function App() {
+  const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
   return (
     <QueryClientProvider client={client}>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/likes" element={<Likes />} />
         <Route path="/posts/:date" element={<PostDetails />} />
+        <Route
+          path="/likes"
+          element={
+            <ProtectedRoute isAllowed={isUserLoggedIn} redirectPath="/">
+              <Likes />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster
