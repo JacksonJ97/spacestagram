@@ -6,6 +6,8 @@ import Header from "components/Header";
 import ProtectedRoute from "components/ProtectedRoute";
 import Home from "pages/Home";
 import PostDetails from "pages/PostDetails";
+import Login from "pages/Login";
+import Signup from "pages/Signup";
 import Likes from "pages/Likes";
 import NotFound from "pages/NotFound";
 
@@ -20,9 +22,25 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/posts/:date" element={<PostDetails />} />
         <Route
+          path="/login"
+          element={
+            <ProtectedRoute redirectPath="/" isAllowed={!isUserLoggedIn}>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <ProtectedRoute redirectPath="/" isAllowed={!isUserLoggedIn}>
+              <Signup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/likes"
           element={
-            <ProtectedRoute isAllowed={isUserLoggedIn} redirectPath="/">
+            <ProtectedRoute redirectPath="/" isAllowed={isUserLoggedIn}>
               <Likes />
             </ProtectedRoute>
           }
