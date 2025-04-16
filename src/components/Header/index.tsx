@@ -64,7 +64,7 @@ export default function Header({
     <header className="sticky top-0 z-10 h-15 border-b border-(--border-color) bg-(--background-color)">
       <div className="mx-auto flex h-full max-w-3xl items-center justify-between px-4">
         <NavLink to="/">
-          <h1 className="font-lobster text-xl text-(--text-color)">
+          <h1 className="font-lobster text-2xl text-(--text-color)">
             Spacestagram
           </h1>
         </NavLink>

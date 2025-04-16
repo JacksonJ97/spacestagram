@@ -23,7 +23,7 @@
 }
 
 @theme {
-  --font-lobster: "Lobster", cursive;
+  --font-lobster: "Lobster Two", cursive;
   --animate-pulsate-fwd: pulsate-fwd 0.3s ease-in-out;
 
   @keyframes pulsate-fwd {

@@ -17,6 +17,7 @@ export default function App() {
   const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
   return (
     <QueryClientProvider client={client}>
+      {/* TODO: Move this into a layout since it doesn't belong in login and signup routes */}
       <Header isUserLoggedIn={isUserLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
