@@ -15,7 +15,7 @@ export default function App() {
   const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
   return (
     <QueryClientProvider client={client}>
-      <Header />
+      <Header isUserLoggedIn={isUserLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/posts/:date" element={<PostDetails />} />

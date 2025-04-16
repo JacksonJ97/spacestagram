@@ -1,18 +1,16 @@
 import { Outlet, Navigate } from "react-router";
 
-type ProtectedRouteProps = {
-  isAllowed: boolean;
-  redirectPath: string;
-  children?: React.ReactNode;
-};
-
 export default function ProtectedRoute({
   isAllowed,
   redirectPath,
   children,
-}: ProtectedRouteProps) {
+}: {
+  isAllowed: boolean;
+  redirectPath: string;
+  children?: React.ReactNode;
+}) {
   if (!isAllowed) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate replace to={redirectPath} />;
   }
 
   return children ? children : <Outlet />;

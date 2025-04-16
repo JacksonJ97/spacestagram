@@ -6,6 +6,8 @@
   --contrast-background-color: rgb(0, 0, 0);
   --text-color: rgb(0, 0, 0);
   --contrast-text-color: rgb(255, 255, 255);
+  --meta-primary: rgb(0, 149, 246);
+  --meta-primary-hover: rgb(24, 119, 242);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +17,8 @@
     --contrast-background-color: rgb(255, 255, 255);
     --text-color: rgb(245, 245, 245);
     --contrast-text-color: rgb(0, 0, 0);
+    --meta-primary: rgb(0, 149, 246);
+    --meta-primary-hover: rgb(24, 119, 242);
   }
 }
 
