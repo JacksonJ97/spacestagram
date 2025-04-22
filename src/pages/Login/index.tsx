@@ -1,9 +1,8 @@
 import { NavLink } from "react-router";
-import PageContent from "components/PageContent";
 
 export default function Login() {
   return (
-    <PageContent>
+    <main className="min-h-screen bg-(--background-color) px-4 py-8">
       <div className="mx-auto max-w-sm">
         <div className="rounded-xs border border-(--border-color) px-2 py-3">
           <h1 className="font-lobster my-9 text-center text-5xl text-(--text-color)">
@@ -29,6 +28,6 @@ export default function Login() {
           </p>
         </div>
       </div>
-    </PageContent>
+    </main>
   );
 }

@@ -1,9 +1,8 @@
 import { useParams } from "react-router";
 import { usePost } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
-import PageContent from "components/PageContent";
-import LoadingSpinner from "components/LoadingSpinner";
 import ErrorPage from "components/ErrorPage";
+import LoadingSpinner from "components/LoadingSpinner";
 
 export default function PostDetails() {
   const params = useParams();
@@ -16,27 +15,21 @@ export default function PostDetails() {
 
   if (isPostPending) {
     return (
-      <PageContent>
-        <div className="flex justify-center">
-          <LoadingSpinner />
-        </div>
-      </PageContent>
+      <div className="flex justify-center">
+        <LoadingSpinner />
+      </div>
     );
   }
 
   if (isPostError) {
     return (
-      <PageContent>
-        <ErrorPage message="We couldn't load the post. Please try again shortly." />
-      </PageContent>
+      <ErrorPage message="We couldn't load the post. Please try again shortly." />
     );
   }
 
   return (
-    <PageContent>
-      <div className="flex flex-col items-center">
-        <PostCard post={post} />
-      </div>
-    </PageContent>
+    <div className="flex flex-col items-center">
+      <PostCard post={post} />
+    </div>
   );
 }

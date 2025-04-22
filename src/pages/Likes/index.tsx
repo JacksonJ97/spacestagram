@@ -1,5 +1,4 @@
 import { Post } from "data/nasa/types";
-import PageContent from "components/PageContent";
 import PostPreviewCard from "components/PostPreviewCard";
 
 type Data = Post & { liked: boolean };
@@ -46,13 +45,11 @@ export default function Likes() {
   ];
 
   return (
-    <PageContent>
-      <section className="mx-auto grid max-w-4xl grid-cols-3 gap-1 min-md:gap-6">
-        {data.map((post) => {
-          if (!post.liked) return null;
-          return <PostPreviewCard post={post} key={post.date} />;
-        })}
-      </section>
-    </PageContent>
+    <section className="mx-auto grid max-w-4xl grid-cols-3 gap-1 min-md:gap-6">
+      {data.map((post) => {
+        if (!post.liked) return null;
+        return <PostPreviewCard post={post} key={post.date} />;
+      })}
+    </section>
   );
 }

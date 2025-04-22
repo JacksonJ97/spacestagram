@@ -3,7 +3,6 @@ import { useInView } from "react-intersection-observer";
 import { usePosts } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
 import ErrorPage from "components/ErrorPage";
-import PageContent from "components/PageContent";
 import LoadingSpinner from "components/LoadingSpinner";
 
 export default function Home() {
@@ -25,34 +24,28 @@ export default function Home() {
 
   if (isPostsPending) {
     return (
-      <PageContent>
-        <div className="flex justify-center">
-          <LoadingSpinner />
-        </div>
-      </PageContent>
+      <div className="flex justify-center">
+        <LoadingSpinner />
+      </div>
     );
   }
 
   if (isPostsError) {
     return (
-      <PageContent>
-        <ErrorPage message="We couldn't load the posts. Please try again shortly." />
-      </PageContent>
+      <ErrorPage message="We couldn't load the posts. Please try again shortly." />
     );
   }
 
   return (
-    <PageContent>
-      <section className="flex flex-col items-center gap-6">
-        {posts.pages
-          .flat()
-          .filter((post) => post.media_type == "image")
-          .map((post) => (
-            <PostCard post={post} key={post.date} />
-          ))}
-        {isFetchingPosts && <LoadingSpinner />}
-      </section>
+    <section className="flex flex-col items-center gap-6">
+      {posts.pages
+        .flat()
+        .filter((post) => post.media_type == "image")
+        .map((post) => (
+          <PostCard post={post} key={post.date} />
+        ))}
+      {isFetchingPosts && <LoadingSpinner />}
       <div ref={ref} />
-    </PageContent>
+    </section>
   );
 }
