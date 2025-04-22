@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { usePosts } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
-import ErrorPage from "components/ErrorPage";
-import LoadingSpinner from "components/LoadingSpinner";
+import ErrorMessage from "components/Error/ErrorMessage";
+import LoadingSpinner from "components/Loading/LoadingSpinner";
 
 export default function Home() {
   const { ref, inView } = useInView();
@@ -32,7 +32,7 @@ export default function Home() {
 
   if (isPostsError) {
     return (
-      <ErrorPage message="We couldn't load the posts. Please try again shortly." />
+      <ErrorMessage message="We couldn't load the posts. Please try again shortly." />
     );
   }
 

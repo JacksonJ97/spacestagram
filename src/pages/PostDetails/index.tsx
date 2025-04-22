@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { usePost } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
-import ErrorPage from "components/ErrorPage";
-import LoadingSpinner from "components/LoadingSpinner";
+import ErrorMessage from "components/Error/ErrorMessage";
+import LoadingSpinner from "components/Loading/LoadingSpinner";
 
 export default function PostDetails() {
   const params = useParams();
@@ -23,7 +23,7 @@ export default function PostDetails() {
 
   if (isPostError) {
     return (
-      <ErrorPage message="We couldn't load the post. Please try again shortly." />
+      <ErrorMessage message="We couldn't load the post. Please try again shortly." />
     );
   }
 

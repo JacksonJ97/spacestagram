@@ -13,7 +13,7 @@ import Signup from "pages/Signup";
 
 const client = new QueryClient();
 
-function AppLayout({ isUserLoggedIn }: { isUserLoggedIn: boolean }) {
+function Layout({ isUserLoggedIn }: { isUserLoggedIn: boolean }) {
   return (
     <>
       <Header isUserLoggedIn={isUserLoggedIn} />
@@ -29,7 +29,7 @@ export default function App() {
   return (
     <QueryClientProvider client={client}>
       <Routes>
-        <Route element={<AppLayout isUserLoggedIn={isUserLoggedIn} />}>
+        <Route element={<Layout isUserLoggedIn={isUserLoggedIn} />}>
           <Route path="/" element={<Home />} />
           <Route path="/posts/:date" element={<PostDetails />} />
           <Route

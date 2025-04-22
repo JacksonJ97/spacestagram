@@ -2,9 +2,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import avatar from "assets/images/nasa-avatar.jpg";
 import type { Post } from "data/nasa/types";
-import HeartIcon from "components/Icons/Heart";
-import ShareIcon from "components/Icons/Share";
-import FilledHeartIcon from "components/Icons/FilledHeart";
+import HeartIcon from "components/common/Icons/Heart";
+import ShareIcon from "components/common/Icons/Share";
+import FilledHeartIcon from "components/common/Icons/FilledHeart";
 
 export default function PostCard({ post }: { post: Post }) {
   const [isLiked, setIsLiked] = useState(false);
