@@ -39,7 +39,7 @@ function UserNav() {
 function GuestNav() {
   return (
     <nav>
-      <ul className="flex gap-4">
+      <ul className="flex items-center gap-4">
         <li>
           <LinkButton to="/login" variant="solid">
             Log In

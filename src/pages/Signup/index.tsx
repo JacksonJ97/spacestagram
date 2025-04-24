@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { NavLink } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Button from "components/common/Button";
 import TextInput from "components/common/TextInput";
+import LinkButton from "components/common/LinkButton";
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -12,7 +13,11 @@ const schema = z.object({
 });
 
 export default function Signup() {
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, dirtyFields },
+  } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       email: "",
@@ -25,6 +30,16 @@ export default function Signup() {
   const onSubmit = handleSubmit((data) => {
     console.log("data", data);
   });
+
+  const isAllFieldsDirty =
+    !!dirtyFields.email &&
+    !!dirtyFields.password &&
+    !!dirtyFields.fullName &&
+    !!dirtyFields.username;
+
+  const hasErrors = Object.keys(errors).length > 0;
+
+  const isSubmitButtonDisabled = !isAllFieldsDirty || hasErrors;
 
   return (
     <main className="min-h-screen bg-(--background-color) px-4 py-8">
@@ -60,24 +75,22 @@ export default function Signup() {
               label="Username"
               control={control}
             />
-            <button
+            <Button
               type="submit"
-              className="w-full cursor-pointer text-(--text-color)"
+              className="mt-3 w-full"
+              disabled={isSubmitButtonDisabled}
             >
-              Signup Button
-            </button>
+              Sign Up
+            </Button>
           </form>
         </div>
 
         <div className="mt-3 rounded-xs border border-(--border-color) px-2 py-4">
           <p className="text-center text-sm text-(--text-color)">
             Have an account?{" "}
-            <NavLink
-              to="/login"
-              className="font-semibold text-(--meta-primary)"
-            >
-              Log in
-            </NavLink>
+            <LinkButton to="/login" variant="text">
+              Log In
+            </LinkButton>
           </p>
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function LinkButton({
         variant === "solid" &&
           "flex h-8 items-center justify-center rounded-lg bg-(--meta-primary) px-4 text-sm font-semibold text-white hover:bg-(--meta-primary-hover)",
         variant === "text" &&
-          "flex h-8 items-center justify-center text-sm font-semibold text-(--meta-primary) hover:text-(--text-color)",
+          "text-sm font-semibold text-(--meta-primary) hover:text-(--text-color)",
         className,
       )}
       {...props}
