@@ -6,10 +6,21 @@ import HeartIcon from "components/common/Icons/Heart";
 import ShareIcon from "components/common/Icons/Share";
 import FilledHeartIcon from "components/common/Icons/FilledHeart";
 
-export default function PostCard({ post }: { post: Post }) {
+export default function PostCard({
+  post,
+  handleOpenDialog,
+}: {
+  post: Post;
+  handleOpenDialog: () => void;
+}) {
+  const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
   const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = () => {
+    if (!isUserLoggedIn) {
+      handleOpenDialog();
+      return;
+    }
     setIsLiked((prev) => !prev);
   };
 
