@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { useParams } from "react-router";
 import { usePost } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
+import LikeAuthDialog from "components/LikeAuthDialog";
 import ErrorMessage from "components/Error/ErrorMessage";
 import LoadingSpinner from "components/Loading/LoadingSpinner";
 
 export default function PostDetails() {
   const params = useParams();
+  const [open, setOpen] = useState(false);
 
   const {
     data: post,
@@ -27,9 +30,18 @@ export default function PostDetails() {
     );
   }
 
+  const handleOpenDialog = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (open: boolean) => {
+    setOpen(open);
+  };
+
   return (
     <div className="flex flex-col items-center">
-      <PostCard post={post} />
+      <PostCard post={post} handleOpenDialog={handleOpenDialog} />
+      <LikeAuthDialog open={open} onOpenChange={onOpenChange} />
     </div>
   );
 }
