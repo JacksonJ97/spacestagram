@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "homepage": "http://jacksonj97.github.io/spacestagram",
+  "homepage": "https://jacksonj97.github.io/spacestagram",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
