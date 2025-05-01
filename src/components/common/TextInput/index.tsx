@@ -6,12 +6,14 @@ import {
 } from "react-hook-form";
 import { cn } from "utils/functions";
 
-type OmittedHTMLInputProps = "name" | "type" | "disabled" | "defaultValue";
-
-type TextInputProps = {
+interface TextInputProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "name" | "type" | "disabled" | "defaultValue"
+  > {
   label: string;
   type?: "text" | "password";
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, OmittedHTMLInputProps>;
+}
 
 export default function TextInput<
   TFieldValues extends FieldValues = FieldValues,
