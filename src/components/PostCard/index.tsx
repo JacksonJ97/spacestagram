@@ -14,6 +14,7 @@ export default function PostCard({
   handleOpenDialog: () => void;
 }) {
   const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
+  const pathname = window.location.origin;
   const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = () => {
@@ -25,7 +26,7 @@ export default function PostCard({
   };
 
   const handleShare = () => {
-    navigator.clipboard.writeText(post.url);
+    navigator.clipboard.writeText(`${pathname}/posts/${post.date}`);
     toast("Link copied to your clipboard!");
   };
 
