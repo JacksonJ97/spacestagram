@@ -5,7 +5,7 @@ dotenv.config();
 
 const db = drizzle({
   connection:
-    process.env.DATABASE_URL || "postgres://user:password@host:8080/database",
+    process.env.DATABASE_URL || "postgres://user:password@host:5432/database",
   casing: "snake_case",
 });
 

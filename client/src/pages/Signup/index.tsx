@@ -5,12 +5,42 @@ import Button from "components/common/Button";
 import TextInput from "components/common/TextInput";
 import LinkButton from "components/common/LinkButton";
 
-const schema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
-  fullName: z.string().min(1, "Full name is required"),
-  username: z.string().min(1, "Username is required"),
-});
+const passwordRegex = (value: string) =>
+  /[a-z]/.test(value) &&
+  /[A-Z]/.test(value) &&
+  /\d/.test(value) &&
+  /[^A-Za-z0-9]/.test(value);
+
+const schema = z
+  .object({
+    firstName: z
+      .string()
+      .trim()
+      .min(1, "First name is required")
+      .max(50, "First name must be under 50 characters"),
+    lastName: z
+      .string()
+      .trim()
+      .min(1, "Last name is required")
+      .max(50, "Last name must be under 50 characters"),
+    email: z
+      .string()
+      .email("Invalid email address")
+      .max(254, "Email must be under 254 characters"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(128, "Password must be under 128 characters")
+      .refine((value) => passwordRegex(value), {
+        message:
+          "Password must contain at least 1 lowercase, 1 uppercase, 1 number, and 1 special character",
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
 
 export default function Signup() {
   const {
@@ -20,22 +50,25 @@ export default function Signup() {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
-      fullName: "",
-      username: "",
+      confirmPassword: "",
     },
   });
 
   const onSubmit = handleSubmit((data) => {
+    // normalize the email before sending it to the backend
     console.log("data", data);
   });
 
   const isAllFieldsDirty =
+    !!dirtyFields.firstName &&
+    !!dirtyFields.lastName &&
     !!dirtyFields.email &&
     !!dirtyFields.password &&
-    !!dirtyFields.fullName &&
-    !!dirtyFields.username;
+    !!dirtyFields.confirmPassword;
 
   const hasErrors = Object.keys(errors).length > 0;
 
@@ -53,7 +86,29 @@ export default function Signup() {
             onSubmit={onSubmit}
             className="mx-auto my-6 flex max-w-2xs flex-col items-center gap-3"
           >
-            <TextInput required name="email" label="Email" control={control} />
+            <TextInput
+              required
+              name="firstName"
+              label="First Name"
+              control={control}
+              autoComplete="given-name"
+              autoCapitalize="words"
+            />
+            <TextInput
+              required
+              name="lastName"
+              label="Last Name"
+              control={control}
+              autoComplete="family-name"
+              autoCapitalize="words"
+            />
+            <TextInput
+              required
+              name="email"
+              label="Email"
+              control={control}
+              autoComplete="email"
+            />
             <TextInput
               required
               type="password"
@@ -64,15 +119,9 @@ export default function Signup() {
             />
             <TextInput
               required
-              name="fullName"
-              label="Full Name"
-              control={control}
-              autoCapitalize="sentences"
-            />
-            <TextInput
-              required
-              name="username"
-              label="Username"
+              type="password"
+              name="confirmPassword"
+              label="Confirm Password"
               control={control}
             />
             <Button
