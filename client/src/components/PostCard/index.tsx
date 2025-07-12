@@ -45,20 +45,21 @@ export default function PostCard({
         <button
           type="button"
           onClick={handleLike}
+          aria-label={isLiked ? "Unlike post" : "Like post"}
           className="group flex h-10 w-10 cursor-pointer items-center justify-center"
         >
           {isLiked ? (
             <FilledHeartIcon
               width={24}
               height={24}
-              aria-label="Unlike"
+              aria-hidden="true"
               className="animate-pulsate-fwd text-red-500"
             />
           ) : (
             <HeartIcon
               width={24}
               height={24}
-              aria-label="Like"
+              aria-hidden="true"
               className="text-(--text-color) group-hover:text-(--text-color)/75"
             />
           )}
@@ -66,9 +67,10 @@ export default function PostCard({
         <button
           type="button"
           onClick={handleShare}
+          aria-label="Copy post link"
           className="flex h-10 w-10 cursor-pointer items-center justify-center text-(--text-color) hover:text-(--text-color)/75"
         >
-          <ShareIcon width={24} height={24} />
+          <ShareIcon width={24} height={24} aria-hidden="true" />
         </button>
       </div>
 

@@ -37,7 +37,7 @@ const DialogContent = ({
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute top-4 right-4 flex h-8 w-8 cursor-pointer items-center justify-center text-(--text-color)">
+      <DialogPrimitive.Close className="absolute top-4 right-4 flex h-8 w-8 cursor-pointer items-center justify-center text-(--text-color) hover:text-(--text-color)/75">
         <XIcon className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>

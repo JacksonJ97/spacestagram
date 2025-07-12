@@ -11,8 +11,7 @@ async function handleCreateUser(req: CreateUserRequest, res: Response) {
   const { firstName, lastName, email, password } = req.body;
 
   try {
-    const normalizedEmail = email.toLowerCase();
-    const [existingUser] = await getUserByEmail(normalizedEmail);
+    const [existingUser] = await getUserByEmail(email);
 
     if (existingUser) {
       return res.status(409).json({ message: "User already exists" });
@@ -24,7 +23,7 @@ async function handleCreateUser(req: CreateUserRequest, res: Response) {
     const [user] = await createUser({
       firstName,
       lastName,
-      email: normalizedEmail,
+      email,
       password: hashedPassword,
     });
 

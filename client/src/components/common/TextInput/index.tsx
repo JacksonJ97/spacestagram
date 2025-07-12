@@ -9,10 +9,10 @@ import { cn } from "utils/functions";
 interface TextInputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    "name" | "type" | "disabled" | "defaultValue"
+    "name" | "type" | "defaultValue"
   > {
   label: string;
-  type?: "text" | "password";
+  type?: "text" | "email";
 }
 
 export default function TextInput<
@@ -27,7 +27,6 @@ export default function TextInput<
   name,
   rules,
   control,
-  disabled,
   defaultValue,
   ...props
 }: TextInputProps & UseControllerProps<TFieldValues, TName>) {
@@ -38,7 +37,6 @@ export default function TextInput<
     name,
     rules,
     control,
-    disabled,
     defaultValue,
   });
 
@@ -57,7 +55,6 @@ export default function TextInput<
         type={type}
         autoCorrect="off"
         autoCapitalize="off"
-        aria-label={label}
         aria-required={isRequired ? true : undefined}
         aria-invalid={error ? true : undefined}
         aria-errormessage={error ? `${name}-error` : undefined}

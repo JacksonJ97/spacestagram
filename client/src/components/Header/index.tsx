@@ -10,23 +10,37 @@ function UserNav() {
     <nav>
       <ul className="flex gap-4">
         <li>
-          <NavLink to="/" className="text-(--text-color)">
+          <NavLink to="/" className="text-(--text-color)" aria-label="Home">
             {({ isActive }) =>
               isActive ? (
-                <FilledHomeIcon width={24} height={24} />
+                <FilledHomeIcon width={24} height={24} aria-hidden="true" />
               ) : (
-                <HomeIcon width={24} height={24} />
+                <HomeIcon
+                  width={24}
+                  height={24}
+                  aria-hidden="true"
+                  className="hover:text-(--text-color)/75"
+                />
               )
             }
           </NavLink>
         </li>
         <li>
-          <NavLink to="/likes" className="text-(--text-color)">
+          <NavLink
+            to="/likes"
+            className="text-(--text-color)"
+            aria-label="Liked posts"
+          >
             {({ isActive }) =>
               isActive ? (
-                <FilledHeartIcon width={24} height={24} />
+                <FilledHeartIcon width={24} height={24} aria-hidden="true" />
               ) : (
-                <HeartIcon width={24} height={24} />
+                <HeartIcon
+                  width={24}
+                  height={24}
+                  aria-hidden="true"
+                  className="hover:text-(--text-color)/75"
+                />
               )
             }
           </NavLink>

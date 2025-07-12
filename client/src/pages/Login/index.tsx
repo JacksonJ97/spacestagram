@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "components/common/Button";
 import TextInput from "components/common/TextInput";
 import LinkButton from "components/common/LinkButton";
+import PasswordInput from "components/common/PasswordInput";
 
 const schema = z.object({
   email: z.email("Invalid email address"),
@@ -45,11 +46,10 @@ export default function Login() {
             className="mx-auto my-6 flex max-w-2xs flex-col items-center gap-3"
           >
             <TextInput required name="email" label="Email" control={control} />
-            <TextInput
+            <PasswordInput
               required
-              type="password"
+              hideHints
               name="password"
-              label="Password"
               control={control}
             />
             <Button

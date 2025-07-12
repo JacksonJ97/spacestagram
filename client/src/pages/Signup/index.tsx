@@ -4,42 +4,39 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "components/common/Button";
 import TextInput from "components/common/TextInput";
 import LinkButton from "components/common/LinkButton";
+import PasswordInput from "components/common/PasswordInput";
 
-const passwordRegex = (value: string) =>
-  /[a-z]/.test(value) &&
-  /[A-Z]/.test(value) &&
-  /\d/.test(value) &&
-  /[^A-Za-z0-9]/.test(value);
+const passwordRequirements = [
+  /.{8,}/, // At least 8 characters
+  /[0-9]/, // At least 1 number
+  /[a-z]/, // At least 1 lowercase letter
+  /[A-Z]/, // At least 1 uppercase letter
+  /[^A-Za-z0-9]/, // At least 1 special character
+];
 
-const schema = z
-  .object({
-    firstName: z
-      .string()
-      .trim()
-      .min(1, "First name is required")
-      .max(50, "First name must be under 50 characters"),
-    lastName: z
-      .string()
-      .trim()
-      .min(1, "Last name is required")
-      .max(50, "Last name must be under 50 characters"),
-    email: z
-      .email("Invalid email address")
-      .max(254, "Email must be under 254 characters"),
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(72, "Password must be under 72 characters")
-      .refine((value) => passwordRegex(value), {
-        message:
-          "Password must contain at least 1 lowercase, 1 uppercase, 1 number, and 1 special character",
-      }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
+const schema = z.object({
+  firstName: z
+    .string()
+    .trim()
+    .min(1, "This field is required")
+    .max(50, "First name must be under 50 characters"),
+  lastName: z
+    .string()
+    .trim()
+    .min(1, "This field is required")
+    .max(50, "Last name must be under 50 characters"),
+  email: z
+    .email("Invalid email address")
+    .toLowerCase()
+    .max(254, "Email must be under 254 characters"),
+  password: z
+    .string()
+    .max(72, "Password must be under 72 characters")
+    .refine(
+      (value) => passwordRequirements.every((regex) => regex.test(value)),
+      { error: "Invalid password" },
+    ),
+});
 
 export default function Signup() {
   const {
@@ -53,12 +50,10 @@ export default function Signup() {
       lastName: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
   const onSubmit = handleSubmit((data) => {
-    // normalize the email before sending it to the backend
     console.log("data", data);
   });
 
@@ -66,11 +61,9 @@ export default function Signup() {
     !!dirtyFields.firstName &&
     !!dirtyFields.lastName &&
     !!dirtyFields.email &&
-    !!dirtyFields.password &&
-    !!dirtyFields.confirmPassword;
+    !!dirtyFields.password;
 
   const hasErrors = Object.keys(errors).length > 0;
-
   const isSubmitButtonDisabled = !isAllFieldsDirty || hasErrors;
 
   return (
@@ -103,26 +96,13 @@ export default function Signup() {
             />
             <TextInput
               required
+              type="email"
               name="email"
               label="Email"
               control={control}
               autoComplete="email"
             />
-            <TextInput
-              required
-              type="password"
-              name="password"
-              label="Password"
-              control={control}
-              autoComplete="new-password"
-            />
-            <TextInput
-              required
-              type="password"
-              name="confirmPassword"
-              label="Confirm Password"
-              control={control}
-            />
+            <PasswordInput required name="password" control={control} />
             <Button
               type="submit"
               className="mt-3 w-full"
