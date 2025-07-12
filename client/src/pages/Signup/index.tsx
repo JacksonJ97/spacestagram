@@ -30,7 +30,7 @@ const schema = z
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
-      .max(128, "Password must be under 128 characters")
+      .max(72, "Password must be under 72 characters")
       .refine((value) => passwordRegex(value), {
         message:
           "Password must contain at least 1 lowercase, 1 uppercase, 1 number, and 1 special character",

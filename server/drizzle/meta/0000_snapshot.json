@@ -1,5 +1,5 @@
 {
-  "id": "86867e9f-f7d5-46fc-9982-729d462e322c",
+  "id": "49d04527-9042-4e39-9b80-75b295801e4c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -25,20 +25,20 @@
             "cycle": false
           }
         },
-        "userId": {
-          "name": "userId",
+        "user_id": {
+          "name": "user_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "postId": {
-          "name": "postId",
+        "post_id": {
+          "name": "post_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
-        "likedAt": {
-          "name": "likedAt",
+        "liked_at": {
+          "name": "liked_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
@@ -47,12 +47,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "liked_posts_userId_users_id_fk": {
-          "name": "liked_posts_userId_users_id_fk",
+        "liked_posts_user_id_users_id_fk": {
+          "name": "liked_posts_user_id_users_id_fk",
           "tableFrom": "liked_posts",
           "tableTo": "users",
           "columnsFrom": [
-            "userId"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -60,12 +60,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "liked_posts_postId_posts_id_fk": {
-          "name": "liked_posts_postId_posts_id_fk",
+        "liked_posts_post_id_posts_id_fk": {
+          "name": "liked_posts_post_id_posts_id_fk",
           "tableFrom": "liked_posts",
           "tableTo": "posts",
           "columnsFrom": [
-            "postId"
+            "post_id"
           ],
           "columnsTo": [
             "id"
@@ -169,27 +169,27 @@
           "primaryKey": false,
           "notNull": true
         },
-        "firstName": {
-          "name": "firstName",
+        "first_name": {
+          "name": "first_name",
           "type": "varchar(50)",
           "primaryKey": false,
           "notNull": true
         },
-        "lastName": {
-          "name": "lastName",
+        "last_name": {
+          "name": "last_name",
           "type": "varchar(50)",
           "primaryKey": false,
           "notNull": true
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,

@@ -9,36 +9,38 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  email: varchar({ length: 254 }).unique().notNull(),
-  password: varchar({ length: 128 }).notNull(),
-  firstName: varchar({ length: 50 }).notNull(),
-  lastName: varchar({ length: 50 }).notNull(),
-  createdAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp({ withTimezone: true })
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  email: varchar("email", { length: 254 }).unique().notNull(),
+  password: varchar("password", { length: 128 }).notNull(),
+  firstName: varchar("first_name", { length: 50 }).notNull(),
+  lastName: varchar("last_name", { length: 50 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
     .defaultNow()
     .$onUpdate(() => new Date())
     .notNull(),
 });
 
 export const posts = pgTable("posts", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  date: date().unique().notNull(),
-  title: varchar({ length: 150 }).notNull(),
-  url: varchar({ length: 512 }).notNull(),
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  date: date("date").unique().notNull(),
+  title: varchar("title", { length: 150 }).notNull(),
+  url: varchar("url", { length: 512 }).notNull(),
 });
 
 export const likedPosts = pgTable(
   "liked_posts",
   {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    userId: integer()
+    id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+    userId: integer("user_id")
       .references(() => users.id, { onDelete: "cascade" })
       .notNull(),
-    postId: integer()
+    postId: integer("post_id")
       .references(() => posts.id, { onDelete: "cascade" })
       .notNull(),
-    likedAt: timestamp({ withTimezone: true })
+    likedAt: timestamp("liked_at", { withTimezone: true })
       .defaultNow()
       .$onUpdate(() => new Date())
       .notNull(),
