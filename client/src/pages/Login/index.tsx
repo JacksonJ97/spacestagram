@@ -6,7 +6,7 @@ import TextInput from "components/common/TextInput";
 import LinkButton from "components/common/LinkButton";
 
 const schema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
 
