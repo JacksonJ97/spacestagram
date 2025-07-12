@@ -27,7 +27,6 @@ const schema = z.object({
     .max(50, "Last name must be under 50 characters"),
   email: z
     .email("Invalid email address")
-    .toLowerCase()
     .max(254, "Email must be under 254 characters"),
   password: z
     .string()

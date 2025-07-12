@@ -7,13 +7,17 @@ async function getUserById(id: number) {
 }
 
 async function getUserByEmail(email: string) {
-  return db.select().from(users).where(eq(users.email, email));
+  const normalizedEmail = email.toLowerCase();
+  return db.select().from(users).where(eq(users.email, normalizedEmail));
 }
 
 type NewUser = typeof users.$inferInsert;
 
 async function createUser(user: NewUser) {
-  return db.insert(users).values(user).returning();
+  return db
+    .insert(users)
+    .values({ ...user, email: user.email.toLowerCase() })
+    .returning();
 }
 
 export { getUserById, getUserByEmail, createUser };

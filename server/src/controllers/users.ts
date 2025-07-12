@@ -1,20 +1,25 @@
 import bcrypt from "bcryptjs";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import type { NewUser } from "../schemas/users";
+import { ConflictError } from "../utils/errors";
 import { createUser, getUserByEmail } from "../db/queries";
 
 interface CreateUserRequest extends Request {
   body: NewUser;
 }
 
-async function handleCreateUser(req: CreateUserRequest, res: Response) {
+async function handleCreateUser(
+  req: CreateUserRequest,
+  res: Response,
+  next: NextFunction
+) {
   const { firstName, lastName, email, password } = req.body;
 
   try {
     const [existingUser] = await getUserByEmail(email);
 
     if (existingUser) {
-      return res.status(409).json({ message: "User already exists" });
+      throw new ConflictError("User already exists");
     }
 
     const SALT_ROUNDS = 10;
@@ -34,8 +39,7 @@ async function handleCreateUser(req: CreateUserRequest, res: Response) {
       email: user.email,
     });
   } catch (error) {
-    console.error(error);
-    throw error;
+    next(error);
   }
 }
 
