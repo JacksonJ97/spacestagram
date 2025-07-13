@@ -15,7 +15,7 @@ export default function LinkButton({
     <NavLink
       className={cn(
         variant === "solid" &&
-          "flex h-8 items-center justify-center rounded-lg bg-(--meta-primary) px-4 text-sm font-semibold text-white hover:bg-(--meta-primary-hover)",
+          "flex h-8 items-center justify-center rounded-md bg-(--meta-primary) px-4 text-sm font-semibold text-white hover:bg-(--meta-primary-hover)",
         variant === "text" &&
           "text-sm font-semibold text-(--meta-primary) hover:text-(--text-color)",
         className,

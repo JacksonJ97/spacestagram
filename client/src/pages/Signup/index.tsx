@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateUser } from "data/user/hooks";
 import Button from "components/common/Button";
 import TextInput from "components/common/TextInput";
 import LinkButton from "components/common/LinkButton";
@@ -38,6 +39,8 @@ const schema = z.object({
 });
 
 export default function Signup() {
+  const { mutate: createUser, isPending: isCreatingUser } = useCreateUser();
+
   const {
     control,
     handleSubmit,
@@ -53,7 +56,7 @@ export default function Signup() {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log("data", data);
+    createUser(data);
   });
 
   const isAllFieldsDirty =
@@ -68,7 +71,7 @@ export default function Signup() {
   return (
     <main className="min-h-screen bg-(--background-color) px-4 py-8">
       <div className="mx-auto max-w-sm">
-        <div className="rounded-xs border border-(--border-color) px-2 py-3">
+        <div className="rounded-xs border border-(--border-color) p-3">
           <h1 className="font-lobster my-9 text-center text-4xl text-(--text-color) min-sm:text-5xl">
             Spacestagram
           </h1>
@@ -105,6 +108,7 @@ export default function Signup() {
             <Button
               type="submit"
               className="mt-3 w-full"
+              isLoading={isCreatingUser}
               disabled={isSubmitButtonDisabled}
             >
               Sign Up

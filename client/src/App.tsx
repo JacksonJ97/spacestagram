@@ -59,16 +59,7 @@ export default function App() {
           }
         />
       </Routes>
-      <Toaster
-        visibleToasts={1}
-        toastOptions={{
-          style: {
-            border: "1px solid var(--contrast-background-color)",
-            background: "var(--contrast-background-color)",
-            color: "var(--contrast-text-color)",
-          },
-        }}
-      />
+      <Toaster richColors visibleToasts={1} />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
