@@ -19,7 +19,7 @@ export default function Button({
       data-loading={isLoading}
       className={cn(
         "relative flex h-9 cursor-pointer items-center justify-center rounded-md bg-(--meta-primary) px-4 text-sm font-semibold text-white hover:bg-(--meta-primary-hover)",
-        "disabled:pointer-events-none disabled:opacity-50",
+        "disabled:pointer-events-none disabled:opacity-50 disabled:select-none",
         "data-[loading=true]:pointer-events-none",
         className,
       )}

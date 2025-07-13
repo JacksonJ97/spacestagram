@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUserLogin } from "data/auth/hooks";
 import Button from "components/common/Button";
 import TextInput from "components/common/TextInput";
 import LinkButton from "components/common/LinkButton";
@@ -8,10 +9,12 @@ import PasswordInput from "components/common/PasswordInput";
 
 const schema = z.object({
   email: z.email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  password: z.string().min(1, "Password is required"),
 });
 
 export default function Login() {
+  const { mutate: login, isPending: isLoggingIn } = useUserLogin();
+
   const {
     control,
     handleSubmit,
@@ -25,7 +28,7 @@ export default function Login() {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log("data", data);
+    login(data);
   });
 
   const isAllFieldsDirty = !!dirtyFields.email && !!dirtyFields.password;
@@ -55,6 +58,7 @@ export default function Login() {
             <Button
               type="submit"
               className="mt-3 w-full"
+              isLoading={isLoggingIn}
               disabled={isSubmitButtonDisabled}
             >
               Log In

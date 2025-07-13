@@ -6,6 +6,7 @@ import type { User, CreateUserInput } from "data/user/types";
 
 export function useCreateUser() {
   const navigate = useNavigate();
+
   const createUser = async (user: CreateUserInput) => {
     const data = await api
       .post<User>("/api/users", user)

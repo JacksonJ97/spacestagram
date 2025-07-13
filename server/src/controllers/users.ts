@@ -16,7 +16,7 @@ async function handleCreateUser(
   const { firstName, lastName, email, password } = req.body;
 
   try {
-    const [existingUser] = await getUserByEmail(email);
+    const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
       throw new ConflictError("User already exists");
@@ -25,7 +25,7 @@ async function handleCreateUser(
     const SALT_ROUNDS = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-    const [user] = await createUser({
+    const user = await createUser({
       firstName,
       lastName,
       email,
@@ -43,8 +43,4 @@ async function handleCreateUser(
   }
 }
 
-function handleGetUser(req: Request, res: Response) {
-  res.json({ message: `Get user with ID: ${req.params.id}` });
-}
-
-export { handleCreateUser, handleGetUser };
+export { handleCreateUser };

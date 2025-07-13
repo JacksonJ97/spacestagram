@@ -2,22 +2,23 @@ import { eq } from "drizzle-orm";
 import { users } from "./schema";
 import db from ".";
 
-async function getUserById(id: number) {
-  return db.select().from(users).where(eq(users.id, id));
-}
-
 async function getUserByEmail(email: string) {
-  const normalizedEmail = email.toLowerCase();
-  return db.select().from(users).where(eq(users.email, normalizedEmail));
+  const user = await db.query.users.findFirst({
+    where: eq(users.email, email.toLowerCase()),
+  });
+
+  return user;
 }
 
 type NewUser = typeof users.$inferInsert;
 
-async function createUser(user: NewUser) {
-  return db
+async function createUser(newUser: NewUser) {
+  const [user] = await db
     .insert(users)
-    .values({ ...user, email: user.email.toLowerCase() })
+    .values({ ...newUser, email: newUser.email.toLowerCase() })
     .returning();
+
+  return user;
 }
 
-export { getUserById, getUserByEmail, createUser };
+export { getUserByEmail, createUser };
