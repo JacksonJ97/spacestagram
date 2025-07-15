@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/errors";
-import { NODE_ENV } from "../utils/constants";
 
 function errorHandler(
   error: unknown,
@@ -8,17 +7,16 @@ function errorHandler(
   res: Response,
   next: NextFunction
 ) {
+  console.error(`ERROR at ${req.method} ${req.path}:`, error);
+
   if (error instanceof AppError) {
     return res.status(error.status).json({
       message: error.message,
-      ...(NODE_ENV !== "production" && { stack: error.stack }),
     });
   }
 
-  console.error("Unexpected error:", error);
   return res.status(500).json({
     message: "Internal Server Error",
-    ...(NODE_ENV !== "production" && { error }),
   });
 }
 
