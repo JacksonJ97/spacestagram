@@ -1,14 +1,11 @@
-import dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/node-postgres";
 import * as schema from "./schema";
-
-dotenv.config();
+import { DATABASE_URL } from "../utils/constants";
 
 const db = drizzle({
   schema,
   casing: "snake_case",
-  connection:
-    process.env.DATABASE_URL || "postgres://user:password@host:5432/database",
+  connection: DATABASE_URL,
 });
 
 export default db;

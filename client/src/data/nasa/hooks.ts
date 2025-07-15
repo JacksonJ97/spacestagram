@@ -2,8 +2,9 @@ import axios from "axios";
 import { format, subDays } from "date-fns";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import type { Post } from "data/nasa/types";
+import { NASA_API_KEY } from "utils/constants";
 
-const BASE_URL = `https://api.nasa.gov/planetary/apod?api_key=${import.meta.env.VITE_NASA_API_KEY}`;
+const BASE_URL = `https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`;
 
 export const usePosts = () => {
   const fetchPosts = async ({ pageParam }: { pageParam: Date }) => {

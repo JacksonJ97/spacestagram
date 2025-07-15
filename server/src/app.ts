@@ -1,16 +1,13 @@
 import cors from "cors";
-import dotenv from "dotenv";
 import express from "express";
 import router from "./routes";
+import { PORT, APP_ORIGIN } from "./utils/constants";
 import errorHandler from "./middlewares/error-handler";
 
-dotenv.config();
-
 const app = express();
-const PORT = process.env.PORT || "8000";
 
-app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
+app.use(cors({ origin: APP_ORIGIN, credentials: true }));
 
 app.use("/api", router);
 

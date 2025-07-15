@@ -1,13 +1,14 @@
 import { twMerge } from "tailwind-merge";
 import axios, { AxiosError } from "axios";
 import { clsx, type ClassValue } from "clsx";
+import { API_BASE_URL } from "utils/constants";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
