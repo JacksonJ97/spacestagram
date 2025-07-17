@@ -2,11 +2,11 @@
   "name": "spacestagram-server",
   "version": "1.0.0",
   "private": true,
-  "main": "dist/app.js",
+  "main": "dist/src/app.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "prestart": "pnpm run build",
-    "start": "node dist/app.js",
+    "start": "node dist/src/app.js",
     "dev": "tsx watch src/app.ts"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@types/node": "^22.16.2",
     "@types/pg": "^8.15.4",
     "drizzle-kit": "^0.31.4",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
