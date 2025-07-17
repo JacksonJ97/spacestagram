@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { CREATED } from "constants/http";
 import { ConflictError } from "utils/errors";
+import { setAuthCookies } from "utils/cookies";
 import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
 import { createUser, getUserByEmail, createSession } from "db/queries";
 
@@ -62,12 +63,14 @@ async function handleCreateAccount(
       { expiresIn: "30d" }
     );
 
-    res.status(CREATED).json({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-    });
+    return setAuthCookies({ res, accessToken, refreshToken })
+      .status(CREATED)
+      .json({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      });
   } catch (error) {
     next(error);
   }
