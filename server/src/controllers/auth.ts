@@ -1,8 +1,10 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { getUserByEmail } from "db/queries";
 import { BadRequestError } from "utils/errors";
+import { getUserByEmail, createSession } from "db/queries";
+import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
 
 export const userLoginSchema = z.object({
   email: z.email(),
@@ -34,6 +36,20 @@ async function handleUserLogin(
     if (!match) {
       throw new BadRequestError("Invalid email or password");
     }
+
+    const session = await createSession(user.id);
+
+    const accessToken = jwt.sign(
+      { userId: user.id, sessionId: session.id },
+      JWT_ACCESS_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    const refreshToken = jwt.sign(
+      { sessionId: session.id },
+      JWT_REFRESH_SECRET,
+      { expiresIn: "30d" }
+    );
 
     res.json({ message: "User authenticated" });
   } catch (error) {

@@ -1,8 +1,10 @@
 import { z } from "zod";
+import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { CREATED } from "constants/http";
 import { ConflictError } from "utils/errors";
-import { createUser, getUserByEmail } from "db/queries";
+import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
+import { createUser, getUserByEmail, createSession } from "db/queries";
 
 const passwordRequirements = [
   /.{8,}/, // At least 8 characters
@@ -45,6 +47,20 @@ async function handleCreateAccount(
     }
 
     const user = await createUser({ firstName, lastName, email, password });
+
+    const session = await createSession(user.id);
+
+    const accessToken = jwt.sign(
+      { userId: user.id, sessionId: session.id },
+      JWT_ACCESS_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    const refreshToken = jwt.sign(
+      { sessionId: session.id },
+      JWT_REFRESH_SECRET,
+      { expiresIn: "30d" }
+    );
 
     res.status(CREATED).json({
       id: user.id,

@@ -4,6 +4,7 @@ import {
   unique,
   varchar,
   integer,
+  boolean,
   timestamp,
   pgTable,
 } from "drizzle-orm/pg-core";
@@ -48,8 +49,19 @@ export const likedPosts = pgTable(
   (table) => [{ uniqueUserPost: unique().on(table.userId, table.postId) }]
 );
 
+export const sessions = pgTable("sessions", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  userId: integer("user_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+  isValid: boolean("is_valid").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  expiresAt: timestamp("expires_at").notNull(),
+});
+
 export const usersRelations = relations(users, ({ many }) => ({
   likedPosts: many(likedPosts),
+  sessions: many(sessions),
 }));
 
 export const postsRelations = relations(posts, ({ many }) => ({
@@ -64,5 +76,12 @@ export const likedPostsRelations = relations(likedPosts, ({ one }) => ({
   post: one(posts, {
     fields: [likedPosts.postId],
     references: [posts.id],
+  }),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
   }),
 }));

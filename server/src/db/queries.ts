@@ -1,7 +1,8 @@
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
-import { users } from "db/schema";
 import db from "db/index";
+import { users, sessions } from "db/schema";
+import { addThirtyDays } from "utils/functions";
 
 async function getUserByEmail(email: string) {
   const user = await db.query.users.findFirst({
@@ -29,4 +30,16 @@ async function createUser(newUser: NewUser) {
   return user;
 }
 
-export { getUserByEmail, createUser };
+async function createSession(userId: number) {
+  const [session] = await db
+    .insert(sessions)
+    .values({
+      userId,
+      expiresAt: addThirtyDays(),
+    })
+    .returning();
+
+  return session;
+}
+
+export { getUserByEmail, createUser, createSession };
