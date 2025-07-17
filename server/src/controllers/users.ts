@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import type { NewUser } from "../schemas/users";
 import { ConflictError } from "../utils/errors";
@@ -22,15 +21,7 @@ async function handleCreateUser(
       throw new ConflictError("User already exists");
     }
 
-    const SALT_ROUNDS = 10;
-    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
-    const user = await createUser({
-      firstName,
-      lastName,
-      email,
-      password: hashedPassword,
-    });
+    const user = await createUser({ firstName, lastName, email, password });
 
     res.status(201).json({
       id: user.id,
