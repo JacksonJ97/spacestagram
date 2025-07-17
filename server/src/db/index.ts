@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import * as schema from "./schema";
-import { DATABASE_URL } from "../utils/constants";
+import * as schema from "db/schema";
+import { DATABASE_URL } from "constants/env";
 
 const db = drizzle({
   schema,

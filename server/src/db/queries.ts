@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
-import { users } from "./schema";
-import db from ".";
+import { users } from "db/schema";
+import db from "db/index";
 
 async function getUserByEmail(email: string) {
   const user = await db.query.users.findFirst({

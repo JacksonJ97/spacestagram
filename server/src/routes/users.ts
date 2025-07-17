@@ -1,10 +1,9 @@
 import { Router } from "express";
-import { newUserSchema } from "../schemas/users";
-import validateRequestBody from "../middlewares/request-body-validator";
-import { handleCreateUser } from "../controllers/users";
+import { createAccountSchema, handleCreateAccount } from "controllers/users";
+import validateRequestBody from "middlewares/request-body-validator";
 
 const router = Router();
 
-router.post("/", validateRequestBody(newUserSchema), handleCreateUser);
+router.post("/", validateRequestBody(createAccountSchema), handleCreateAccount);
 
 export default router;

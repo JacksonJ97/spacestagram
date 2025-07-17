@@ -1,8 +1,8 @@
 import cors from "cors";
 import express from "express";
-import router from "./routes";
-import { PORT, APP_ORIGIN } from "./utils/constants";
-import errorHandler from "./middlewares/error-handler";
+import router from "routes/index";
+import { PORT, APP_ORIGIN } from "constants/env";
+import errorHandler from "middlewares/error-handler";
 
 const app = express();
 

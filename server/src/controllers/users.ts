@@ -1,14 +1,37 @@
+import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
-import type { NewUser } from "../schemas/users";
-import { ConflictError } from "../utils/errors";
-import { createUser, getUserByEmail } from "../db/queries";
+import { CREATED } from "constants/http";
+import { ConflictError } from "utils/errors";
+import { createUser, getUserByEmail } from "db/queries";
 
-interface CreateUserRequest extends Request {
+const passwordRequirements = [
+  /.{8,}/, // At least 8 characters
+  /[0-9]/, // At least 1 number
+  /[a-z]/, // At least 1 lowercase letter
+  /[A-Z]/, // At least 1 uppercase letter
+  /[^A-Za-z0-9]/, // At least 1 special character
+];
+
+export const createAccountSchema = z.object({
+  firstName: z.string().min(1).max(50),
+  lastName: z.string().min(1).max(50),
+  email: z.email().max(254),
+  password: z
+    .string()
+    .max(72)
+    .refine((value) =>
+      passwordRequirements.every((regex) => regex.test(value))
+    ),
+});
+
+type NewUser = z.infer<typeof createAccountSchema>;
+
+interface CreateAccountRequest extends Request {
   body: NewUser;
 }
 
-async function handleCreateUser(
-  req: CreateUserRequest,
+async function handleCreateAccount(
+  req: CreateAccountRequest,
   res: Response,
   next: NextFunction
 ) {
@@ -23,7 +46,7 @@ async function handleCreateUser(
 
     const user = await createUser({ firstName, lastName, email, password });
 
-    res.status(201).json({
+    res.status(CREATED).json({
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -34,4 +57,4 @@ async function handleCreateUser(
   }
 }
 
-export { handleCreateUser };
+export { handleCreateAccount };

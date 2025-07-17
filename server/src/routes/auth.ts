@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { handleUserLogin, handleUserLogout } from "../controllers/auth";
-import validateRequestBody from "../middlewares/request-body-validator";
-import { userLoginSchema } from "../schemas/auth";
+import {
+  userLoginSchema,
+  handleUserLogin,
+  handleUserLogout,
+} from "controllers/auth";
+import validateRequestBody from "middlewares/request-body-validator";
 
 const router = Router();
 

@@ -1,8 +1,15 @@
+import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
-import { UserLogin } from "../schemas/auth";
-import { getUserByEmail } from "../db/queries";
-import { BadRequestError } from "../utils/errors";
+import { getUserByEmail } from "db/queries";
+import { BadRequestError } from "utils/errors";
+
+export const userLoginSchema = z.object({
+  email: z.email(),
+  password: z.string().min(1),
+});
+
+type UserLogin = z.infer<typeof userLoginSchema>;
 
 interface UserLoginRequest extends Request {
   body: UserLogin;
