@@ -48,7 +48,6 @@ async function handleCreateAccount(
     }
 
     const user = await createUser({ firstName, lastName, email, password });
-
     const session = await createSession(user.id);
 
     const accessToken = jwt.sign(

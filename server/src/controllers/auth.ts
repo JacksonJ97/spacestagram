@@ -3,8 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
-import { BadRequestError } from "utils/errors";
 import { setAuthCookies } from "utils/cookies";
+import { UnauthorizedError } from "utils/errors";
 import { getUserByEmail, createSession } from "db/queries";
 import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
 
@@ -30,13 +30,13 @@ async function handleUserLogin(
     const user = await getUserByEmail(email);
 
     if (!user) {
-      throw new BadRequestError("Invalid email or password");
+      throw new UnauthorizedError("Invalid email or password");
     }
 
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      throw new BadRequestError("Invalid email or password");
+      throw new UnauthorizedError("Invalid email or password");
     }
 
     const session = await createSession(user.id);

@@ -2,19 +2,17 @@ import {
   CONFLICT,
   NOT_FOUND,
   BAD_REQUEST,
+  UNAUTHORIZED,
   INTERNAL_SERVER_ERROR,
+  HttpStatusCode,
 } from "constants/http";
 
 export class AppError extends Error {
-  status: number;
   constructor(
-    status = INTERNAL_SERVER_ERROR,
-    message = "Internal Server Error"
+    public status: HttpStatusCode = INTERNAL_SERVER_ERROR,
+    public message: string = "Internal Server Error"
   ) {
     super(message);
-    this.status = status;
-    this.name = this.constructor.name;
-    Error.captureStackTrace(this, this.constructor);
   }
 }
 
@@ -33,5 +31,11 @@ export class NotFoundError extends AppError {
 export class BadRequestError extends AppError {
   constructor(message = "Bad Request") {
     super(BAD_REQUEST, message);
+  }
+}
+
+export class UnauthorizedError extends AppError {
+  constructor(message = "Unauthorized") {
+    super(UNAUTHORIZED, message);
   }
 }
