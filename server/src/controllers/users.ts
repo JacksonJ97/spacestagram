@@ -1,10 +1,9 @@
 import { z } from "zod";
-import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { CREATED } from "constants/http";
 import { ConflictError } from "utils/errors";
 import { setAuthCookies } from "utils/cookies";
-import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
+import { signAccessToken, signRefreshToken } from "utils/jwt";
 import { createUser, getUserByEmail, createSession } from "db/queries";
 
 const passwordRequirements = [
@@ -50,17 +49,11 @@ async function handleCreateAccount(
     const user = await createUser({ firstName, lastName, email, password });
     const session = await createSession(user.id);
 
-    const accessToken = jwt.sign(
-      { userId: user.id, sessionId: session.id },
-      JWT_ACCESS_SECRET,
-      { expiresIn: "15m" }
-    );
-
-    const refreshToken = jwt.sign(
-      { sessionId: session.id },
-      JWT_REFRESH_SECRET,
-      { expiresIn: "30d" }
-    );
+    const accessToken = signAccessToken({
+      userId: user.id,
+      sessionId: session.id,
+    });
+    const refreshToken = signRefreshToken({ sessionId: session.id });
 
     return setAuthCookies({ res, accessToken, refreshToken })
       .status(CREATED)

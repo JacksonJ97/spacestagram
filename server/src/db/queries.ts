@@ -42,4 +42,8 @@ async function createSession(userId: number) {
   return session;
 }
 
-export { getUserByEmail, createUser, createSession };
+async function deleteSessionById(sessionId: number) {
+  await db.delete(sessions).where(eq(sessions.id, sessionId));
+}
+
+export { getUserByEmail, createUser, createSession, deleteSessionById };

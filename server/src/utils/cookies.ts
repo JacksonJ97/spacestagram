@@ -2,6 +2,8 @@ import { Response, CookieOptions } from "express";
 import { NODE_ENV } from "constants/env";
 import { addThirtyDays, addFifteenMinutes } from "utils/functions";
 
+const REFRESH_PATH = "/api/auth/refresh";
+
 const defaults: CookieOptions = {
   sameSite: "strict",
   httpOnly: true,
@@ -25,5 +27,10 @@ export const setAuthCookies = ({
     .cookie("refreshToken", refreshToken, {
       ...defaults,
       expires: addThirtyDays(),
-      path: "/api/auth/refresh",
+      path: REFRESH_PATH,
     });
+
+export const clearAuthCookies = (res: Response) =>
+  res
+    .clearCookie("accessToken")
+    .clearCookie("refreshToken", { path: REFRESH_PATH });

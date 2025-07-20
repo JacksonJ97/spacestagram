@@ -1,12 +1,15 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
-import { setAuthCookies } from "utils/cookies";
 import { UnauthorizedError } from "utils/errors";
-import { getUserByEmail, createSession } from "db/queries";
-import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
+import { setAuthCookies, clearAuthCookies } from "utils/cookies";
+import {
+  signAccessToken,
+  signRefreshToken,
+  verifyAccessToken,
+} from "utils/jwt";
+import { getUserByEmail, createSession, deleteSessionById } from "db/queries";
 
 export const userLoginSchema = z.object({
   email: z.email(),
@@ -41,17 +44,11 @@ async function handleUserLogin(
 
     const session = await createSession(user.id);
 
-    const accessToken = jwt.sign(
-      { userId: user.id, sessionId: session.id },
-      JWT_ACCESS_SECRET,
-      { expiresIn: "15m" }
-    );
-
-    const refreshToken = jwt.sign(
-      { sessionId: session.id },
-      JWT_REFRESH_SECRET,
-      { expiresIn: "30d" }
-    );
+    const accessToken = signAccessToken({
+      userId: user.id,
+      sessionId: session.id,
+    });
+    const refreshToken = signRefreshToken({ sessionId: session.id });
 
     return setAuthCookies({ res, accessToken, refreshToken }).status(OK).json({
       message: "Login successful",
@@ -61,8 +58,27 @@ async function handleUserLogin(
   }
 }
 
-function handleUserLogout(req: Request, res: Response, next: NextFunction) {
-  res.json({ message: "Login route" });
+interface UserLogoutRequest extends Request {
+  cookies: {
+    accessToken?: string;
+  };
+}
+
+async function handleUserLogout(
+  req: UserLogoutRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const cookies = { ...req.cookies };
+  const payload = verifyAccessToken(cookies.accessToken || "");
+
+  if (payload) {
+    await deleteSessionById(payload.sessionId);
+  }
+
+  return clearAuthCookies(res)
+    .status(OK)
+    .json({ message: "Logout successful" });
 }
 
 export { handleUserLogin, handleUserLogout };
