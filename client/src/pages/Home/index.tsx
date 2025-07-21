@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { usePosts } from "data/nasa/hooks";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { infinitePostOptions } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
 import LikeAuthDialog from "components/LikeAuthDialog";
 import ErrorMessage from "components/Error/ErrorMessage";
@@ -16,7 +17,7 @@ export default function Home() {
     isPending: isPostsPending,
     isError: isPostsError,
     isFetching: isFetchingPosts,
-  } = usePosts();
+  } = useInfiniteQuery({ ...infinitePostOptions });
 
   useEffect(() => {
     if (inView) {

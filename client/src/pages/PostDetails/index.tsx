@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import { usePost } from "data/nasa/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { postOptions } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
 import LikeAuthDialog from "components/LikeAuthDialog";
 import ErrorMessage from "components/Error/ErrorMessage";
 import LoadingSpinner from "components/Loading/LoadingSpinner";
 
 export default function PostDetails() {
-  const params = useParams();
+  const { date } = useParams();
   const [open, setOpen] = useState(false);
 
   const {
     data: post,
     isPending: isPostPending,
     isError: isPostError,
-  } = usePost({ date: params.date! }); // The `date` parameter is always defined in the route pattern (e.g., /posts/:date)
+  } = useQuery({ ...postOptions(date!) }); // The `date` is always defined in the route pattern (e.g., /posts/:date)
 
   if (isPostPending) {
     return (
