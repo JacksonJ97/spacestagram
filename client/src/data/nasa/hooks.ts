@@ -19,8 +19,8 @@ export const infinitePostOptions = infiniteQueryOptions({
     return data.reverse();
   },
   initialPageParam: new Date(),
-  getNextPageParam: (lastPage) => {
-    const oldest = new Date(lastPage[lastPage.length - 1].date);
+  getNextPageParam: (posts) => {
+    const oldest = new Date(posts[posts.length - 1].date);
     return subDays(oldest, 1);
   },
 });
