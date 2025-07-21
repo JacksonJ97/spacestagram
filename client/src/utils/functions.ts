@@ -9,6 +9,7 @@ export const cn = (...inputs: ClassValue[]) => {
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

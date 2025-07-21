@@ -64,11 +64,7 @@ interface UserLogoutRequest extends Request {
   };
 }
 
-async function handleUserLogout(
-  req: UserLogoutRequest,
-  res: Response,
-  next: NextFunction
-) {
+async function handleUserLogout(req: UserLogoutRequest, res: Response) {
   const cookies = { ...req.cookies };
   const payload = verifyAccessToken(cookies.accessToken || "");
 

@@ -16,7 +16,7 @@ export function useUserLogin() {
   return useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
-      navigate("/");
+      navigate("/", { replace: true });
     },
   });
 }

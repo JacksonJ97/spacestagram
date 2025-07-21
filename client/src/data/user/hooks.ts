@@ -17,7 +17,7 @@ export function useCreateUser() {
   return useMutation({
     mutationFn: createUser,
     onSuccess: () => {
-      navigate("/");
+      navigate("/", { replace: true });
     },
     onError: (error) => {
       const message = getErrorMessage(error);
