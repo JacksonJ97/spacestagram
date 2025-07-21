@@ -13,52 +13,59 @@ import Signup from "pages/Signup";
 
 const client = new QueryClient();
 
-function Layout({ isUserLoggedIn }: { isUserLoggedIn: boolean }) {
+function Layout() {
   return (
     <>
-      <Header isUserLoggedIn={isUserLoggedIn} />
-      <main className="min-h-[calc(100vh-60px)] bg-(--background-color) px-4 py-8">
+      <Header />
+      <main className="min-h-screen bg-(--background-color) px-4 py-8">
         <Outlet />
       </main>
     </>
   );
 }
 
-export default function App() {
+function AppRoutes() {
   const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
   return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="posts/:date" element={<PostDetails />} />
+        <Route
+          path="likes"
+          element={
+            <ProtectedRoute redirectPath="/login" isAllowed={isUserLoggedIn}>
+              <Likes />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+
+      <Route
+        path="/login"
+        element={
+          <ProtectedRoute redirectPath="/" isAllowed={!isUserLoggedIn}>
+            <Login />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <ProtectedRoute redirectPath="/" isAllowed={!isUserLoggedIn}>
+            <Signup />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
     <QueryClientProvider client={client}>
-      <Routes>
-        <Route element={<Layout isUserLoggedIn={isUserLoggedIn} />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/posts/:date" element={<PostDetails />} />
-          <Route
-            path="/likes"
-            element={
-              <ProtectedRoute redirectPath="/login" isAllowed={isUserLoggedIn}>
-                <Likes />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-        <Route
-          path="/login"
-          element={
-            <ProtectedRoute redirectPath="/" isAllowed={!isUserLoggedIn}>
-              <Login />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <ProtectedRoute redirectPath="/" isAllowed={!isUserLoggedIn}>
-              <Signup />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <AppRoutes />
       <Toaster richColors visibleToasts={1} />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

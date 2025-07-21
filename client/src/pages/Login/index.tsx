@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { NavLink } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserLogin } from "data/auth/hooks";
@@ -39,10 +40,15 @@ export default function Login() {
   return (
     <main className="min-h-screen bg-(--background-color) px-4 py-8">
       <div className="mx-auto max-w-sm">
-        <div className="rounded-xs border border-(--border-color) px-2 py-3">
-          <h1 className="font-lobster my-9 text-center text-4xl text-(--text-color) min-sm:text-5xl">
-            Spacestagram
-          </h1>
+        <div className="rounded-xs border border-(--border-color) px-3 py-4">
+          <div className="my-10 flex items-center justify-center">
+            <NavLink
+              to="/"
+              className="font-lobster text-5xl text-(--text-color)"
+            >
+              Spacestagram
+            </NavLink>
+          </div>
 
           <form
             onSubmit={onSubmit}
@@ -66,7 +72,7 @@ export default function Login() {
           </form>
         </div>
 
-        <div className="mt-3 rounded-xs border border-(--border-color) px-2 py-4">
+        <div className="mt-3 rounded-xs border border-(--border-color) px-3 py-4">
           <p className="text-center text-sm text-(--text-color)">
             Don't have an account?{" "}
             <LinkButton to="/signup" variant="text">
