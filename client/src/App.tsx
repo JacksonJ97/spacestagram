@@ -1,15 +1,20 @@
 import { Toaster } from "sonner";
 import { Routes, Route, Outlet } from "react-router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { currentUserOptions } from "data/user/hooks";
 import Header from "components/Header";
 import ProtectedRoute from "components/ProtectedRoute";
 import Home from "pages/Home";
-import PostDetails from "pages/PostDetails";
 import Likes from "pages/Likes";
-import NotFound from "pages/NotFound";
 import Login from "pages/Login";
 import Signup from "pages/Signup";
+import NotFound from "pages/NotFound";
+import PostDetails from "pages/PostDetails";
 
 const client = new QueryClient();
 
@@ -24,11 +29,24 @@ function Layout() {
   );
 }
 
+function UserLayout() {
+  return (
+    <div className="flex min-h-screen bg-(--background-color)">
+      <div className="text-(--text-color)">Sidebar</div>
+      <main className="h-full w-full px-4 py-8">
+        <Outlet />
+      </main>
+    </div>
+  );
+}
+
 function AppRoutes() {
-  const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
+  const { data: user } = useQuery({ ...currentUserOptions });
+  const isUserLoggedIn = !!user;
+
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={isUserLoggedIn ? <UserLayout /> : <Layout />}>
         <Route index element={<Home />} />
         <Route path="posts/:date" element={<PostDetails />} />
         <Route

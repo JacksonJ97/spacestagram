@@ -4,6 +4,14 @@ import db from "db/index";
 import { users, sessions } from "db/schema";
 import { addThirtyDays } from "utils/functions";
 
+async function getUserById(id: number) {
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, id),
+  });
+
+  return user;
+}
+
 async function getUserByEmail(email: string) {
   const user = await db.query.users.findFirst({
     where: eq(users.email, email.toLowerCase()),
@@ -46,4 +54,10 @@ async function deleteSessionById(sessionId: number) {
   await db.delete(sessions).where(eq(sessions.id, sessionId));
 }
 
-export { getUserByEmail, createUser, createSession, deleteSessionById };
+export {
+  getUserById,
+  getUserByEmail,
+  createUser,
+  createSession,
+  deleteSessionById,
+};

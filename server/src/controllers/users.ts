@@ -1,10 +1,15 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { CREATED } from "constants/http";
-import { ConflictError } from "utils/errors";
+import { ConflictError, UnauthorizedError } from "utils/errors";
 import { setAuthCookies } from "utils/cookies";
 import { signAccessToken, signRefreshToken } from "utils/jwt";
-import { createUser, getUserByEmail, createSession } from "db/queries";
+import {
+  createUser,
+  getUserById,
+  getUserByEmail,
+  createSession,
+} from "db/queries";
 
 const passwordRequirements = [
   /.{8,}/, // At least 8 characters
@@ -68,4 +73,31 @@ async function handleCreateAccount(
   }
 }
 
-export { handleCreateAccount };
+async function handleGetCurrentUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    if (!req.userId) {
+      throw new UnauthorizedError("Unauthorized access");
+    }
+
+    const user = await getUserById(req.userId);
+
+    if (!user) {
+      throw new UnauthorizedError("Unauthorized access");
+    }
+
+    return res.json({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export { handleCreateAccount, handleGetCurrentUser };

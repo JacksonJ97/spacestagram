@@ -58,15 +58,9 @@ async function handleUserLogin(
   }
 }
 
-interface UserLogoutRequest extends Request {
-  cookies: {
-    accessToken?: string;
-  };
-}
-
-async function handleUserLogout(req: UserLogoutRequest, res: Response) {
-  const cookies = { ...req.cookies };
-  const payload = verifyAccessToken(cookies.accessToken || "");
+async function handleUserLogout(req: Request, res: Response) {
+  const cookies = { ...req.cookies } as { accessToken: string | undefined };
+  const { payload } = verifyAccessToken(cookies.accessToken || "");
 
   if (payload) {
     await deleteSessionById(payload.sessionId);

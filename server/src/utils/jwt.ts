@@ -1,6 +1,7 @@
 import jwt, {
   SignOptions,
   VerifyOptions,
+  TokenExpiredError,
   JsonWebTokenError,
 } from "jsonwebtoken";
 import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
@@ -39,12 +40,17 @@ export const verifyAccessToken = (token: string, options?: VerifyOptions) => {
       options
     ) as AccessTokenPayload;
 
-    return payload;
+    return { payload };
   } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      console.error("Access token expired at: ", error.expiredAt);
+      return { error: "Access token expired" };
+    }
+
     if (error instanceof JsonWebTokenError) {
       console.error("JWT Error: ", error.message);
-    } else {
-      console.error("Error verifying access token: ", error);
     }
+
+    return { error: "Invalid access token" };
   }
 };

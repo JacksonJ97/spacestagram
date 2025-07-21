@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, queryOptions } from "@tanstack/react-query";
 import { api, getErrorMessage } from "utils/functions";
 import type { User, CreateUserInput } from "data/user/types";
 
@@ -25,3 +25,14 @@ export function useCreateUser() {
     },
   });
 }
+
+export const currentUserOptions = queryOptions({
+  queryKey: ["current-user"],
+  queryFn: async () => {
+    const data = await api
+      .get<User>("/api/users/me")
+      .then((response) => response.data);
+    return data;
+  },
+  retry: false,
+});
