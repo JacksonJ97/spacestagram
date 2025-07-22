@@ -6,6 +6,12 @@ import HomeIcon from "components/common/Icons/Home";
 import FilledHomeIcon from "components/common/Icons/FilledHome";
 import HeartIcon from "components/common/Icons/Heart";
 import FilledHeartIcon from "components/common/Icons/FilledHeart";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "components/common/DropdownMenu";
 
 function HomeLink({ isActive }: { isActive: boolean }) {
   return (
@@ -47,13 +53,16 @@ function LikesLink({ isActive }: { isActive: boolean }) {
 
 function MenuButton() {
   return (
-    <button
-      type="button"
-      className="flex w-full cursor-pointer items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--secondary-background-color)"
-    >
-      <MenuIcon width={24} height={24} aria-hidden="true" />
-      <span className="sr-only min-xl:not-sr-only">More</span>
-    </button>
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background)">
+        <MenuIcon width={24} height={24} aria-hidden="true" />
+        <span className="sr-only min-xl:not-sr-only">More</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-2 min-xl:min-w-72">
+        <DropdownMenuItem className="p-4">Dark mode</DropdownMenuItem>
+        <DropdownMenuItem className="p-4">Log out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -90,7 +99,7 @@ export default function Sidebar() {
           <li>
             <NavLink
               to="/"
-              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--secondary-background-color)"
+              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background)"
             >
               {({ isActive }) => <HomeLink isActive={isActive} />}
             </NavLink>
@@ -98,7 +107,7 @@ export default function Sidebar() {
           <li>
             <NavLink
               to="/likes"
-              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--secondary-background-color)"
+              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background)"
             >
               {({ isActive }) => <LikesLink isActive={isActive} />}
             </NavLink>
