@@ -23,6 +23,7 @@ export const infinitePostOptions = infiniteQueryOptions({
     const oldest = new Date(posts[posts.length - 1].date);
     return subDays(oldest, 1);
   },
+  staleTime: 10 * 60 * 1000, // 10 minutes
 });
 
 export const postOptions = (date: string) =>

@@ -5,6 +5,7 @@ import { infinitePostOptions } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
 import LikeAuthDialog from "components/LikeAuthDialog";
 import ErrorMessage from "components/Error/ErrorMessage";
+import PostSkeleton from "components/Loading/PostSkeleton";
 import LoadingSpinner from "components/Loading/LoadingSpinner";
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
   if (isPostsPending) {
     return (
       <div className="flex justify-center">
-        <LoadingSpinner />
+        <PostSkeleton />
       </div>
     );
   }

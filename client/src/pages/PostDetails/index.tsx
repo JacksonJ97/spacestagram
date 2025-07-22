@@ -5,7 +5,7 @@ import { postOptions } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
 import LikeAuthDialog from "components/LikeAuthDialog";
 import ErrorMessage from "components/Error/ErrorMessage";
-import LoadingSpinner from "components/Loading/LoadingSpinner";
+import PostSkeleton from "components/Loading/PostSkeleton";
 
 export default function PostDetails() {
   const { date } = useParams();
@@ -20,7 +20,7 @@ export default function PostDetails() {
   if (isPostPending) {
     return (
       <div className="flex justify-center">
-        <LoadingSpinner />
+        <PostSkeleton />
       </div>
     );
   }

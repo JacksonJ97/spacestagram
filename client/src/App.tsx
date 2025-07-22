@@ -10,6 +10,7 @@ import { currentUserOptions } from "data/user/hooks";
 import Header from "components/Header";
 import Sidebar from "components/Sidebar";
 import ProtectedRoute from "components/ProtectedRoute";
+import LoadingSpinner from "components/Loading/LoadingSpinner";
 import Home from "pages/Home";
 import Likes from "pages/Likes";
 import Login from "pages/Login";
@@ -42,8 +43,18 @@ function UserLayout() {
 }
 
 function AppRoutes() {
-  const { data: user } = useQuery({ ...currentUserOptions });
+  const { data: user, isPending: isUserLoading } = useQuery({
+    ...currentUserOptions,
+  });
   const isUserLoggedIn = !!user;
+
+  if (isUserLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-(--background-color)">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <Routes>
@@ -63,7 +74,6 @@ function AppRoutes() {
         />
         <Route path="*" element={<NotFound />} />
       </Route>
-
       <Route
         path="/login"
         element={
