@@ -5,7 +5,7 @@ import {
   useController,
   UseControllerProps,
 } from "react-hook-form";
-import { cn } from "utils/functions";
+import { cn, cx } from "utils/functions";
 import XIcon from "components/common/Icons/X";
 import EyeIcon from "components/common/Icons/Eye";
 import CheckIcon from "components/common/Icons/Check";
@@ -140,7 +140,7 @@ export default function PasswordInput<
                   />
                 )}
                 <span
-                  className={cn(
+                  className={cx(
                     "text-sm",
                     requirement.met
                       ? "text-emerald-600"

@@ -3,6 +3,10 @@ import axios, { AxiosError } from "axios";
 import { clsx, type ClassValue } from "clsx";
 import { API_BASE_URL } from "utils/constants";
 
+export const cx = (...inputs: ClassValue[]) => {
+  return clsx(inputs);
+};
+
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };

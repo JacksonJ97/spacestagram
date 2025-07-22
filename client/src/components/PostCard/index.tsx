@@ -33,7 +33,7 @@ export default function PostCard({
   return (
     <article className="bg-(--background-color max-w-xl rounded-xs border border-(--border-color)">
       <header className="flex items-center gap-3 p-4">
-        <img className="h-8 w-8 rounded-full" src={avatar} alt="User avatar" />
+        <img src={avatar} alt="User avatar" className="h-8 w-8 rounded-full" />
         <p className="text-sm font-medium text-(--text-color)">nasa</p>
       </header>
 
