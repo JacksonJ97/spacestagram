@@ -54,7 +54,7 @@ function LikesLink({ isActive }: { isActive: boolean }) {
 function MenuButton() {
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background)">
+      <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background-color)">
         <MenuIcon width={24} height={24} aria-hidden="true" />
         <span className="sr-only min-xl:not-sr-only">More</span>
       </DropdownMenuTrigger>
@@ -99,7 +99,7 @@ export default function Sidebar() {
           <li>
             <NavLink
               to="/"
-              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background)"
+              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background-color)"
             >
               {({ isActive }) => <HomeLink isActive={isActive} />}
             </NavLink>
@@ -107,7 +107,7 @@ export default function Sidebar() {
           <li>
             <NavLink
               to="/likes"
-              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background)"
+              className="flex items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background-color)"
             >
               {({ isActive }) => <LikesLink isActive={isActive} />}
             </NavLink>
