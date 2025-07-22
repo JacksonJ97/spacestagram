@@ -43,12 +43,12 @@ function UserLayout() {
 }
 
 function AppRoutes() {
-  const { data: user, isPending: isUserLoading } = useQuery({
+  const { data: user, isPending: isUserPending } = useQuery({
     ...currentUserOptions,
   });
   const isUserLoggedIn = !!user;
 
-  if (isUserLoading) {
+  if (isUserPending) {
     return (
       <div className="flex h-screen items-center justify-center bg-(--background-color)">
         <LoadingSpinner />

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { cx } from "utils/functions";
+import { useUserLogout } from "data/auth/hooks";
 import logo from "assets/images/spacestagram-logo.ico";
 import MenuIcon from "components/common/Icons/Menu";
 import HomeIcon from "components/common/Icons/Home";
@@ -52,6 +53,7 @@ function LikesLink({ isActive }: { isActive: boolean }) {
 }
 
 function MenuButton() {
+  const { mutate: logout } = useUserLogout();
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background-color)">
@@ -60,7 +62,9 @@ function MenuButton() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-2 min-xl:min-w-72">
         <DropdownMenuItem className="p-4">Dark mode</DropdownMenuItem>
-        <DropdownMenuItem className="p-4">Log out</DropdownMenuItem>
+        <DropdownMenuItem className="p-4" onClick={() => logout()}>
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

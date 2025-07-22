@@ -22,8 +22,8 @@ export function useCreateUser() {
   return useMutation({
     mutationFn: createUser,
     onSuccess: () => {
-      navigate("/", { replace: true });
       client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+      navigate("/", { replace: true });
     },
     onError: (error) => {
       const message = getErrorMessage(error);
@@ -43,5 +43,4 @@ export const currentUserOptions = queryOptions({
   retry: false,
   gcTime: Infinity,
   staleTime: Infinity,
-  refetchOnWindowFocus: false,
 });

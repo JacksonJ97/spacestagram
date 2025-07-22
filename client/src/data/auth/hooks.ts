@@ -18,8 +18,28 @@ export function useUserLogin() {
   return useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
-      navigate("/", { replace: true });
       client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+      navigate("/", { replace: true });
+    },
+  });
+}
+
+export function useUserLogout() {
+  const navigate = useNavigate();
+  const client = useQueryClient();
+
+  const logoutUser = async () => {
+    const data = await api
+      .post<{ message: string }>("/api/auth/logout")
+      .then((response) => response.data);
+    return data;
+  };
+
+  return useMutation({
+    mutationFn: logoutUser,
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+      navigate("/login", { replace: true });
     },
   });
 }
