@@ -1,11 +1,5 @@
-import { Toaster } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 import { Routes, Route, Outlet } from "react-router";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import {
-  useQuery,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
 import { currentUserOptions } from "data/user/hooks";
 import Header from "components/Header";
 import Sidebar from "components/Sidebar";
@@ -17,8 +11,6 @@ import Login from "pages/Login";
 import Signup from "pages/Signup";
 import NotFound from "pages/NotFound";
 import PostDetails from "pages/PostDetails";
-
-const client = new QueryClient();
 
 function GuestLayout() {
   return (
@@ -42,7 +34,7 @@ function UserLayout() {
   );
 }
 
-function AppRoutes() {
+export default function App() {
   const { data: user, isPending: isUserPending } = useQuery({
     ...currentUserOptions,
   });
@@ -91,15 +83,5 @@ function AppRoutes() {
         }
       />
     </Routes>
-  );
-}
-
-export default function App() {
-  return (
-    <QueryClientProvider client={client}>
-      <AppRoutes />
-      <Toaster richColors visibleToasts={1} />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
   );
 }

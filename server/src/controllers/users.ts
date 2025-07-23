@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
-import { CREATED } from "constants/http";
-import { ConflictError, UnauthorizedError } from "utils/errors";
+import { OK, CREATED } from "constants/http";
+import { ConflictError, NotFoundError } from "utils/errors";
 import { setAuthCookies } from "utils/cookies";
 import { signAccessToken, signRefreshToken } from "utils/jwt";
 import {
@@ -77,17 +77,15 @@ async function handleGetCurrentUser(
   next: NextFunction
 ) {
   try {
-    if (!req.userId) {
-      throw new UnauthorizedError("Unauthorized access");
-    }
+    const userId = req.userId as number; // Validated from authenticate user middleware
 
-    const user = await getUserById(req.userId);
+    const user = await getUserById(userId);
 
     if (!user) {
-      throw new UnauthorizedError("Unauthorized access");
+      throw new NotFoundError("User not found");
     }
 
-    return res.json({
+    return res.status(OK).json({
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
