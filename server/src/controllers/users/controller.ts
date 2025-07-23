@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK, CREATED } from "constants/http";
-import { ConflictError, NotFoundError } from "utils/errors";
 import { setAuthCookies } from "utils/cookies";
+import { ConflictError, NotFoundError } from "utils/errors";
 import { signAccessToken, signRefreshToken } from "utils/jwt";
 import {
   createUser,
@@ -10,26 +10,7 @@ import {
   getUserByEmail,
   createSession,
 } from "db/queries";
-
-const passwordRequirements = [
-  /.{8,}/, // At least 8 characters
-  /[0-9]/, // At least 1 number
-  /[a-z]/, // At least 1 lowercase letter
-  /[A-Z]/, // At least 1 uppercase letter
-  /[^A-Za-z0-9]/, // At least 1 special character
-];
-
-export const createAccountSchema = z.object({
-  firstName: z.string().min(1).max(50),
-  lastName: z.string().min(1).max(50),
-  email: z.email().max(254),
-  password: z
-    .string()
-    .max(72)
-    .refine((value) =>
-      passwordRequirements.every((regex) => regex.test(value))
-    ),
-});
+import { createAccountSchema } from "controllers/users/schema";
 
 interface CreateAccountRequest extends Request {
   body: z.infer<typeof createAccountSchema>;

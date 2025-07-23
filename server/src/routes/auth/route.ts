@@ -1,10 +1,10 @@
 import { Router } from "express";
 import {
-  userLoginSchema,
   handleUserLogin,
   handleUserLogout,
   handleTokenRefresh,
-} from "controllers/auth";
+} from "controllers/auth/controller";
+import { userLoginSchema } from "controllers/auth/schema";
 import validateRequestBody from "middlewares/request-body-validator";
 
 const router = Router();

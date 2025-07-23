@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
 import { UnauthorizedError } from "utils/errors";
+import { addFifteenMinutes } from "utils/functions";
 import { defaults, setAuthCookies, clearAuthCookies } from "utils/cookies";
 import {
   signAccessToken,
@@ -15,12 +16,7 @@ import {
   getSessionById,
   updateSessionById,
 } from "db/queries";
-import { addFifteenMinutes } from "utils/functions";
-
-export const userLoginSchema = z.object({
-  email: z.email(),
-  password: z.string().min(1),
-});
+import { userLoginSchema } from "controllers/auth/schema";
 
 interface UserLoginRequest extends Request {
   body: z.infer<typeof userLoginSchema>;
