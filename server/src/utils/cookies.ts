@@ -4,7 +4,7 @@ import { addThirtyDays, addFifteenMinutes } from "utils/functions";
 
 const REFRESH_PATH = "/api/auth/refresh";
 
-const defaults: CookieOptions = {
+export const defaults: CookieOptions = {
   sameSite: "strict",
   httpOnly: true,
   secure: NODE_ENV === "production",

@@ -31,10 +31,8 @@ export const createAccountSchema = z.object({
     ),
 });
 
-type NewUser = z.infer<typeof createAccountSchema>;
-
 interface CreateAccountRequest extends Request {
-  body: NewUser;
+  body: z.infer<typeof createAccountSchema>;
 }
 
 async function handleCreateAccount(
@@ -42,9 +40,9 @@ async function handleCreateAccount(
   res: Response,
   next: NextFunction
 ) {
-  const { firstName, lastName, email, password } = req.body;
-
   try {
+    const { firstName, lastName, email, password } = req.body;
+
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {

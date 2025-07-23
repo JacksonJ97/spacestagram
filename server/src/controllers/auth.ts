@@ -3,23 +3,27 @@ import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
 import { UnauthorizedError } from "utils/errors";
-import { setAuthCookies, clearAuthCookies } from "utils/cookies";
+import { defaults, setAuthCookies, clearAuthCookies } from "utils/cookies";
 import {
   signAccessToken,
   signRefreshToken,
-  verifyAccessToken,
+  verifyRefreshToken,
 } from "utils/jwt";
-import { getUserByEmail, createSession, deleteSessionById } from "db/queries";
+import {
+  getUserByEmail,
+  createSession,
+  getSessionById,
+  updateSessionById,
+} from "db/queries";
+import { addFifteenMinutes } from "utils/functions";
 
 export const userLoginSchema = z.object({
   email: z.email(),
   password: z.string().min(1),
 });
 
-type UserLogin = z.infer<typeof userLoginSchema>;
-
 interface UserLoginRequest extends Request {
-  body: UserLogin;
+  body: z.infer<typeof userLoginSchema>;
 }
 
 async function handleUserLogin(
@@ -27,9 +31,9 @@ async function handleUserLogin(
   res: Response,
   next: NextFunction
 ) {
-  const { email, password } = req.body;
-
   try {
+    const { email, password } = req.body;
+
     const user = await getUserByEmail(email);
 
     if (!user) {
@@ -59,11 +63,11 @@ async function handleUserLogin(
 }
 
 async function handleUserLogout(req: Request, res: Response) {
-  const cookies = { ...req.cookies } as { accessToken: string | undefined };
-  const { payload } = verifyAccessToken(cookies.accessToken || "");
+  const cookies = { ...req.cookies } as { refreshToken: string | undefined };
+  const { payload } = verifyRefreshToken(cookies.refreshToken || "");
 
   if (payload) {
-    await deleteSessionById(payload.sessionId);
+    await updateSessionById(payload.sessionId, { isValid: false });
   }
 
   return clearAuthCookies(res)
@@ -71,4 +75,50 @@ async function handleUserLogout(req: Request, res: Response) {
     .json({ message: "Logout successful" });
 }
 
-export { handleUserLogin, handleUserLogout };
+async function handleTokenRefresh(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const cookies = { ...req.cookies } as { refreshToken: string | undefined };
+
+    if (!cookies.refreshToken) {
+      throw new UnauthorizedError("Missing refresh token");
+    }
+
+    const { payload } = verifyRefreshToken(cookies.refreshToken);
+
+    if (!payload) {
+      throw new UnauthorizedError("Invalid refresh token");
+    }
+
+    const session = await getSessionById(payload.sessionId);
+
+    if (!session || !session.isValid) {
+      throw new UnauthorizedError("Invalid session");
+    }
+
+    if (new Date() > session.expiresAt) {
+      throw new UnauthorizedError("Session expired");
+    }
+
+    const accessToken = signAccessToken({
+      userId: session.userId,
+      sessionId: session.id,
+    });
+
+    res
+      .cookie("accessToken", accessToken, {
+        ...defaults,
+        expires: addFifteenMinutes(),
+      })
+      .status(OK)
+      .json({ message: "Access token refreshed" });
+  } catch (error) {
+    clearAuthCookies(res);
+    next(error);
+  }
+}
+
+export { handleUserLogin, handleUserLogout, handleTokenRefresh };

@@ -49,8 +49,35 @@ export const verifyAccessToken = (token: string, options?: VerifyOptions) => {
 
     if (error instanceof JsonWebTokenError) {
       console.error("JWT Error: ", error.message);
+      return { error: "Invalid access token" };
     }
 
+    console.error("Unknown JWT verification error: ", error);
     return { error: "Invalid access token" };
+  }
+};
+
+export const verifyRefreshToken = (token: string, options?: VerifyOptions) => {
+  try {
+    const payload = jwt.verify(
+      token,
+      JWT_REFRESH_SECRET,
+      options
+    ) as RefreshTokenPayload;
+
+    return { payload };
+  } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      console.error("Refresh token expired at: ", error.expiredAt);
+      return { error: "Refresh token expired" };
+    }
+
+    if (error instanceof JsonWebTokenError) {
+      console.error("JWT Error: ", error.message);
+      return { error: "Invalid refresh token" };
+    }
+
+    console.error("Unknown JWT verification error: ", error);
+    return { error: "Invalid refresh token" };
   }
 };
