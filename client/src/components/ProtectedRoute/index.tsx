@@ -10,7 +10,13 @@ export default function ProtectedRoute({
   children?: React.ReactNode;
 }) {
   if (!isAllowed) {
-    return <Navigate replace to={redirectPath} />;
+    return (
+      <Navigate
+        replace
+        to={redirectPath}
+        state={{ redirectUrl: window.location.pathname }}
+      />
+    );
   }
 
   return children ? children : <Outlet />;

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "utils/functions";
+import { api } from "utils/api";
 import type { Credentials } from "data/auth/types";
 import { currentUserOptions } from "data/user/hooks";
 

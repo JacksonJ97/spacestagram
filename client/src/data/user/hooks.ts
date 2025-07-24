@@ -5,7 +5,7 @@ import {
   queryOptions,
   useQueryClient,
 } from "@tanstack/react-query";
-import { api, getErrorMessage } from "utils/functions";
+import { api, getErrorMessage } from "utils/api";
 import type { User, CreateUserInput } from "data/user/types";
 
 export function useCreateUser() {

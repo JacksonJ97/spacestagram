@@ -1,0 +1,20 @@
+import axios, { AxiosError } from "axios";
+import { API_BASE_URL } from "utils/constants";
+
+export const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+});
+
+export const getErrorMessage = (error: unknown) => {
+  if (error instanceof AxiosError) {
+    if (error.response?.data?.message) {
+      return error.response.data.message;
+    }
+  }
+  return "Something went wrong.";
+};
