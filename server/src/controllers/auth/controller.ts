@@ -104,7 +104,7 @@ async function handleTokenRefresh(
       sessionId: session.id,
     });
 
-    res
+    return res
       .cookie("accessToken", accessToken, {
         ...defaults,
         expires: addFifteenMinutes(),

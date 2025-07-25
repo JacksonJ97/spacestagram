@@ -1,7 +1,7 @@
 import { Link } from "react-router";
-import type { Post } from "data/nasa/types";
+import type { LikedPost } from "data/liked-posts/types";
 
-export default function PostPreviewCard({ post }: { post: Post }) {
+export default function PostPreviewCard({ post }: { post: LikedPost }) {
   return (
     <div className="relative aspect-square">
       <Link to={`/posts/${post.date}`}>

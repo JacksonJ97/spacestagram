@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import db from "db/index";
-import { users, sessions } from "db/schema";
 import { addThirtyDays } from "utils/functions";
+import { users, sessions, posts, likedPosts } from "db/schema";
 
 async function createUser(input: typeof users.$inferInsert) {
   const SALT_ROUNDS = 10;
@@ -63,6 +63,19 @@ async function updateSessionById(
   await db.update(sessions).set(updates).where(eq(sessions.id, id));
 }
 
+async function getLikedPostsByUserId(userId: number) {
+  const liked = await db
+    .select()
+    .from(likedPosts)
+    .innerJoin(posts, eq(posts.id, likedPosts.postId))
+    .where(eq(likedPosts.userId, userId))
+    .orderBy(desc(likedPosts.likedAt));
+
+  const formatted = liked.map(({ posts }) => posts);
+
+  return formatted;
+}
+
 export {
   createUser,
   getUserById,
@@ -70,4 +83,5 @@ export {
   createSession,
   getSessionById,
   updateSessionById,
+  getLikedPostsByUserId,
 };

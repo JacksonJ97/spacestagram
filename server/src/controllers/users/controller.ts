@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK, CREATED } from "constants/http";
 import { setAuthCookies } from "utils/cookies";
-import { ConflictError, NotFoundError } from "utils/errors";
+import { ConflictError, BadRequestError } from "utils/errors";
 import { signAccessToken, signRefreshToken } from "utils/jwt";
 import {
   createUser,
@@ -63,7 +63,7 @@ async function handleGetCurrentUser(
     const user = await getUserById(userId);
 
     if (!user) {
-      throw new NotFoundError("User not found");
+      throw new BadRequestError("Request could not be processed");
     }
 
     return res.status(OK).json({
