@@ -1,6 +1,12 @@
-import { queryOptions } from "@tanstack/react-query";
-import { api } from "utils/api";
-import { LikedPost } from "data/liked-posts/types";
+import { toast } from "sonner";
+import {
+  useMutation,
+  queryOptions,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { api, getErrorMessage } from "utils/api";
+import { currentUserOptions } from "data/user/hooks";
+import type { LikedPost, LikePostInput } from "data/liked-posts/types";
 
 export const getLikedPostsOptions = queryOptions({
   queryKey: ["liked-posts"],
@@ -11,3 +17,47 @@ export const getLikedPostsOptions = queryOptions({
     return data;
   },
 });
+
+export function useLikePost() {
+  const client = useQueryClient();
+
+  const likePost = async (post: LikePostInput) => {
+    const data = await api
+      .post<{ message: string }>("/api/liked-posts", post)
+      .then((response) => response.data);
+    return data;
+  };
+
+  return useMutation({
+    mutationFn: likePost,
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+    },
+    onError: (error) => {
+      const message = getErrorMessage(error);
+      toast.error(message);
+    },
+  });
+}
+
+export function useUnlikePost() {
+  const client = useQueryClient();
+
+  const unlikePost = async (date: string) => {
+    const data = await api
+      .delete<{ message: string }>(`/api/liked-posts/${date}`)
+      .then((response) => response.data);
+    return data;
+  };
+
+  return useMutation({
+    mutationFn: unlikePost,
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+    },
+    onError: (error) => {
+      const message = getErrorMessage(error);
+      toast.error(message);
+    },
+  });
+}

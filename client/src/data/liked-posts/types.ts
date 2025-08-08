@@ -4,3 +4,9 @@ export type LikedPost = {
   title: string;
   url: string;
 };
+
+export type LikePostInput = {
+  date: string;
+  title: string;
+  url: string;
+};

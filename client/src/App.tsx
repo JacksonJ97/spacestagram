@@ -38,7 +38,6 @@ export default function App() {
   const { data: user, isPending: isUserPending } = useQuery({
     ...currentUserOptions,
   });
-  const isUserLoggedIn = !!user;
 
   if (isUserPending) {
     return (
@@ -48,6 +47,8 @@ export default function App() {
     );
   }
 
+  const isUserLoggedIn = !!user;
+
   return (
     <Routes>
       <Route
@@ -55,7 +56,9 @@ export default function App() {
         element={isUserLoggedIn ? <UserLayout /> : <GuestLayout />}
       >
         <Route index element={<Home />} />
-        <Route path="posts/:date" element={<PostDetails />} />
+        <Route path="posts">
+          <Route path=":date" element={<PostDetails />} />
+        </Route>
         <Route
           path="likes"
           element={

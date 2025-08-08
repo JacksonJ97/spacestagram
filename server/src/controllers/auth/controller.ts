@@ -29,7 +29,6 @@ async function handleUserLogin(
 ) {
   try {
     const { email, password } = req.body;
-
     const user = await getUserByEmail(email);
 
     if (!user) {

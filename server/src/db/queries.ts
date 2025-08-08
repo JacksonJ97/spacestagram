@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { eq, desc } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import db from "db/index";
 import { addThirtyDays } from "utils/functions";
 import { users, sessions, posts, likedPosts } from "db/schema";
@@ -23,9 +23,31 @@ async function createUser(input: typeof users.$inferInsert) {
 async function getUserById(id: number) {
   const user = await db.query.users.findFirst({
     where: eq(users.id, id),
+    columns: {
+      password: false,
+      createdAt: false,
+      updatedAt: false,
+    },
+    with: {
+      likedPosts: {
+        columns: {},
+        with: {
+          post: {
+            columns: {
+              date: true,
+            },
+          },
+        },
+      },
+    },
   });
 
-  return user;
+  const dates = user
+    ? user.likedPosts.map((likedPost) => likedPost.post.date)
+    : [];
+  const formattedUser = user ? { ...user, likedPosts: dates } : undefined;
+
+  return formattedUser;
 }
 
 async function getUserByEmail(email: string) {
@@ -76,6 +98,55 @@ async function getLikedPostsByUserId(userId: number) {
   return formatted;
 }
 
+async function getOrCreatePost({
+  date,
+  title,
+  url,
+}: typeof posts.$inferInsert) {
+  const [post] = await db
+    .insert(posts)
+    .values({ date, title, url })
+    .onConflictDoNothing()
+    .returning();
+
+  return post;
+}
+
+async function createLikedPost({
+  userId,
+  postId,
+}: typeof likedPosts.$inferInsert) {
+  const [likedPost] = await db
+    .insert(likedPosts)
+    .values({ userId, postId })
+    .returning();
+
+  return likedPost;
+}
+
+async function getPostByDate(date: string) {
+  const post = await db.query.posts.findFirst({
+    where: eq(posts.date, date),
+  });
+
+  return post;
+}
+
+async function deleteLikedPost({
+  userId,
+  postId,
+}: {
+  userId: number;
+  postId: number;
+}) {
+  const result = await db
+    .delete(likedPosts)
+    .where(and(eq(likedPosts.userId, userId), eq(likedPosts.postId, postId)))
+    .returning();
+
+  return result;
+}
+
 export {
   createUser,
   getUserById,
@@ -84,4 +155,8 @@ export {
   getSessionById,
   updateSessionById,
   getLikedPostsByUserId,
+  getOrCreatePost,
+  createLikedPost,
+  getPostByDate,
+  deleteLikedPost,
 };

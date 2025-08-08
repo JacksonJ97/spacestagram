@@ -23,7 +23,6 @@ async function handleCreateAccount(
 ) {
   try {
     const { firstName, lastName, email, password } = req.body;
-
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
@@ -58,20 +57,14 @@ async function handleGetCurrentUser(
   next: NextFunction
 ) {
   try {
-    const userId = req.userId as number; // Validated from authenticate user middleware
-
+    const userId = req.userId as number;
     const user = await getUserById(userId);
 
     if (!user) {
       throw new BadRequestError("Request could not be processed");
     }
 
-    return res.status(OK).json({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-    });
+    return res.status(OK).json(user);
   } catch (error) {
     next(error);
   }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import avatar from "assets/images/nasa-avatar.jpg";
 import type { Post } from "data/nasa/types";
+import { useLikePost, useUnlikePost } from "data/liked-posts/hooks";
 import HeartIcon from "components/common/Icons/Heart";
 import ShareIcon from "components/common/Icons/Share";
 import FilledHeartIcon from "components/common/Icons/FilledHeart";
@@ -17,12 +18,20 @@ export default function PostCard({
   const pathname = window.location.origin;
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleLike = () => {
+  const { mutate: likePost } = useLikePost();
+  const { mutate: unlikePost } = useUnlikePost();
+
+  const toggleLike = () => {
     if (!isUserLoggedIn) {
       handleOpenDialog();
       return;
     }
     setIsLiked((prev) => !prev);
+    if (isLiked) {
+      unlikePost(post.date);
+    } else {
+      likePost({ date: post.date, title: post.title, url: post.url });
+    }
   };
 
   const handleShare = () => {
@@ -44,7 +53,7 @@ export default function PostCard({
       <div className="flex items-center px-2 pt-2">
         <button
           type="button"
-          onClick={handleLike}
+          onClick={toggleLike}
           aria-label={isLiked ? "Unlike post" : "Like post"}
           className="group flex h-10 w-10 cursor-pointer items-center justify-center"
         >

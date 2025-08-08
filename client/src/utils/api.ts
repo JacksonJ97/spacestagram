@@ -10,7 +10,7 @@ export const api = axios.create({
   },
 });
 
-export const getErrorMessage = (error: unknown) => {
+export const getErrorMessage = (error: unknown): string => {
   if (error instanceof AxiosError) {
     if (error.response?.data?.message) {
       return error.response.data.message;
