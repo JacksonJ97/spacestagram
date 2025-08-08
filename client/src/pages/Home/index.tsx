@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { infinitePostOptions } from "data/nasa/hooks";
@@ -9,9 +9,6 @@ import PostSkeleton from "components/Loading/PostSkeleton";
 import LoadingSpinner from "components/Loading/LoadingSpinner";
 
 export default function Home() {
-  const { ref, inView } = useInView();
-  const [open, setOpen] = useState(false);
-
   const {
     data: posts,
     fetchNextPage: fetchNextPosts,
@@ -20,11 +17,14 @@ export default function Home() {
     isFetching: isFetchingPosts,
   } = useInfiniteQuery({ ...infinitePostOptions });
 
-  useEffect(() => {
-    if (inView) {
-      fetchNextPosts();
-    }
-  }, [inView, fetchNextPosts]);
+  const [open, setOpen] = useState(false);
+  const { ref } = useInView({
+    onChange: (inView) => {
+      if (inView && !isFetchingPosts) {
+        fetchNextPosts();
+      }
+    },
+  });
 
   if (isPostsPending) {
     return (
