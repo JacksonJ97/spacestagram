@@ -1,23 +1,21 @@
 import { Outlet, Navigate } from "react-router";
 
 export default function ProtectedRoute({
+  to,
   isAllowed,
-  redirectPath,
-  children,
 }: {
+  to: string;
   isAllowed: boolean;
-  redirectPath: string;
-  children?: React.ReactNode;
 }) {
   if (!isAllowed) {
     return (
       <Navigate
         replace
-        to={redirectPath}
+        to={to}
         state={{ redirectUrl: window.location.pathname }}
       />
     );
   }
 
-  return children ? children : <Outlet />;
+  return <Outlet />;
 }
