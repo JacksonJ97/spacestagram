@@ -60,8 +60,7 @@ function MenuButton() {
         <MenuIcon width={24} height={24} aria-hidden="true" />
         <span className="sr-only min-xl:not-sr-only">More</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-2 min-xl:min-w-72">
-        <DropdownMenuItem className="p-4">Dark mode</DropdownMenuItem>
+      <DropdownMenuContent className="p-1 min-xl:min-w-72">
         <DropdownMenuItem className="p-4" onClick={() => logout()}>
           Log out
         </DropdownMenuItem>

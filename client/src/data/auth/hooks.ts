@@ -38,7 +38,7 @@ export function useUserLogout() {
   return useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+      client.resetQueries({ queryKey: currentUserOptions.queryKey });
       navigate("/login", { replace: true });
     },
   });

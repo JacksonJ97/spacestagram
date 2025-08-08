@@ -8,6 +8,7 @@ import { defaults, setAuthCookies, clearAuthCookies } from "utils/cookies";
 import {
   signAccessToken,
   signRefreshToken,
+  verifyAccessToken,
   verifyRefreshToken,
 } from "utils/jwt";
 import {
@@ -58,8 +59,8 @@ async function handleUserLogin(
 }
 
 async function handleUserLogout(req: Request, res: Response) {
-  const cookies = { ...req.cookies } as { refreshToken: string | undefined };
-  const { payload } = verifyRefreshToken(cookies.refreshToken || "");
+  const cookies = { ...req.cookies } as { accessToken: string | undefined };
+  const { payload } = verifyAccessToken(cookies.accessToken || "");
 
   if (payload) {
     await updateSessionById(payload.sessionId, { isValid: false });

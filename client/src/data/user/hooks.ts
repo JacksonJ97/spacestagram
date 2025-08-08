@@ -41,6 +41,7 @@ export const currentUserOptions = queryOptions({
     return data;
   },
   retry: false,
+  refetchOnWindowFocus: false,
   gcTime: Infinity,
   staleTime: Infinity,
 });
