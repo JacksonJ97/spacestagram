@@ -1,13 +1,12 @@
 import { Response, CookieOptions } from "express";
-import { NODE_ENV } from "constants/env";
 import { addThirtyDays, addFifteenMinutes } from "utils/functions";
 
 const REFRESH_PATH = "/api/auth/refresh";
 
 export const defaults: CookieOptions = {
-  sameSite: "strict",
+  sameSite: "none",
   httpOnly: true,
-  secure: NODE_ENV === "production",
+  secure: true,
 };
 
 export const setAuthCookies = ({

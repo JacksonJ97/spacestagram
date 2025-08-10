@@ -13,7 +13,6 @@ const getEnv = (key: string, defaultValue?: string) => {
 };
 
 export const PORT = getEnv("PORT", "8000");
-export const NODE_ENV = getEnv("NODE_ENV");
 export const APP_ORIGIN = getEnv("APP_ORIGIN");
 export const DATABASE_URL = getEnv("DATABASE_URL");
 export const JWT_ACCESS_SECRET = getEnv("JWT_ACCESS_SECRET");

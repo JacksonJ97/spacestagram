@@ -8,7 +8,14 @@ import errorHandler from "middlewares/error-handler";
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: APP_ORIGIN, credentials: true }));
+app.use(
+  cors({
+    origin: APP_ORIGIN,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(cookieParser());
 
 app.use("/api", router);

@@ -1,17 +1,18 @@
 import axios, { AxiosError } from "axios";
-import { API_BASE_URL } from "utils/constants";
 import client from "config/client";
+import { API_BASE_URL } from "utils/constants";
 
 const options = {
   baseURL: API_BASE_URL,
   withCredentials: true,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
+  headers: { Accept: "application/json" },
 };
 
 const api = axios.create(options);
+
+api.defaults.headers.post["Content-Type"] = "application/json";
+api.defaults.headers.put["Content-Type"] = "application/json";
+api.defaults.headers.patch["Content-Type"] = "application/json";
 
 api.interceptors.response.use(
   (response) => response,
