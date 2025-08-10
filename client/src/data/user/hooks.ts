@@ -5,7 +5,8 @@ import {
   queryOptions,
   useQueryClient,
 } from "@tanstack/react-query";
-import { api, getErrorMessage } from "utils/api";
+import api from "config/api";
+import { getErrorMessage } from "utils/functions";
 import type { User, CreateUserInput } from "data/user/types";
 
 export function useCreateUser() {
@@ -41,7 +42,6 @@ export const currentUserOptions = queryOptions({
     return data;
   },
   retry: false,
-  refetchOnWindowFocus: false,
   gcTime: Infinity,
   staleTime: Infinity,
 });

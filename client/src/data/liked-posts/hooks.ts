@@ -4,7 +4,8 @@ import {
   queryOptions,
   useQueryClient,
 } from "@tanstack/react-query";
-import { api, getErrorMessage } from "utils/api";
+import api from "config/api";
+import { getErrorMessage } from "utils/functions";
 import { currentUserOptions } from "data/user/hooks";
 import type { LikedPost, LikePostInput } from "data/liked-posts/types";
 

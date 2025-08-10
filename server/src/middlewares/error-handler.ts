@@ -12,6 +12,7 @@ function errorHandler(
 
   if (error instanceof AppError) {
     return res.status(error.status).json({
+      code: error.code,
       message: error.message,
     });
   }

@@ -11,7 +11,10 @@ async function authenticateUser(
     const cookies = { ...req.cookies } as { accessToken: string | undefined };
 
     if (!cookies.accessToken) {
-      throw new UnauthorizedError("Access token is missing");
+      throw new UnauthorizedError(
+        "Access token is missing",
+        "ACCESS_TOKEN_MISSING"
+      );
     }
 
     const { payload, error } = verifyAccessToken(cookies.accessToken);
