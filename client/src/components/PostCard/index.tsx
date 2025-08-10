@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { toast } from "sonner";
 import avatar from "assets/images/nasa-avatar.jpg";
 import type { Post } from "data/nasa/types";
@@ -9,24 +8,25 @@ import FilledHeartIcon from "components/common/Icons/FilledHeart";
 
 export default function PostCard({
   post,
+  isLiked,
+  isLoggedIn,
   handleOpenDialog,
 }: {
   post: Post;
+  isLiked: boolean;
+  isLoggedIn: boolean;
   handleOpenDialog: () => void;
 }) {
-  const isUserLoggedIn = false; // TODO: Replace with actual authentication logic
   const pathname = window.location.origin;
-  const [isLiked, setIsLiked] = useState(false);
 
-  const { mutate: likePost } = useLikePost();
-  const { mutate: unlikePost } = useUnlikePost();
+  const { mutate: likePost, isPending: isLikingPost } = useLikePost();
+  const { mutate: unlikePost, isPending: isUnlikingPost } = useUnlikePost();
 
   const toggleLike = () => {
-    if (!isUserLoggedIn) {
+    if (!isLoggedIn) {
       handleOpenDialog();
       return;
     }
-    setIsLiked((prev) => !prev);
     if (isLiked) {
       unlikePost(post.date);
     } else {
@@ -40,7 +40,7 @@ export default function PostCard({
   };
 
   return (
-    <article className="bg-(--background-color max-w-xl rounded-xs border border-(--border-color)">
+    <article className="max-w-xl rounded-xs border border-(--border-color) bg-(--background-color)">
       <header className="flex items-center gap-3 p-4">
         <img src={avatar} alt="User avatar" className="h-8 w-8 rounded-full" />
         <p className="text-sm font-medium text-(--text-color)">nasa</p>
@@ -54,8 +54,9 @@ export default function PostCard({
         <button
           type="button"
           onClick={toggleLike}
+          data-loading={isLikingPost || isUnlikingPost}
           aria-label={isLiked ? "Unlike post" : "Like post"}
-          className="group flex h-10 w-10 cursor-pointer items-center justify-center"
+          className="group flex h-10 w-10 cursor-pointer items-center justify-center data-[loading=true]:pointer-events-none"
         >
           {isLiked ? (
             <FilledHeartIcon

@@ -23,6 +23,12 @@ export const infinitePostOptions = infiniteQueryOptions({
     const oldest = new Date(posts[posts.length - 1].date);
     return subDays(oldest, 1);
   },
+  select: (data) => {
+    const pages = data.pages
+      .flat()
+      .filter((post) => post.media_type == "image");
+    return { ...data, pages };
+  },
   staleTime: 10 * 60 * 1000, // 10 minutes
 });
 

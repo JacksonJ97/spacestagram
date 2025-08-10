@@ -10,6 +10,6 @@ import validateRequestBody from "middlewares/request-body-validator";
 const router = Router();
 
 router.post("/", validateRequestBody(createAccountSchema), handleCreateAccount);
-router.get("/me", authenticateUser, handleGetCurrentUser);
+router.get("/me", handleGetCurrentUser);
 
 export default router;

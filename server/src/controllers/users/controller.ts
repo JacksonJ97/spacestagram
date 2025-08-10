@@ -2,8 +2,16 @@ import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK, CREATED } from "constants/http";
 import { setAuthCookies } from "utils/cookies";
-import { ConflictError, BadRequestError } from "utils/errors";
-import { signAccessToken, signRefreshToken } from "utils/jwt";
+import {
+  ConflictError,
+  BadRequestError,
+  UnauthorizedError,
+} from "utils/errors";
+import {
+  signAccessToken,
+  signRefreshToken,
+  verifyAccessToken,
+} from "utils/jwt";
 import {
   createUser,
   getUserById,
@@ -57,8 +65,19 @@ async function handleGetCurrentUser(
   next: NextFunction
 ) {
   try {
-    const userId = req.userId as number;
-    const user = await getUserById(userId);
+    const cookies = { ...req.cookies } as { accessToken: string | undefined };
+
+    if (!cookies.accessToken) {
+      return res.status(OK).json(null);
+    }
+
+    const { payload, error } = verifyAccessToken(cookies.accessToken);
+
+    if (!payload) {
+      throw new UnauthorizedError(error);
+    }
+
+    const user = await getUserById(payload.userId);
 
     if (!user) {
       throw new BadRequestError("Request could not be processed");

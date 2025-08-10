@@ -17,6 +17,8 @@ export const getLikedPostsOptions = queryOptions({
       .then((response) => response.data);
     return data;
   },
+  gcTime: Infinity,
+  staleTime: Infinity,
 });
 
 export function useLikePost() {
@@ -33,6 +35,7 @@ export function useLikePost() {
     mutationFn: likePost,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+      client.invalidateQueries({ queryKey: getLikedPostsOptions.queryKey });
     },
     onError: (error) => {
       const message = getErrorMessage(error);
@@ -55,6 +58,7 @@ export function useUnlikePost() {
     mutationFn: unlikePost,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
+      client.invalidateQueries({ queryKey: getLikedPostsOptions.queryKey });
     },
     onError: (error) => {
       const message = getErrorMessage(error);

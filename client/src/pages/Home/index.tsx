@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { currentUserOptions } from "data/user/hooks";
 import { infinitePostOptions } from "data/nasa/hooks";
 import PostCard from "components/PostCard";
 import LikeAuthDialog from "components/LikeAuthDialog";
@@ -26,6 +27,8 @@ export default function Home() {
     },
   });
 
+  const { data: user } = useQuery({ ...currentUserOptions });
+
   if (isPostsPending) {
     return (
       <div className="flex justify-center">
@@ -40,6 +43,9 @@ export default function Home() {
     );
   }
 
+  const isLoggedIn = !!user;
+  const likedPosts = new Set(user ? user.likedPosts : []);
+
   const handleOpenDialog = () => {
     setOpen(true);
   };
@@ -50,16 +56,15 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-center gap-6">
-      {posts.pages
-        .flat()
-        .filter((post) => post.media_type == "image")
-        .map((post) => (
-          <PostCard
-            post={post}
-            handleOpenDialog={handleOpenDialog}
-            key={post.date}
-          />
-        ))}
+      {posts.pages.map((post) => (
+        <PostCard
+          post={post}
+          isLoggedIn={isLoggedIn}
+          isLiked={likedPosts.has(post.date)}
+          handleOpenDialog={handleOpenDialog}
+          key={post.date}
+        />
+      ))}
       {isFetchingPosts && <LoadingSpinner />}
       <LikeAuthDialog open={open} onOpenChange={onOpenChange} />
       <div ref={ref} />
