@@ -20,6 +20,7 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api", router);
+app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 app.use(errorHandler);
 
