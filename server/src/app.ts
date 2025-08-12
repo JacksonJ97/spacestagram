@@ -19,6 +19,12 @@ app.use(
 );
 app.use(cookieParser());
 
+app.use((req, _res, next) => {
+  console.log("URL seen by Express:", req.url);
+  console.log("VERCEL", process.env.VERCEL);
+  next();
+});
+
 app.use(process.env.VERCEL ? "" : "/api", router);
 
 app.get(process.env.VERCEL ? "/health" : "/api/health", (req, res) =>
