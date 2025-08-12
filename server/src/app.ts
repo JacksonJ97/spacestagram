@@ -17,9 +17,12 @@ app.use(
   })
 );
 app.use(cookieParser());
-
-app.use("/api", router);
-app.get("/api/health", (req, res) => res.json({ ok: true }));
+app.use((_req, _res, next) => {
+  console.log("Request URL:", _req.url);
+  next();
+});
+app.use(router);
+app.get("/health", (req, res) => res.json({ ok: true }));
 
 app.use(errorHandler);
 
