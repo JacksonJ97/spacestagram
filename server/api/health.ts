@@ -1,3 +1,3 @@
-export default function handler(_req, res) {
+export default function handler(_req: any, res: any) {
   res.status(200).json({ ok: true, from: "single file fn" });
 }
