@@ -1,5 +1,5 @@
 import { Response, CookieOptions } from "express";
-import { addThirtyDays, addFifteenMinutes } from "utils/functions";
+import { addThirtyDays, addFifteenMinutes } from "../utils/functions";
 
 const ACCESS_PATH = "/";
 const REFRESH_PATH = "/api/auth/refresh";

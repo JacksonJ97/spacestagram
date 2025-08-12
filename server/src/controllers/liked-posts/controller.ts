@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
-import { OK } from "constants/http";
-import { NotFoundError, BadRequestError } from "utils/errors";
+import { OK } from "../../constants/http";
+import { NotFoundError, BadRequestError } from "../../utils/errors";
 import {
   getUserById,
   getPostByDate,
@@ -9,8 +9,8 @@ import {
   getLikedPostsByUserId,
   getOrCreatePost,
   createLikedPost,
-} from "db/queries";
-import { likePostSchema } from "controllers/liked-posts/schema";
+} from "../../db/queries";
+import { likePostSchema } from "../../controllers/liked-posts/schema";
 
 async function handleGetLikedPosts(
   req: Request,

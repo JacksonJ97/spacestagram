@@ -1,23 +1,27 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
-import { OK } from "constants/http";
-import { UnauthorizedError } from "utils/errors";
-import { addFifteenMinutes } from "utils/functions";
-import { defaults, setAuthCookies, clearAuthCookies } from "utils/cookies";
+import { OK } from "../../constants/http";
+import { UnauthorizedError } from "../../utils/errors";
+import { addFifteenMinutes } from "../../utils/functions";
+import {
+  defaults,
+  setAuthCookies,
+  clearAuthCookies,
+} from "../../utils/cookies";
 import {
   signAccessToken,
   signRefreshToken,
   verifyAccessToken,
   verifyRefreshToken,
-} from "utils/jwt";
+} from "../../utils/jwt";
 import {
   getUserByEmail,
   createSession,
   getSessionById,
   updateSessionById,
-} from "db/queries";
-import { userLoginSchema } from "controllers/auth/schema";
+} from "../../db/queries";
+import { userLoginSchema } from "../../controllers/auth/schema";
 
 interface UserLoginRequest extends Request {
   body: z.infer<typeof userLoginSchema>;

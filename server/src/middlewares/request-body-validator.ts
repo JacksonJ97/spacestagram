@@ -1,6 +1,6 @@
 import { z, ZodType } from "zod";
 import { Request, Response, NextFunction } from "express";
-import { BAD_REQUEST } from "constants/http";
+import { BAD_REQUEST } from "../constants/http";
 
 function validateRequestBody(schema: ZodType) {
   return (req: Request, res: Response, next: NextFunction) => {

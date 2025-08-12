@@ -4,7 +4,7 @@ import jwt, {
   TokenExpiredError,
   JsonWebTokenError,
 } from "jsonwebtoken";
-import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "constants/env";
+import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "../constants/env";
 
 type AccessTokenPayload = {
   userId: number;

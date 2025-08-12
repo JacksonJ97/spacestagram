@@ -1,7 +1,7 @@
 import { Router } from "express";
-import auth from "routes/auth/route";
-import users from "routes/users/route";
-import likedPosts from "routes/liked-posts/route";
+import auth from "../routes/auth/route";
+import users from "../routes/users/route";
+import likedPosts from "../routes/liked-posts/route";
 
 const router = Router();
 

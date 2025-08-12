@@ -1,12 +1,12 @@
 import { Router } from "express";
-import authenticateUser from "middlewares/authenticate-user";
-import validateRequestBody from "middlewares/request-body-validator";
+import authenticateUser from "../../middlewares/authenticate-user";
+import validateRequestBody from "../../middlewares/request-body-validator";
 import {
   handleGetLikedPosts,
   handleLikePost,
   handleUnlikePost,
-} from "controllers/liked-posts/controller";
-import { likePostSchema } from "controllers/liked-posts/schema";
+} from "../../controllers/liked-posts/controller";
+import { likePostSchema } from "../../controllers/liked-posts/schema";
 
 const router = Router();
 

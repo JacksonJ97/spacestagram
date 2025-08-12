@@ -1,16 +1,11 @@
 import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
-import router from "routes/index";
-import { PORT, APP_ORIGIN } from "constants/env";
-import errorHandler from "middlewares/error-handler";
+import router from "./routes";
+import { PORT, APP_ORIGIN } from "./constants/env";
+import errorHandler from "./middlewares/error-handler";
 
 const app = express();
-
-app.use((req, _res, next) => {
-  console.log("URL", req.url, "VERCEL", process.env.VERCEL);
-  next();
-});
 
 app.use(express.json());
 app.use(
@@ -22,11 +17,9 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use((_req, _res, next) => {
-  console.log("Request URL:", _req.url);
-  next();
-});
+
 app.use(process.env.VERCEL ? "" : "/api", router);
+
 app.get(process.env.VERCEL ? "/health" : "/api/health", (req, res) =>
   res.json({ ok: true })
 );

@@ -7,15 +7,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "constants/*": ["src/constants/*"],
-      "controllers/*": ["src/controllers/*"],
-      "db/*": ["src/db/*"],
-      "middlewares/*": ["src/middlewares/*"],
-      "routes/*": ["src/routes/*"],
-      "utils/*": ["src/utils/*"]
-    }
+    "skipLibCheck": true
   }
 }
