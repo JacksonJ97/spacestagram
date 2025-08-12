@@ -7,6 +7,11 @@ import errorHandler from "middlewares/error-handler";
 
 const app = express();
 
+app.use((req, _res, next) => {
+  console.log("URL", req.url, "VERCEL", process.env.VERCEL);
+  next();
+});
+
 app.use(express.json());
 app.use(
   cors({
