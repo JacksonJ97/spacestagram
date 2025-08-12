@@ -7,7 +7,6 @@ import errorHandler from "middlewares/error-handler";
 
 const app = express();
 
-app.set("trust proxy", 1);
 app.use(express.json());
 app.use(
   cors({
@@ -24,6 +23,10 @@ app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
