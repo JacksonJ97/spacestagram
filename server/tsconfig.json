@@ -17,5 +17,6 @@
       "routes/*": ["src/routes/*"],
       "utils/*": ["src/utils/*"]
     }
-  }
+  },
+  "include": ["api", "src"]
 }
