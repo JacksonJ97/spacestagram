@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import { eq, and, desc } from "drizzle-orm";
-import { addThirtyDays } from "../utils/functions";
-import db from "./client";
-import { users, sessions, posts, likedPosts } from "./schema";
+import { addThirtyDays } from "utils/functions";
+import db from "db/client";
+import { users, sessions, posts, likedPosts } from "db/schema";
 
 async function createUser(input: typeof users.$inferInsert) {
   const SALT_ROUNDS = 10;

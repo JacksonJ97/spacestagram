@@ -5,7 +5,7 @@ import {
   UNAUTHORIZED,
   INTERNAL_SERVER_ERROR,
   HttpStatusCode,
-} from "../constants/http";
+} from "constants/http";
 
 const codes = {
   INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",

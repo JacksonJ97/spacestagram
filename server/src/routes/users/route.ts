@@ -2,9 +2,9 @@ import { Router } from "express";
 import {
   handleCreateAccount,
   handleGetCurrentUser,
-} from "../../controllers/users/controller";
-import { createAccountSchema } from "../../controllers/users/schema";
-import validateRequestBody from "../../middlewares/request-body-validator";
+} from "controllers/users/controller";
+import { createAccountSchema } from "controllers/users/schema";
+import validateRequestBody from "middlewares/request-body-validator";
 
 const router = Router();
 

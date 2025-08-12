@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyAccessToken } from "../utils/jwt";
-import { UnauthorizedError } from "../utils/errors";
+import { verifyAccessToken } from "utils/jwt";
+import { UnauthorizedError } from "utils/errors";
 
 async function authenticateUser(
   req: Request,

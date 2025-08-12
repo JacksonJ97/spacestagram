@@ -1,9 +1,9 @@
 import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
-import router from "./routes";
-import { PORT, APP_ORIGIN } from "./constants/env";
-import errorHandler from "./middlewares/error-handler";
+import router from "routes/index";
+import { PORT, APP_ORIGIN } from "constants/env";
+import errorHandler from "middlewares/error-handler";
 
 const app = express();
 
@@ -19,21 +19,9 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use((req, _res, next) => {
-  console.log("URL seen by Express:", req.url);
-  console.log("VERCEL", process.env.VERCEL);
-  next();
-});
-
 app.use("/api", router);
-app.get("/api/health", (req, res) => res.json({ ok: true }));
-
 app.use(errorHandler);
 
-if (!process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
-}
-
-export default app;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

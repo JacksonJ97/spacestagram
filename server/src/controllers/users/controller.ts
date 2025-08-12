@@ -1,24 +1,24 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
-import { OK, CREATED } from "../../constants/http";
-import { setAuthCookies } from "../../utils/cookies";
+import { OK, CREATED } from "constants/http";
+import { setAuthCookies } from "utils/cookies";
 import {
   ConflictError,
   BadRequestError,
   UnauthorizedError,
-} from "../../utils/errors";
+} from "utils/errors";
 import {
   signAccessToken,
   signRefreshToken,
   verifyAccessToken,
-} from "../../utils/jwt";
+} from "utils/jwt";
 import {
   createUser,
   getUserById,
   getUserByEmail,
   createSession,
-} from "../../db/queries";
-import { createAccountSchema } from "../../controllers/users/schema";
+} from "db/queries";
+import { createAccountSchema } from "controllers/users/schema";
 
 interface CreateAccountRequest extends Request {
   body: z.infer<typeof createAccountSchema>;
