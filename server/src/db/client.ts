@@ -1,9 +1,9 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { Pool } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
 import * as schema from "db/schema";
 import { DATABASE_URL } from "constants/env";
 
-const sql = neon(DATABASE_URL);
-const db = drizzle({ schema, casing: "snake_case", client: sql });
+const pool = new Pool({ connectionString: DATABASE_URL, max: 5 });
+const db = drizzle({ schema, casing: "snake_case", client: pool });
 
 export default db;
