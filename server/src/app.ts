@@ -25,11 +25,8 @@ app.use((req, _res, next) => {
   next();
 });
 
-app.use(process.env.VERCEL ? "" : "/api", router);
-
-app.get(process.env.VERCEL ? "/health" : "/api/health", (req, res) =>
-  res.json({ ok: true })
-);
+app.use("/api", router);
+app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 app.use(errorHandler);
 
