@@ -4,7 +4,11 @@ import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
 import { UnauthorizedError } from "utils/errors";
 import { addFifteenMinutes } from "utils/functions";
-import { defaults, setAuthCookies, clearAuthCookies } from "utils/cookies";
+import {
+  setAuthCookies,
+  clearAuthCookies,
+  accessTokenOptions,
+} from "utils/cookies";
 import {
   signAccessToken,
   signRefreshToken,
@@ -83,10 +87,10 @@ async function handleTokenRefresh(
       throw new UnauthorizedError("Missing refresh token");
     }
 
-    const { payload } = verifyRefreshToken(cookies.refreshToken);
+    const { payload, error } = verifyRefreshToken(cookies.refreshToken);
 
-    if (!payload) {
-      throw new UnauthorizedError("Invalid refresh token");
+    if (error) {
+      throw new UnauthorizedError(error);
     }
 
     const session = await getSessionById(payload.sessionId);
@@ -106,7 +110,7 @@ async function handleTokenRefresh(
 
     return res
       .cookie("accessToken", accessToken, {
-        ...defaults,
+        ...accessTokenOptions,
         expires: addFifteenMinutes(),
       })
       .status(OK)

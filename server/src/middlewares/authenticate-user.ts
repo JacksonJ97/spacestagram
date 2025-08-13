@@ -12,14 +12,14 @@ async function authenticateUser(
 
     if (!cookies.accessToken) {
       throw new UnauthorizedError(
-        "Access token is missing",
+        "Missing access token",
         "ACCESS_TOKEN_MISSING"
       );
     }
 
     const { payload, error } = verifyAccessToken(cookies.accessToken);
 
-    if (!payload) {
+    if (error) {
       throw new UnauthorizedError(error);
     }
 

@@ -44,16 +44,16 @@ export const verifyAccessToken = (token: string, options?: VerifyOptions) => {
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       console.error("Access token expired at: ", error.expiredAt);
-      return { error: "Access token expired" };
+      return { error: "Access token expired" as const };
     }
 
     if (error instanceof JsonWebTokenError) {
       console.error("JWT Error: ", error.message);
-      return { error: "Invalid access token" };
+      return { error: "Invalid access token" as const };
     }
 
     console.error("Unknown JWT verification error: ", error);
-    return { error: "Invalid access token" };
+    return { error: "Invalid access token" as const };
   }
 };
 
@@ -69,15 +69,15 @@ export const verifyRefreshToken = (token: string, options?: VerifyOptions) => {
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       console.error("Refresh token expired at: ", error.expiredAt);
-      return { error: "Refresh token expired" };
+      return { error: "Refresh token expired" as const };
     }
 
     if (error instanceof JsonWebTokenError) {
       console.error("JWT Error: ", error.message);
-      return { error: "Invalid refresh token" };
+      return { error: "Invalid refresh token" as const };
     }
 
     console.error("Unknown JWT verification error: ", error);
-    return { error: "Invalid refresh token" };
+    return { error: "Invalid refresh token" as const };
   }
 };

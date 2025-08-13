@@ -10,6 +10,16 @@ export const defaults: CookieOptions = {
   secure: true,
 };
 
+export const accessTokenOptions: CookieOptions = {
+  ...defaults,
+  path: ACCESS_PATH,
+};
+
+export const refreshTokenOptions: CookieOptions = {
+  ...defaults,
+  path: REFRESH_PATH,
+};
+
 export const setAuthCookies = ({
   res,
   accessToken,
@@ -21,17 +31,15 @@ export const setAuthCookies = ({
 }) =>
   res
     .cookie("accessToken", accessToken, {
-      ...defaults,
-      path: ACCESS_PATH,
+      ...accessTokenOptions,
       expires: addFifteenMinutes(),
     })
     .cookie("refreshToken", refreshToken, {
-      ...defaults,
-      path: REFRESH_PATH,
+      ...refreshTokenOptions,
       expires: addThirtyDays(),
     });
 
 export const clearAuthCookies = (res: Response) =>
   res
-    .clearCookie("accessToken")
-    .clearCookie("refreshToken", { path: REFRESH_PATH });
+    .clearCookie("accessToken", accessTokenOptions)
+    .clearCookie("refreshToken", refreshTokenOptions);

@@ -116,13 +116,17 @@ async function getOrCreatePost({
   });
 }
 
-async function createLikedPost({
+async function createOrTouchLikedPost({
   userId,
   postId,
 }: typeof likedPosts.$inferInsert) {
   const [likedPost] = await db
     .insert(likedPosts)
     .values({ userId, postId })
+    .onConflictDoUpdate({
+      target: [likedPosts.userId, likedPosts.postId],
+      set: { likedAt: new Date() },
+    })
     .returning();
 
   return likedPost;
@@ -143,12 +147,12 @@ async function deleteLikedPost({
   userId: number;
   postId: number;
 }) {
-  const result = await db
+  const deleted = await db
     .delete(likedPosts)
     .where(and(eq(likedPosts.userId, userId), eq(likedPosts.postId, postId)))
-    .returning();
+    .returning({ id: likedPosts.id });
 
-  return result;
+  return deleted.length > 0;
 }
 
 export {
@@ -160,7 +164,7 @@ export {
   updateSessionById,
   getLikedPostsByUserId,
   getOrCreatePost,
-  createLikedPost,
+  createOrTouchLikedPost,
   getPostByDate,
   deleteLikedPost,
 };

@@ -8,7 +8,7 @@ import {
   deleteLikedPost,
   getLikedPostsByUserId,
   getOrCreatePost,
-  createLikedPost,
+  createOrTouchLikedPost,
 } from "db/queries";
 import { likePostSchema } from "controllers/liked-posts/schema";
 
@@ -57,7 +57,7 @@ async function handleLikePost(
       throw new NotFoundError("Post not found");
     }
 
-    await createLikedPost({ userId: user.id, postId: post.id });
+    await createOrTouchLikedPost({ userId: user.id, postId: post.id });
 
     return res.status(OK).json({ message: "Post liked" });
   } catch (error) {
@@ -84,11 +84,7 @@ async function handleUnlikePost(
       throw new NotFoundError("Post not found");
     }
 
-    const result = await deleteLikedPost({ userId: user.id, postId: post.id });
-
-    if (result.length === 0) {
-      throw new NotFoundError("Unable to unlike a post that hasn't been liked");
-    }
+    await deleteLikedPost({ userId: user.id, postId: post.id });
 
     return res.status(OK).json({ message: "Post unliked" });
   } catch (error) {
