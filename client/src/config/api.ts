@@ -1,5 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import client from "config/client";
+import type { ServerError } from "src/global";
 import { API_BASE_URL } from "utils/constants";
 
 const options = {
@@ -16,7 +17,7 @@ api.defaults.headers.patch["Content-Type"] = "application/json";
 
 api.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError<{ code: string; message: string }>) => {
+  async (error: ServerError) => {
     const { config, response } = error;
 
     if (

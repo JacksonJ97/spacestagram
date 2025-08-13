@@ -18,6 +18,7 @@ function errorHandler(
   }
 
   return res.status(INTERNAL_SERVER_ERROR).json({
+    code: "INTERNAL_SERVER_ERROR",
     message: "Internal Server Error",
   });
 }

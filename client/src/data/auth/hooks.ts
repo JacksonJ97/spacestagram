@@ -1,8 +1,10 @@
+import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "config/api";
 import type { Credentials } from "data/auth/types";
 import { currentUserOptions } from "data/user/hooks";
+import { getErrorMessage } from "utils/functions";
 
 export function useUserLogin() {
   const navigate = useNavigate();
@@ -20,6 +22,12 @@ export function useUserLogin() {
     onSuccess: () => {
       client.invalidateQueries({ queryKey: currentUserOptions.queryKey });
       navigate("/", { replace: true });
+    },
+    onError: (error) => {
+      if (error.response && error.response.status !== 401) {
+        const message = getErrorMessage(error);
+        toast.error(message);
+      }
     },
   });
 }

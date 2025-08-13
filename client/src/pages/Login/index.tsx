@@ -14,7 +14,7 @@ const schema = z.object({
 });
 
 export default function Login() {
-  const { mutate: login, isPending: isLoggingIn } = useUserLogin();
+  const { mutate: login, isPending: isLoggingIn, error } = useUserLogin();
 
   const {
     control,
@@ -52,7 +52,7 @@ export default function Login() {
 
           <form
             onSubmit={onSubmit}
-            className="mx-auto my-6 flex max-w-2xs flex-col items-center gap-3"
+            className="mx-auto my-6 flex max-w-2xs flex-col gap-3"
           >
             <TextInput required name="email" label="Email" control={control} />
             <PasswordInput
@@ -61,6 +61,11 @@ export default function Login() {
               name="password"
               control={control}
             />
+            {error && error.status === 401 && (
+              <p className="text-sm text-(--error-color)">
+                Invalid email or password
+              </p>
+            )}
             <Button
               type="submit"
               className="mt-3 w-full"

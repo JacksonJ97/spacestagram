@@ -53,6 +53,7 @@ async function handleCreateAccount(
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        likedPosts: [],
       });
   } catch (error) {
     next(error);

@@ -93,9 +93,9 @@ async function getLikedPostsByUserId(userId: number) {
     .where(eq(likedPosts.userId, userId))
     .orderBy(desc(likedPosts.likedAt));
 
-  const formatted = liked.map(({ posts }) => posts);
+  const data = liked.map(({ posts }) => posts);
 
-  return formatted;
+  return data;
 }
 
 async function getOrCreatePost({
@@ -103,13 +103,17 @@ async function getOrCreatePost({
   title,
   url,
 }: typeof posts.$inferInsert) {
-  const [post] = await db
+  const [inserted] = await db
     .insert(posts)
     .values({ date, title, url })
     .onConflictDoNothing()
     .returning();
 
-  return post;
+  if (inserted) return inserted;
+
+  return db.query.posts.findFirst({
+    where: eq(posts.date, date),
+  });
 }
 
 async function createLikedPost({

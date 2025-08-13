@@ -53,10 +53,11 @@ async function handleLikePost(
     const { date, title, url } = req.body;
     const post = await getOrCreatePost({ date, title, url });
 
-    const likedPost = await createLikedPost({
-      userId: user.id,
-      postId: post.id,
-    });
+    if (!post) {
+      throw new NotFoundError("Post not found");
+    }
+
+    await createLikedPost({ userId: user.id, postId: post.id });
 
     return res.status(OK).json({ message: "Post liked" });
   } catch (error) {
