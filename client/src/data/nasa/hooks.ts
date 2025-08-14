@@ -29,7 +29,8 @@ export const infinitePostOptions = infiniteQueryOptions({
       .filter((post) => post.media_type == "image");
     return { ...data, pages };
   },
-  staleTime: 10 * 60 * 1000, // 10 minutes
+  gcTime: 60 * 60 * 1000, // 1 hour
+  staleTime: 15 * 60 * 1000, // 15 minutes
 });
 
 export const postOptions = (date: string) =>
@@ -41,4 +42,6 @@ export const postOptions = (date: string) =>
         .then((response) => response.data);
       return data;
     },
+    gcTime: 60 * 60 * 1000, // 1 hours
+    staleTime: Infinity,
   });
