@@ -44,7 +44,7 @@ export const verifyAccessToken = (token: string, options?: VerifyOptions) => {
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       console.error("Access token expired at: ", error.expiredAt);
-      return { error: "Access token expired" as const };
+      return { error: "Expired access token" as const };
     }
 
     if (error instanceof JsonWebTokenError) {
@@ -69,7 +69,7 @@ export const verifyRefreshToken = (token: string, options?: VerifyOptions) => {
   } catch (error) {
     if (error instanceof TokenExpiredError) {
       console.error("Refresh token expired at: ", error.expiredAt);
-      return { error: "Refresh token expired" as const };
+      return { error: "Expired refresh token" as const };
     }
 
     if (error instanceof JsonWebTokenError) {

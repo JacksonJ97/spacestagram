@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyAccessToken } from "utils/jwt";
 import { UnauthorizedError } from "utils/errors";
+import { accessTokenOptions } from "utils/cookies";
 
 async function authenticateUser(
   req: Request,
@@ -20,7 +21,14 @@ async function authenticateUser(
     const { payload, error } = verifyAccessToken(cookies.accessToken);
 
     if (error) {
-      throw new UnauthorizedError(error);
+      res.clearCookie("accessToken", accessTokenOptions);
+
+      const code =
+        error === "Expired access token"
+          ? "ACCESS_TOKEN_EXPIRED"
+          : "ACCESS_TOKEN_INVALID";
+
+      throw new UnauthorizedError(error, code);
     }
 
     req.userId = payload.userId;
