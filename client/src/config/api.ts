@@ -66,6 +66,17 @@ api.interceptors.response.use(
 
       return api.request(config);
     } catch {
+      // If the refresh fails and the request is from /api/users/me
+      // then treat the user as unauthenticated (null)
+      if (config.url && config.url.includes("/api/users/me")) {
+        return Promise.resolve({
+          ...response,
+          config,
+          data: null,
+          status: 200,
+        });
+      }
+
       client.clear();
       window.location.replace("/login");
       return Promise.reject(error);
