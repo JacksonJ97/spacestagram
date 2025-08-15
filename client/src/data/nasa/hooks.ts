@@ -42,6 +42,6 @@ export const postOptions = (date: string) =>
         .then((response) => response.data);
       return data;
     },
-    gcTime: 60 * 60 * 1000, // 1 hours
+    gcTime: 60 * 60 * 1000, // 1 hour
     staleTime: Infinity,
   });
