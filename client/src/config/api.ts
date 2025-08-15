@@ -47,9 +47,7 @@ api.interceptors.response.use(
       | (InternalAxiosRequestConfig & { [RETRY_FLAG]?: boolean })
       | undefined;
 
-    if (!config || !response) {
-      return Promise.reject(error);
-    }
+    if (!config || !response) return Promise.reject(error);
 
     if (response.status !== 401 || !CODES.has(response.data.code)) {
       return Promise.reject(error);
@@ -59,9 +57,7 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (config[RETRY_FLAG]) {
-      return Promise.reject(error);
-    }
+    if (config[RETRY_FLAG]) return Promise.reject(error);
 
     try {
       await queueTokenRefresh();
