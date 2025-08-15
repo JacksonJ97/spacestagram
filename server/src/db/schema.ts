@@ -46,14 +46,7 @@ export const likedPosts = pgTable(
       .$onUpdate(() => new Date())
       .notNull(),
   },
-  (table) => [
-    {
-      uniqueUserPost: unique("liked_posts_user_id_post_id_key").on(
-        table.userId,
-        table.postId
-      ),
-    },
-  ]
+  (table) => ({ uniqueUserPost: unique().on(table.userId, table.postId) })
 );
 
 export const sessions = pgTable("sessions", {

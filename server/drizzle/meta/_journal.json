@@ -15,6 +15,13 @@
       "when": 1752790335623,
       "tag": "0001_keen_bedlam",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755248136505,
+      "tag": "0002_plain_thena",
+      "breakpoints": true
     }
   ]
 }
