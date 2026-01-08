@@ -35,7 +35,7 @@ export default function Likes() {
   }
 
   return (
-    <section className="mx-auto grid max-w-4xl grid-cols-3 gap-1 min-md:gap-6">
+    <section className="mx-auto grid max-w-4xl grid-cols-3 gap-1 md:gap-6">
       {posts.map((post) => (
         <PostPreviewCard post={post} key={post.id} />
       ))}

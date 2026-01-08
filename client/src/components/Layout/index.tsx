@@ -15,7 +15,7 @@ function GuestLayout() {
 
 function UserLayout() {
   return (
-    <div className="flex h-screen flex-col-reverse min-sm:flex-row">
+    <div className="flex h-screen flex-col-reverse sm:flex-row">
       <Sidebar />
       <main className="h-full w-full overflow-auto bg-(--background-color) px-4 py-8">
         <Outlet />

@@ -11,11 +11,10 @@ import EyeIcon from "components/common/Icons/Eye";
 import CheckIcon from "components/common/Icons/Check";
 import EyeOffIcon from "components/common/Icons/EyeOff";
 
-interface PasswordInputProps
-  extends Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    "name" | "type" | "defaultValue"
-  > {
+interface PasswordInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "name" | "type" | "defaultValue"
+> {
   hideHints?: boolean;
 }
 

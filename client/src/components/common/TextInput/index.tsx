@@ -6,11 +6,10 @@ import {
 } from "react-hook-form";
 import { cn } from "utils/functions";
 
-interface TextInputProps
-  extends Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    "name" | "type" | "defaultValue"
-  > {
+interface TextInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "name" | "type" | "defaultValue"
+> {
   label: string;
   type?: "text" | "email";
 }
