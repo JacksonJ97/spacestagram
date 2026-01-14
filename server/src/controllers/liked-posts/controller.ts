@@ -65,8 +65,12 @@ async function handleLikePost(
   }
 }
 
+interface UnlikePostRequest extends Request {
+  params: { date: string };
+}
+
 async function handleUnlikePost(
-  req: Request,
+  req: UnlikePostRequest,
   res: Response,
   next: NextFunction
 ) {
