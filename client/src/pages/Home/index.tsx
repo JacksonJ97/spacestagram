@@ -15,13 +15,15 @@ export default function Home() {
     fetchNextPage: fetchNextPosts,
     isPending: isPostsPending,
     isError: isPostsError,
-    isFetching: isFetchingPosts,
+    hasNextPage,
+    isFetchingNextPage,
   } = useInfiniteQuery({ ...infinitePostOptions });
 
   const [open, setOpen] = useState(false);
   const { ref } = useInView({
+    rootMargin: "0px 0px 400px 0px",
     onChange: (inView) => {
-      if (inView && !isFetchingPosts) {
+      if (inView && hasNextPage && !isFetchingNextPage) {
         fetchNextPosts();
       }
     },
@@ -56,18 +58,21 @@ export default function Home() {
 
   return (
     <section className="flex flex-col items-center gap-6">
-      {posts.pages.map((post) => (
-        <PostCard
-          post={post}
-          isLoggedIn={isLoggedIn}
-          isLiked={likedPosts.has(post.date)}
-          handleOpenDialog={handleOpenDialog}
-          key={post.date}
-        />
-      ))}
-      {isFetchingPosts && <LoadingSpinner />}
+      {posts.pages.map((post, index) => {
+        const isLast = index === posts.pages.length - 1;
+        return (
+          <PostCard
+            post={post}
+            isLoggedIn={isLoggedIn}
+            isLiked={likedPosts.has(post.date)}
+            handleOpenDialog={handleOpenDialog}
+            ref={isLast ? ref : undefined}
+            key={post.date}
+          />
+        );
+      })}
+      {isFetchingNextPage && <LoadingSpinner />}
       <LikeAuthDialog open={open} onOpenChange={onOpenChange} />
-      <div ref={ref} />
     </section>
   );
 }

@@ -11,11 +11,13 @@ export default function PostCard({
   isLiked,
   isLoggedIn,
   handleOpenDialog,
+  ref,
 }: {
   post: Post;
   isLiked: boolean;
   isLoggedIn: boolean;
   handleOpenDialog: () => void;
+  ref?: React.Ref<HTMLDivElement>;
 }) {
   const pathname = window.location.origin;
 
@@ -40,7 +42,10 @@ export default function PostCard({
   };
 
   return (
-    <article className="max-w-xl rounded-xs border border-(--border-color) bg-(--background-color)">
+    <article
+      ref={ref}
+      className="max-w-xl rounded-xs border border-(--border-color) bg-(--background-color)"
+    >
       <header className="flex items-center gap-3 p-4">
         <img src={avatar} alt="User avatar" className="h-8 w-8 rounded-full" />
         <p className="text-sm font-medium text-(--text-color)">nasa</p>
