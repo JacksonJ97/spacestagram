@@ -92,7 +92,7 @@ export default function PasswordInput<
             aria-controls="password"
             aria-pressed={isVisible}
             aria-label={isVisible ? "Hide password" : "Show password"}
-            className="absolute inset-y-0 end-0 flex w-9 cursor-pointer items-center justify-center rounded-e-xs text-(--text-color) hover:text-(--text-color)/75"
+            className="absolute inset-y-0 inset-e-0 flex w-9 cursor-pointer items-center justify-center rounded-e-xs text-(--text-color) hover:text-(--text-color)/75"
           >
             {isVisible ? (
               <EyeOffIcon width={16} height={16} aria-hidden="true" />
