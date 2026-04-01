@@ -6,14 +6,13 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "prestart": "pnpm run build",
-    "start": "node dist/src/app.js",
-    "dev": "tsx watch src/app.ts"
+    "start": "node --env-file=.env dist/src/app.js",
+    "dev": "tsx watch --env-file=.env src/app.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
