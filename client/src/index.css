@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "tailwindcss-animate";
 
 :root {
   --border-color: rgb(219, 219, 219);
@@ -11,6 +10,14 @@
   --meta-primary: rgb(0, 149, 246);
   --meta-primary-hover: rgb(24, 119, 242);
   --error-color: rgb(207, 85, 62);
+}
+
+body {
+  position: relative;
+}
+
+#root {
+  isolation: isolate;
 }
 
 @media (prefers-color-scheme: dark) {

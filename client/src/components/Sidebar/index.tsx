@@ -9,9 +9,9 @@ import HeartIcon from "components/common/Icons/Heart";
 import FilledHeartIcon from "components/common/Icons/FilledHeart";
 import {
   DropdownMenu,
+  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
 } from "components/common/DropdownMenu";
 
 function HomeLink({ isActive }: { isActive: boolean }) {
@@ -51,12 +51,12 @@ function LikesLink({ isActive }: { isActive: boolean }) {
 function MenuButton() {
   const { mutate: logout } = useUserLogout();
   return (
-    <DropdownMenu modal={false}>
+    <DropdownMenu>
       <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-4 rounded-lg p-3 text-(--text-color) hover:bg-(--hover-background-color)">
-        <MenuIcon width={24} height={24} aria-hidden="true" />
+        <MenuIcon width={24} height={24} />
         <span className="sr-only xl:not-sr-only">More</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 xl:min-w-72">
+      <DropdownMenuContent className="xl:min-w-72">
         <DropdownMenuItem className="p-4" onClick={() => logout()}>
           Log out
         </DropdownMenuItem>
