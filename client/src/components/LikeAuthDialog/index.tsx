@@ -1,6 +1,6 @@
 import {
   Dialog,
-  DialogContent,
+  DialogPopup,
   DialogTitle,
   DialogDescription,
 } from "components/common/Dialog";
@@ -15,7 +15,7 @@ export default function LikeAuthDialog({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogPopup>
         <DialogTitle className="mt-3 text-center">Like this post</DialogTitle>
         <DialogDescription className="mt-2 text-center">
           Show your support for this post.
@@ -29,7 +29,7 @@ export default function LikeAuthDialog({
             Log In
           </LinkButton>
         </div>
-      </DialogContent>
+      </DialogPopup>
     </Dialog>
   );
 }
