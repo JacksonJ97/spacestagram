@@ -1,7 +1,15 @@
-import axios, { type InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 import client from "config/client";
-import type { ServerError } from "src/global";
 import { API_BASE_URL } from "utils/constants";
+
+export type ServerError = AxiosError<{
+  code: string;
+  message: string;
+  errors?: {
+    formErrors: string[];
+    fieldErrors: Record<string, string[]>;
+  };
+}>;
 
 const options = {
   baseURL: API_BASE_URL,

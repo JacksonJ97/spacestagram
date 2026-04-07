@@ -1,8 +1,8 @@
 import {
-  FieldPath,
-  FieldValues,
   useController,
-  UseControllerProps,
+  type FieldPath,
+  type FieldValues,
+  type UseControllerProps,
 } from "react-hook-form";
 import { cn } from "utils/functions";
 

@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { clsx, type ClassValue } from "clsx";
-import type { ServerError } from "src/global";
+import { type ServerError } from "config/api";
 
 export const cx = (...inputs: ClassValue[]) => {
   return clsx(inputs);

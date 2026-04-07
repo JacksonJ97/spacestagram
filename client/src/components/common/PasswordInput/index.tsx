@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  FieldPath,
-  FieldValues,
   useController,
-  UseControllerProps,
+  type FieldPath,
+  type FieldValues,
+  type UseControllerProps,
 } from "react-hook-form";
 import { cn, cx } from "utils/functions";
 import XIcon from "components/common/Icons/X";

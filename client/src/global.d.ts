@@ -1,14 +1,5 @@
 import "@tanstack/react-query";
-import { AxiosError } from "axios";
-
-type ServerError = AxiosError<{
-  code: string;
-  message: string;
-  errors?: {
-    formErrors: string[];
-    fieldErrors: Record<string, string[]>;
-  };
-}>;
+import { ServerError } from "config/api";
 
 declare module "@tanstack/react-query" {
   interface Register {
