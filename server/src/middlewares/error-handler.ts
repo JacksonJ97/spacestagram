@@ -6,7 +6,7 @@ function errorHandler(
   error: unknown,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   console.error(`ERROR at ${req.method} ${req.path}:`, error);
 

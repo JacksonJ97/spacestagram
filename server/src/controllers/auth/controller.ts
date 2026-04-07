@@ -30,7 +30,7 @@ interface UserLoginRequest extends Request {
 async function handleUserLogin(
   req: UserLoginRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const { email, password } = req.body;
@@ -78,7 +78,7 @@ async function handleUserLogout(req: Request, res: Response) {
 async function handleTokenRefresh(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const cookies = { ...req.cookies } as { refreshToken: string | undefined };

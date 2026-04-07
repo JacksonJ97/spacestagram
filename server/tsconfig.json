@@ -1,21 +1,24 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
+    "target": "es2022",
+    "module": "node16",
+    "moduleResolution": "node16",
+    "types": ["node"],
+
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "resolveJsonModule": true,
+
     "rootDir": ".",
     "outDir": "dist",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "constants/*": ["src/constants/*"],
-      "controllers/*": ["src/controllers/*"],
-      "db/*": ["src/db/*"],
-      "middlewares/*": ["src/middlewares/*"],
-      "routes/*": ["src/routes/*"],
-      "utils/*": ["src/utils/*"]
+      "constants/*": ["./src/constants/*"],
+      "controllers/*": ["./src/controllers/*"],
+      "db/*": ["./src/db/*"],
+      "middlewares/*": ["./src/middlewares/*"],
+      "routes/*": ["./src/routes/*"],
+      "utils/*": ["./src/utils/*"]
     }
   }
 }

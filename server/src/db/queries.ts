@@ -17,6 +17,10 @@ async function createUser(input: typeof users.$inferInsert) {
     })
     .returning();
 
+  if (!user) {
+    throw new Error("Failed to create user");
+  }
+
   return user;
 }
 
@@ -67,6 +71,10 @@ async function createSession(userId: number) {
     })
     .returning();
 
+  if (!session) {
+    throw new Error("Failed to create session");
+  }
+
   return session;
 }
 
@@ -80,7 +88,7 @@ async function getSessionById(id: number) {
 
 async function updateSessionById(
   id: number,
-  updates: Partial<typeof sessions.$inferInsert>
+  updates: Partial<typeof sessions.$inferInsert>,
 ) {
   await db.update(sessions).set(updates).where(eq(sessions.id, id));
 }

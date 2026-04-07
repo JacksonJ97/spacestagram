@@ -6,7 +6,7 @@ import { accessTokenOptions } from "utils/cookies";
 async function authenticateUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const cookies = { ...req.cookies } as { accessToken: string | undefined };
@@ -14,7 +14,7 @@ async function authenticateUser(
     if (!cookies.accessToken) {
       throw new UnauthorizedError(
         "Missing access token",
-        "ACCESS_TOKEN_MISSING"
+        "ACCESS_TOKEN_MISSING",
       );
     }
 

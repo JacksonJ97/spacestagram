@@ -19,7 +19,7 @@ interface CreateAccountRequest extends Request {
 async function handleCreateAccount(
   req: CreateAccountRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -55,7 +55,7 @@ async function handleCreateAccount(
 async function handleGetCurrentUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const userId = req.userId as number;

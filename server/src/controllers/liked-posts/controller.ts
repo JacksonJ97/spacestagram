@@ -15,7 +15,7 @@ import { likePostSchema } from "controllers/liked-posts/schema";
 async function handleGetLikedPosts(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const userId = req.userId as number;
@@ -40,7 +40,7 @@ interface LikePostRequest extends Request {
 async function handleLikePost(
   req: LikePostRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const userId = req.userId as number;
@@ -72,7 +72,7 @@ interface UnlikePostRequest extends Request {
 async function handleUnlikePost(
   req: UnlikePostRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const userId = req.userId as number;

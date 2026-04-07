@@ -15,7 +15,7 @@ router.post(
   "/",
   authenticateUser,
   validateRequestBody(likePostSchema),
-  handleLikePost
+  handleLikePost,
 );
 router.delete("/:date", authenticateUser, handleUnlikePost);
 

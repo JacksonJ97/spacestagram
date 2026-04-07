@@ -17,14 +17,14 @@ type RefreshTokenPayload = {
 
 export const signAccessToken = (
   payload: AccessTokenPayload,
-  options?: SignOptions
+  options?: SignOptions,
 ) => {
   return jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: "15m", ...options });
 };
 
 export const signRefreshToken = (
   payload: RefreshTokenPayload,
-  options?: SignOptions
+  options?: SignOptions,
 ) => {
   return jwt.sign(payload, JWT_REFRESH_SECRET, {
     expiresIn: "30d",
@@ -37,7 +37,7 @@ export const verifyAccessToken = (token: string, options?: VerifyOptions) => {
     const payload = jwt.verify(
       token,
       JWT_ACCESS_SECRET,
-      options
+      options,
     ) as AccessTokenPayload;
 
     return { payload };
@@ -62,7 +62,7 @@ export const verifyRefreshToken = (token: string, options?: VerifyOptions) => {
     const payload = jwt.verify(
       token,
       JWT_REFRESH_SECRET,
-      options
+      options,
     ) as RefreshTokenPayload;
 
     return { payload };

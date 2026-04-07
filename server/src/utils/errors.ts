@@ -24,7 +24,7 @@ export class AppError extends Error {
   constructor(
     public status: HttpStatusCode = INTERNAL_SERVER_ERROR,
     public message: string = "Internal Server Error",
-    public code: ErrorCode = "INTERNAL_SERVER_ERROR"
+    public code: ErrorCode = "INTERNAL_SERVER_ERROR",
   ) {
     super(message);
   }
