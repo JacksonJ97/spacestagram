@@ -5,8 +5,8 @@ import {
   handleGetLikedPosts,
   handleLikePost,
   handleUnlikePost,
-} from "modules/likes/controller";
-import { likePostSchema } from "modules/likes/schema";
+} from "modules/likes/controllers";
+import { likePostSchema } from "modules/likes/schemas";
 
 const router = Router();
 

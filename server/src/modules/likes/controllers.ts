@@ -1,16 +1,12 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
-import { NotFoundError, BadRequestError } from "utils/errors";
+import { likePostSchema } from "modules/likes/schemas";
 import {
-  getUserById,
-  getPostByDate,
-  deleteLikedPost,
-  getLikedPostsByUserId,
-  getOrCreatePost,
-  createOrTouchLikedPost,
-} from "db/queries";
-import { likePostSchema } from "modules/likes/schema";
+  getUserLikedPosts,
+  likePost,
+  unlikePost,
+} from "modules/likes/services";
 
 async function handleGetLikedPosts(
   req: Request,
@@ -19,13 +15,7 @@ async function handleGetLikedPosts(
 ) {
   try {
     const userId = req.userId as number;
-    const user = await getUserById(userId);
-
-    if (!user) {
-      throw new BadRequestError("Request could not be processed");
-    }
-
-    const posts = await getLikedPostsByUserId(user.id);
+    const posts = await getUserLikedPosts(userId);
 
     return res.status(OK).json(posts);
   } catch (error) {
@@ -44,20 +34,9 @@ async function handleLikePost(
 ) {
   try {
     const userId = req.userId as number;
-    const user = await getUserById(userId);
-
-    if (!user) {
-      throw new BadRequestError("Request could not be processed");
-    }
-
     const { date, title, url } = req.body;
-    const post = await getOrCreatePost({ date, title, url });
 
-    if (!post) {
-      throw new NotFoundError("Post not found");
-    }
-
-    await createOrTouchLikedPost({ userId: user.id, postId: post.id });
+    await likePost({ userId, date, title, url });
 
     return res.status(OK).json({ message: "Post liked" });
   } catch (error) {
@@ -76,19 +55,8 @@ async function handleUnlikePost(
 ) {
   try {
     const userId = req.userId as number;
-    const user = await getUserById(userId);
 
-    if (!user) {
-      throw new BadRequestError("Request could not be processed");
-    }
-
-    const post = await getPostByDate(req.params.date);
-
-    if (!post) {
-      throw new NotFoundError("Post not found");
-    }
-
-    await deleteLikedPost({ userId: user.id, postId: post.id });
+    await unlikePost({ userId, date: req.params.date });
 
     return res.status(OK).json({ message: "Post unliked" });
   } catch (error) {

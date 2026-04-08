@@ -2,15 +2,8 @@ import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK, CREATED } from "constants/http";
 import { setAuthCookies } from "utils/cookies";
-import { ConflictError, BadRequestError } from "utils/errors";
-import { signAccessToken, signRefreshToken } from "utils/jwt";
-import {
-  createUser,
-  getUserById,
-  getUserByEmail,
-  createSession,
-} from "db/queries";
-import { createAccountSchema } from "modules/users/schema";
+import { createAccountSchema } from "modules/users/schemas";
+import { createAccount, getCurrentUser } from "modules/users/services";
 
 interface CreateAccountRequest extends Request {
   body: z.infer<typeof createAccountSchema>;
@@ -23,20 +16,13 @@ async function handleCreateAccount(
 ) {
   try {
     const { firstName, lastName, email, password } = req.body;
-    const existingUser = await getUserByEmail(email);
 
-    if (existingUser) {
-      throw new ConflictError("User already exists");
-    }
-
-    const user = await createUser({ firstName, lastName, email, password });
-    const session = await createSession(user.id);
-
-    const accessToken = signAccessToken({
-      userId: user.id,
-      sessionId: session.id,
+    const { user, accessToken, refreshToken } = await createAccount({
+      firstName,
+      lastName,
+      email,
+      password,
     });
-    const refreshToken = signRefreshToken({ sessionId: session.id });
 
     return setAuthCookies({ res, accessToken, refreshToken })
       .status(CREATED)
@@ -59,11 +45,7 @@ async function handleGetCurrentUser(
 ) {
   try {
     const userId = req.userId as number;
-    const user = await getUserById(userId);
-
-    if (!user) {
-      throw new BadRequestError("Request could not be processed");
-    }
+    const user = await getCurrentUser(userId);
 
     return res.status(OK).json(user);
   } catch (error) {

@@ -17,10 +17,6 @@ async function createUser(input: typeof users.$inferInsert) {
     })
     .returning();
 
-  if (!user) {
-    throw new Error("Failed to create user");
-  }
-
   return user;
 }
 
@@ -70,10 +66,6 @@ async function createSession(userId: number) {
       expiresAt: addThirtyDays(),
     })
     .returning();
-
-  if (!session) {
-    throw new Error("Failed to create session");
-  }
 
   return session;
 }
