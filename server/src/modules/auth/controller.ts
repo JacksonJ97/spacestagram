@@ -21,7 +21,7 @@ import {
   getSessionById,
   updateSessionById,
 } from "db/queries";
-import { userLoginSchema } from "controllers/auth/schema";
+import { userLoginSchema } from "modules/auth/schema";
 
 interface UserLoginRequest extends Request {
   body: z.infer<typeof userLoginSchema>;

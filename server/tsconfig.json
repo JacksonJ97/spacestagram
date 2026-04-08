@@ -17,6 +17,7 @@
       "controllers/*": ["./src/controllers/*"],
       "db/*": ["./src/db/*"],
       "middlewares/*": ["./src/middlewares/*"],
+      "modules/*": ["./src/modules/*"],
       "routes/*": ["./src/routes/*"],
       "utils/*": ["./src/utils/*"]
     }

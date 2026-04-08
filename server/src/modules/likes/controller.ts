@@ -10,7 +10,7 @@ import {
   getOrCreatePost,
   createOrTouchLikedPost,
 } from "db/queries";
-import { likePostSchema } from "controllers/liked-posts/schema";
+import { likePostSchema } from "modules/likes/schema";
 
 async function handleGetLikedPosts(
   req: Request,

@@ -10,7 +10,7 @@ import {
   getUserByEmail,
   createSession,
 } from "db/queries";
-import { createAccountSchema } from "controllers/users/schema";
+import { createAccountSchema } from "modules/users/schema";
 
 interface CreateAccountRequest extends Request {
   body: z.infer<typeof createAccountSchema>;

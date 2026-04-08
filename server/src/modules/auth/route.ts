@@ -3,8 +3,8 @@ import {
   handleUserLogin,
   handleUserLogout,
   handleTokenRefresh,
-} from "controllers/auth/controller";
-import { userLoginSchema } from "controllers/auth/schema";
+} from "modules/auth/controller";
+import { userLoginSchema } from "modules/auth/schema";
 import validateRequestBody from "middlewares/request-body-validator";
 
 const router = Router();

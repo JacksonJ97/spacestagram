@@ -4,7 +4,7 @@ import {
   BAD_REQUEST,
   UNAUTHORIZED,
   INTERNAL_SERVER_ERROR,
-  HttpStatusCode,
+  type HttpStatusCode,
 } from "constants/http";
 
 const codes = {
