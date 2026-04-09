@@ -7,11 +7,11 @@ import {
   clearAuthCookies,
   accessTokenOptions,
 } from "utils/cookies";
-import { userLoginSchema } from "modules/auth/schemas";
+import { loginSchema } from "modules/auth/schemas";
 import { loginUser, logoutUser, refreshTokens } from "modules/auth/services";
 
 interface UserLoginRequest extends Request {
-  body: z.infer<typeof userLoginSchema>;
+  body: z.infer<typeof loginSchema>;
 }
 
 async function handleUserLogin(

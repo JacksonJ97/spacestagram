@@ -1,6 +1,6 @@
 import { Router } from "express";
 import authenticateUser from "middlewares/authenticate-user";
-import validateRequestBody from "middlewares/request-body-validator";
+import validate from "middlewares/request-validator";
 import {
   handleGetLikedPosts,
   handleLikePost,
@@ -11,12 +11,7 @@ import { likePostSchema } from "modules/likes/schemas";
 const router = Router();
 
 router.get("/", authenticateUser, handleGetLikedPosts);
-router.post(
-  "/",
-  authenticateUser,
-  validateRequestBody(likePostSchema),
-  handleLikePost,
-);
+router.post("/", authenticateUser, validate(likePostSchema), handleLikePost);
 router.delete("/:date", authenticateUser, handleUnlikePost);
 
 export default router;

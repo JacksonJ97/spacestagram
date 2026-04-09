@@ -1,15 +1,15 @@
 import { Router } from "express";
+import validate from "middlewares/request-validator";
 import {
   handleUserLogin,
   handleUserLogout,
   handleTokenRefresh,
 } from "modules/auth/controllers";
-import { userLoginSchema } from "modules/auth/schemas";
-import validateRequestBody from "middlewares/request-body-validator";
+import { loginSchema } from "modules/auth/schemas";
 
 const router = Router();
 
-router.post("/login", validateRequestBody(userLoginSchema), handleUserLogin);
+router.post("/login", validate(loginSchema), handleUserLogin);
 router.post("/logout", handleUserLogout);
 router.post("/refresh", handleTokenRefresh);
 
