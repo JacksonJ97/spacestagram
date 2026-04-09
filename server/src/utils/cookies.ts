@@ -1,45 +1,28 @@
 import { Response, CookieOptions } from "express";
-import { addThirtyDays, addFifteenMinutes } from "utils/functions";
-
-const ACCESS_PATH = "/";
-const REFRESH_PATH = "/api/auth/refresh";
+import { SESSION_COOKIE_NAME } from "constants/session";
 
 export const defaults: CookieOptions = {
-  sameSite: "none",
-  httpOnly: true,
+  path: "/",
   secure: true,
+  httpOnly: true,
+  sameSite: "lax",
 };
 
-export const accessTokenOptions: CookieOptions = {
-  ...defaults,
-  path: ACCESS_PATH,
-};
-
-export const refreshTokenOptions: CookieOptions = {
-  ...defaults,
-  path: REFRESH_PATH,
-};
-
-export const setAuthCookies = ({
+export function setSessionCookie({
   res,
-  accessToken,
-  refreshToken,
+  token,
+  expiresAt,
 }: {
   res: Response;
-  accessToken: string;
-  refreshToken: string;
-}) =>
-  res
-    .cookie("accessToken", accessToken, {
-      ...accessTokenOptions,
-      expires: addFifteenMinutes(),
-    })
-    .cookie("refreshToken", refreshToken, {
-      ...refreshTokenOptions,
-      expires: addThirtyDays(),
-    });
+  token: string;
+  expiresAt: Date;
+}) {
+  return res.cookie(SESSION_COOKIE_NAME, token, {
+    ...defaults,
+    expires: expiresAt,
+  });
+}
 
-export const clearAuthCookies = (res: Response) =>
-  res
-    .clearCookie("accessToken", accessTokenOptions)
-    .clearCookie("refreshToken", refreshTokenOptions);
+export function clearSessionCookie(res: Response) {
+  return res.clearCookie(SESSION_COOKIE_NAME, { ...defaults });
+}

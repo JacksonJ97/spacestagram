@@ -1,11 +1,7 @@
-import {
-  createUser,
-  getUserById,
-  getUserByEmail,
-  createSession,
-} from "db/queries";
+import bcrypt from "bcryptjs";
+import { createUser, getUserById, getUserByEmail } from "db/queries";
+import { createUserSession } from "modules/auth/services";
 import { ConflictError, NotFoundError } from "utils/errors";
-import { signAccessToken, signRefreshToken } from "utils/jwt";
 
 export async function createAccount({
   firstName,
@@ -24,25 +20,23 @@ export async function createAccount({
     throw new ConflictError("User already exists");
   }
 
-  const user = await createUser({ firstName, lastName, email, password });
+  const SALT_ROUNDS = 10;
+  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+
+  const user = await createUser({
+    firstName,
+    lastName,
+    email: email.toLowerCase(),
+    passwordHash,
+  });
 
   if (!user) {
     throw new Error("Failed to create user");
   }
 
-  const session = await createSession(user.id);
+  const { token, expiresAt } = await createUserSession(user.id);
 
-  if (!session) {
-    throw new Error("Failed to create session");
-  }
-
-  const accessToken = signAccessToken({
-    userId: user.id,
-    sessionId: session.id,
-  });
-  const refreshToken = signRefreshToken({ sessionId: session.id });
-
-  return { user, accessToken, refreshToken };
+  return { user, token, expiresAt };
 }
 
 export async function getCurrentUser(userId: number) {

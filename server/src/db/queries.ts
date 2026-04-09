@@ -1,22 +1,9 @@
-import bcrypt from "bcryptjs";
 import { eq, and, desc } from "drizzle-orm";
-import { addThirtyDays } from "utils/functions";
 import db from "db/client";
 import { users, sessions, posts, likedPosts } from "db/schema";
 
 async function createUser(input: typeof users.$inferInsert) {
-  const SALT_ROUNDS = 10;
-  const hashedPassword = await bcrypt.hash(input.password, SALT_ROUNDS);
-
-  const [user] = await db
-    .insert(users)
-    .values({
-      ...input,
-      email: input.email.toLowerCase(),
-      password: hashedPassword,
-    })
-    .returning();
-
+  const [user] = await db.insert(users).values(input).returning();
   return user;
 }
 
@@ -24,7 +11,7 @@ async function getUserById(id: number) {
   const user = await db.query.users.findFirst({
     where: eq(users.id, id),
     columns: {
-      password: false,
+      password: false, // renamed to passwordHash
       createdAt: false,
       updatedAt: false,
     },
@@ -58,19 +45,12 @@ async function getUserByEmail(email: string) {
   return user;
 }
 
-async function createSession(userId: number) {
-  const [session] = await db
-    .insert(sessions)
-    .values({
-      userId,
-      expiresAt: addThirtyDays(),
-    })
-    .returning();
-
+async function createSession(input: typeof sessions.$inferInsert) {
+  const [session] = await db.insert(sessions).values(input).returning();
   return session;
 }
 
-async function getSessionById(id: number) {
+async function getSessionById(id: string) {
   const session = await db.query.sessions.findFirst({
     where: eq(sessions.id, id),
   });
@@ -78,8 +58,12 @@ async function getSessionById(id: number) {
   return session;
 }
 
+async function deleteSession(id: string) {
+  await db.delete(sessions).where(eq(sessions.id, id));
+}
+
 async function updateSessionById(
-  id: number,
+  id: string,
   updates: Partial<typeof sessions.$inferInsert>,
 ) {
   await db.update(sessions).set(updates).where(eq(sessions.id, id));
@@ -161,6 +145,7 @@ export {
   getUserByEmail,
   createSession,
   getSessionById,
+  deleteSession,
   updateSessionById,
   getLikedPostsByUserId,
   getOrCreatePost,

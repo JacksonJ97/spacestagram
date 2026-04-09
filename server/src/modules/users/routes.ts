@@ -1,6 +1,6 @@
 import { Router } from "express";
 import validate from "middlewares/request-validator";
-import authenticateUser from "middlewares/authenticate-user";
+import requireAuth from "middlewares/require-auth";
 import {
   handleCreateAccount,
   handleGetCurrentUser,
@@ -10,6 +10,6 @@ import { createAccountSchema } from "modules/users/schemas";
 const router = Router();
 
 router.post("/", validate(createAccountSchema), handleCreateAccount);
-router.get("/me", authenticateUser, handleGetCurrentUser);
+router.get("/me", requireAuth, handleGetCurrentUser);
 
 export default router;

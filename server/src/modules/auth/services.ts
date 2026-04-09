@@ -2,16 +2,82 @@ import bcrypt from "bcryptjs";
 import {
   getUserByEmail,
   createSession,
-  getSessionById,
   updateSessionById,
+  getSessionById,
+  deleteSession,
 } from "db/queries";
-import {
-  signAccessToken,
-  signRefreshToken,
-  verifyAccessToken,
-  verifyRefreshToken,
-} from "utils/jwt";
 import { UnauthorizedError } from "utils/errors";
+import {
+  generateRandomString,
+  hashSecret,
+  timingSafeCompare,
+} from "utils/crypto";
+import { ACTIVITY_WRITE_INTERVAL_MS, IDLE_TIMEOUT_MS } from "constants/session";
+
+// Possible move this
+export async function createUserSession(userId: number) {
+  const id = generateRandomString();
+  const secret = generateRandomString();
+  const secretHash = hashSecret(secret);
+
+  const session = await createSession({ id, userId, secretHash });
+
+  if (!session) {
+    throw new Error("Failed to create session");
+  }
+
+  // Clean this up later
+  const expiresAt = new Date(
+    session.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000, // 30 days
+  );
+
+  return { token: `${id}.${secret}`, session, expiresAt };
+}
+
+export async function validateSession(token: string) {
+  const parts = token.split(".");
+
+  if (parts.length !== 2) return null;
+
+  const [id, secret] = parts;
+  const now = new Date();
+
+  if (!id || !secret) return null;
+
+  const session = await getSessionById(id);
+
+  if (!session) return null;
+
+  // Absolute expiry
+  if (now.getTime() >= session.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000) {
+    await deleteSession(session.id);
+    return null;
+  }
+
+  // Idle timeout
+  if (now.getTime() - session.lastVerifiedAt.getTime() >= IDLE_TIMEOUT_MS) {
+    await deleteSession(session.id);
+    return null;
+  }
+
+  // Verify secret
+  const incomingHash = hashSecret(secret);
+  if (!timingSafeCompare(incomingHash, session.secretHash)) {
+    return null;
+  }
+
+  // Activity write-back after successful verification only
+  if (
+    now.getTime() - session.lastVerifiedAt.getTime() >=
+    ACTIVITY_WRITE_INTERVAL_MS
+  ) {
+    await updateSessionById(session.id, { lastVerifiedAt: now });
+
+    session.lastVerifiedAt = now; // What does this do?
+  }
+
+  return session;
+}
 
 export async function loginUser({
   email,
@@ -26,64 +92,17 @@ export async function loginUser({
     throw new UnauthorizedError("Invalid email or password");
   }
 
-  const match = await bcrypt.compare(password, user.password);
+  const match = await bcrypt.compare(password, user.passwordHash);
 
   if (!match) {
     throw new UnauthorizedError("Invalid email or password");
   }
 
-  const session = await createSession(user.id);
+  const { token, expiresAt } = await createUserSession(user.id);
 
-  if (!session) {
-    throw new Error("Failed to create session");
-  }
-
-  const accessToken = signAccessToken({
-    userId: user.id,
-    sessionId: session.id,
-  });
-  const refreshToken = signRefreshToken({ sessionId: session.id });
-
-  return { accessToken, refreshToken };
+  return { token, expiresAt };
 }
 
-export async function logoutUser({ accessToken }: { accessToken: string }) {
-  const { payload } = verifyAccessToken(accessToken);
-
-  if (payload) {
-    await updateSessionById(payload.sessionId, { isValid: false });
-  }
-}
-
-export async function refreshTokens({
-  refreshToken,
-}: {
-  refreshToken: string;
-}) {
-  if (!refreshToken) {
-    throw new UnauthorizedError("Missing refresh token");
-  }
-
-  const { payload, error } = verifyRefreshToken(refreshToken);
-
-  if (error) {
-    throw new UnauthorizedError(error);
-  }
-
-  const session = await getSessionById(payload.sessionId);
-
-  if (!session || !session.isValid) {
-    throw new UnauthorizedError("Invalid session");
-  }
-
-  if (new Date() > session.expiresAt) {
-    throw new UnauthorizedError("Session expired");
-  }
-
-  const accessToken = signAccessToken({
-    userId: session.userId,
-    sessionId: session.id,
-  });
-
-  return { accessToken };
+export async function logoutUser(sessionId: string) {
+  await deleteSession(sessionId);
 }
