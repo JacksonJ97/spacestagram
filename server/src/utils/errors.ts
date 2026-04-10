@@ -4,7 +4,7 @@ import {
   BAD_REQUEST,
   UNAUTHORIZED,
   INTERNAL_SERVER_ERROR,
-  HttpStatusCode,
+  type HttpStatusCode,
 } from "constants/http";
 
 const codes = {
@@ -13,9 +13,6 @@ const codes = {
   RESOURCE_NOT_FOUND: "RESOURCE_NOT_FOUND",
   INVALID_INPUT: "INVALID_INPUT",
   UNAUTHORIZED: "UNAUTHORIZED",
-  ACCESS_TOKEN_MISSING: "ACCESS_TOKEN_MISSING",
-  ACCESS_TOKEN_EXPIRED: "ACCESS_TOKEN_EXPIRED",
-  ACCESS_TOKEN_INVALID: "ACCESS_TOKEN_INVALID",
 } as const;
 
 type ErrorCode = keyof typeof codes;

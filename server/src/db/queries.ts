@@ -1,26 +1,11 @@
-import bcrypt from "bcryptjs";
 import { eq, and, desc } from "drizzle-orm";
-import { addThirtyDays } from "utils/functions";
-import db from "db/client";
+import db from "config/db";
 import { users, sessions, posts, likedPosts } from "db/schema";
 
+// USER QUERIES //
+
 async function createUser(input: typeof users.$inferInsert) {
-  const SALT_ROUNDS = 10;
-  const hashedPassword = await bcrypt.hash(input.password, SALT_ROUNDS);
-
-  const [user] = await db
-    .insert(users)
-    .values({
-      ...input,
-      email: input.email.toLowerCase(),
-      password: hashedPassword,
-    })
-    .returning();
-
-  if (!user) {
-    throw new Error("Failed to create user");
-  }
-
+  const [user] = await db.insert(users).values(input).returning();
   return user;
 }
 
@@ -28,7 +13,7 @@ async function getUserById(id: number) {
   const user = await db.query.users.findFirst({
     where: eq(users.id, id),
     columns: {
-      password: false,
+      passwordHash: false,
       createdAt: false,
       updatedAt: false,
     },
@@ -62,23 +47,14 @@ async function getUserByEmail(email: string) {
   return user;
 }
 
-async function createSession(userId: number) {
-  const [session] = await db
-    .insert(sessions)
-    .values({
-      userId,
-      expiresAt: addThirtyDays(),
-    })
-    .returning();
+// SESSION QUERIES //
 
-  if (!session) {
-    throw new Error("Failed to create session");
-  }
-
+async function createSession(input: typeof sessions.$inferInsert) {
+  const [session] = await db.insert(sessions).values(input).returning();
   return session;
 }
 
-async function getSessionById(id: number) {
+async function getSessionById(id: string) {
   const session = await db.query.sessions.findFirst({
     where: eq(sessions.id, id),
   });
@@ -87,24 +63,17 @@ async function getSessionById(id: number) {
 }
 
 async function updateSessionById(
-  id: number,
+  id: string,
   updates: Partial<typeof sessions.$inferInsert>,
 ) {
   await db.update(sessions).set(updates).where(eq(sessions.id, id));
 }
 
-async function getLikedPostsByUserId(userId: number) {
-  const liked = await db
-    .select()
-    .from(likedPosts)
-    .innerJoin(posts, eq(posts.id, likedPosts.postId))
-    .where(eq(likedPosts.userId, userId))
-    .orderBy(desc(likedPosts.likedAt));
-
-  const data = liked.map(({ posts }) => posts);
-
-  return data;
+async function deleteSession(id: string) {
+  await db.delete(sessions).where(eq(sessions.id, id));
 }
+
+// POST QUERIES //
 
 async function getOrCreatePost({
   date,
@@ -124,6 +93,29 @@ async function getOrCreatePost({
   });
 }
 
+async function getPostByDate(date: string) {
+  const post = await db.query.posts.findFirst({
+    where: eq(posts.date, date),
+  });
+
+  return post;
+}
+
+// LIKED POST QUERIES //
+
+async function getLikedPostsByUserId(userId: number) {
+  const liked = await db
+    .select()
+    .from(likedPosts)
+    .innerJoin(posts, eq(posts.id, likedPosts.postId))
+    .where(eq(likedPosts.userId, userId))
+    .orderBy(desc(likedPosts.likedAt));
+
+  const data = liked.map(({ posts }) => posts);
+
+  return data;
+}
+
 async function createOrTouchLikedPost({
   userId,
   postId,
@@ -138,14 +130,6 @@ async function createOrTouchLikedPost({
     .returning();
 
   return likedPost;
-}
-
-async function getPostByDate(date: string) {
-  const post = await db.query.posts.findFirst({
-    where: eq(posts.date, date),
-  });
-
-  return post;
 }
 
 async function deleteLikedPost({
@@ -164,15 +148,20 @@ async function deleteLikedPost({
 }
 
 export {
+  // User queries //
   createUser,
   getUserById,
   getUserByEmail,
+  // Session queries //
   createSession,
   getSessionById,
   updateSessionById,
-  getLikedPostsByUserId,
+  deleteSession,
+  // Post queries //
   getOrCreatePost,
-  createOrTouchLikedPost,
   getPostByDate,
+  // Liked post queries //
+  getLikedPostsByUserId,
+  createOrTouchLikedPost,
   deleteLikedPost,
 };

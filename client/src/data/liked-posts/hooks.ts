@@ -12,9 +12,7 @@ import type { LikedPost, LikePostInput } from "data/liked-posts/types";
 export const getLikedPostsOptions = queryOptions({
   queryKey: ["liked-posts"],
   queryFn: async () => {
-    const data = await api
-      .get<LikedPost[]>("/api/liked-posts")
-      .then((response) => response.data);
+    const data = await api.get<LikedPost[]>("/api/liked-posts").json();
     return data;
   },
   gcTime: Infinity,
@@ -26,8 +24,8 @@ export function useLikePost() {
 
   const likePost = async (post: LikePostInput) => {
     const data = await api
-      .post<{ message: string }>("/api/liked-posts", post)
-      .then((response) => response.data);
+      .post<{ message: string }>("/api/liked-posts", { json: post })
+      .json();
     return data;
   };
 
@@ -50,7 +48,7 @@ export function useUnlikePost() {
   const unlikePost = async (date: string) => {
     const data = await api
       .delete<{ message: string }>(`/api/liked-posts/${date}`)
-      .then((response) => response.data);
+      .json();
     return data;
   };
 

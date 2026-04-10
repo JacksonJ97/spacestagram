@@ -2,7 +2,7 @@ import { z, ZodType } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { BAD_REQUEST } from "constants/http";
 
-function validateRequestBody(schema: ZodType) {
+function validate(schema: ZodType) {
   return (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.body);
 
@@ -18,4 +18,4 @@ function validateRequestBody(schema: ZodType) {
   };
 }
 
-export default validateRequestBody;
+export default validate;

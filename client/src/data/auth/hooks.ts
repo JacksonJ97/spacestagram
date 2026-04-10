@@ -3,8 +3,8 @@ import { useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "config/api";
 import type { Credentials } from "data/auth/types";
-import { currentUserOptions } from "data/user/hooks";
 import { getErrorMessage } from "utils/functions";
+import { currentUserOptions } from "data/user/hooks";
 
 export function useUserLogin() {
   const navigate = useNavigate();
@@ -12,8 +12,8 @@ export function useUserLogin() {
 
   const loginUser = async (credentials: Credentials) => {
     const data = await api
-      .post<{ message: string }>("/api/auth/login", credentials)
-      .then((response) => response.data);
+      .post<{ message: string }>("/api/auth/login", { json: credentials })
+      .json();
     return data;
   };
 
@@ -24,10 +24,8 @@ export function useUserLogin() {
       navigate("/", { replace: true });
     },
     onError: (error) => {
-      if (error.response && error.response.status !== 401) {
-        const message = getErrorMessage(error);
-        toast.error(message);
-      }
+      const message = getErrorMessage(error);
+      toast.error(message);
     },
   });
 }
@@ -37,9 +35,7 @@ export function useUserLogout() {
   const client = useQueryClient();
 
   const logoutUser = async () => {
-    const data = await api
-      .post<{ message: string }>("/api/auth/logout")
-      .then((response) => response.data);
+    const data = await api.post<{ message: string }>("/api/auth/logout").json();
     return data;
   };
 

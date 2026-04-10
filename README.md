@@ -8,7 +8,7 @@ Spacestagram is a web application that reimagines NASA’s Astronomy Picture of 
 - Like and unlike posts to engage with images.
 - Share posts via generated links.
 - View a personalized favorites gallery.
-- Secure authentication with JWT-based sessions.
+- Secure authentication with sessions.
 
 ## Demo
 
@@ -35,5 +35,4 @@ You can explore the app by signing up, or use the demo credentials:
 
 - Express + TypeScript
 - PostgreSQL + Drizzle ORM
-- JSON Web Tokens
 - Zod

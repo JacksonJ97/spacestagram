@@ -14,9 +14,7 @@ export function useCreateUser() {
   const client = useQueryClient();
 
   const createUser = async (user: CreateUserInput) => {
-    const data = await api
-      .post<User>("/api/users", user)
-      .then((response) => response.data);
+    const data = await api.post<User>("/api/users", { json: user }).json();
     return data;
   };
 
@@ -36,9 +34,7 @@ export function useCreateUser() {
 export const currentUserOptions = queryOptions({
   queryKey: ["current-user"],
   queryFn: async () => {
-    const data = await api
-      .get<User>("/api/users/me")
-      .then((response) => response.data);
+    const data = await api.get<User | null>("/api/users/me").json();
     return data;
   },
   retry: false,

@@ -1,4 +1,4 @@
-import axios from "axios";
+import ky from "ky";
 import { format, subDays } from "date-fns";
 import { queryOptions, infiniteQueryOptions } from "@tanstack/react-query";
 import type { Post } from "data/nasa/types";
@@ -12,9 +12,9 @@ export const infinitePostOptions = infiniteQueryOptions({
     const endDate = format(pageParam, "yyyy-MM-dd");
     const startDate = format(subDays(pageParam, 9), "yyyy-MM-dd");
 
-    const data = await axios
+    const data = await ky
       .get<Post[]>(`${BASE_URL}&start_date=${startDate}&end_date=${endDate}`)
-      .then((response) => response.data);
+      .json();
 
     return data.reverse();
   },
@@ -37,9 +37,7 @@ export const postOptions = (date: string) =>
   queryOptions({
     queryKey: ["post", date],
     queryFn: async () => {
-      const data = await axios
-        .get<Post>(`${BASE_URL}&date=${date}`)
-        .then((response) => response.data);
+      const data = await ky.get<Post>(`${BASE_URL}&date=${date}`).json();
       return data;
     },
     gcTime: 60 * 60 * 1000, // 1 hour
