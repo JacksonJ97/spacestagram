@@ -14,7 +14,7 @@ async function handleGetLikedPosts(
   next: NextFunction,
 ) {
   try {
-    const userId = req.userId as number;
+    const userId = req.auth!.userId;
     const posts = await getUserLikedPosts(userId);
 
     return res.status(OK).json(posts);
@@ -33,7 +33,7 @@ async function handleLikePost(
   next: NextFunction,
 ) {
   try {
-    const userId = req.userId as number;
+    const userId = req.auth!.userId;
     const { date, title, url } = req.body;
 
     await likePost({ userId, date, title, url });
@@ -54,7 +54,7 @@ async function handleUnlikePost(
   next: NextFunction,
 ) {
   try {
-    const userId = req.userId as number;
+    const userId = req.auth!.userId;
 
     await unlikePost({ userId, date: req.params.date });
 

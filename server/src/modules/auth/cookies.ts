@@ -1,7 +1,7 @@
 import { Response, CookieOptions } from "express";
-import { SESSION_COOKIE_NAME } from "constants/session";
+import { SESSION_COOKIE_NAME } from "modules/auth/constants";
 
-export const defaults: CookieOptions = {
+export const defaultOptions: CookieOptions = {
   path: "/",
   secure: true,
   httpOnly: true,
@@ -18,11 +18,11 @@ export function setSessionCookie({
   expiresAt: Date;
 }) {
   return res.cookie(SESSION_COOKIE_NAME, token, {
-    ...defaults,
+    ...defaultOptions,
     expires: expiresAt,
   });
 }
 
 export function clearSessionCookie(res: Response) {
-  return res.clearCookie(SESSION_COOKIE_NAME, { ...defaults });
+  return res.clearCookie(SESSION_COOKIE_NAME, defaultOptions);
 }

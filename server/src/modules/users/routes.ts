@@ -1,15 +1,15 @@
 import { Router } from "express";
+import optionalAuth from "middlewares/optional-auth";
 import validate from "middlewares/request-validator";
-import requireAuth from "middlewares/require-auth";
+import { createAccountSchema } from "modules/users/schemas";
 import {
   handleCreateAccount,
   handleGetCurrentUser,
 } from "modules/users/controllers";
-import { createAccountSchema } from "modules/users/schemas";
 
 const router = Router();
 
 router.post("/", validate(createAccountSchema), handleCreateAccount);
-router.get("/me", requireAuth, handleGetCurrentUser);
+router.get("/me", optionalAuth, handleGetCurrentUser);
 
 export default router;

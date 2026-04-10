@@ -13,6 +13,7 @@
     "rootDir": ".",
     "outDir": "dist",
     "paths": {
+      "config/*": ["./src/config/*"],
       "constants/*": ["./src/constants/*"],
       "controllers/*": ["./src/controllers/*"],
       "db/*": ["./src/db/*"],

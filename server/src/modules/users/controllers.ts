@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK, CREATED } from "constants/http";
-import { setSessionCookie } from "utils/cookies";
+import { clearSessionCookie, setSessionCookie } from "modules/auth/cookies";
 import { createAccountSchema } from "modules/users/schemas";
 import { createAccount, getCurrentUser } from "modules/users/services";
 
@@ -41,10 +41,15 @@ async function handleGetCurrentUser(
   next: NextFunction,
 ) {
   try {
-    const userId = req.auth!.userId;
+    const userId = req.auth?.userId;
+
+    if (!userId) {
+      return res.status(OK).json(null);
+    }
+
     const user = await getCurrentUser(userId);
 
-    return res.status(OK).json(user);
+    return res.status(OK).json(user ?? null);
   } catch (error) {
     next(error);
   }

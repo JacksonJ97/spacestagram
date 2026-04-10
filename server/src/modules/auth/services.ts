@@ -2,19 +2,22 @@ import bcrypt from "bcryptjs";
 import {
   getUserByEmail,
   createSession,
-  updateSessionById,
   getSessionById,
+  updateSessionById,
   deleteSession,
 } from "db/queries";
-import { UnauthorizedError } from "utils/errors";
 import {
-  generateRandomString,
   hashSecret,
   timingSafeCompare,
+  generateRandomString,
 } from "utils/crypto";
-import { ACTIVITY_WRITE_INTERVAL_MS, IDLE_TIMEOUT_MS } from "constants/session";
+import { UnauthorizedError } from "utils/errors";
+import {
+  IDLE_TIMEOUT_MS,
+  ABSOLUTE_EXPIRY_MS,
+  ACTIVITY_INTERVAL_MS,
+} from "modules/auth/constants";
 
-// Possible move this
 export async function createUserSession(userId: number) {
   const id = generateRandomString();
   const secret = generateRandomString();
@@ -26,54 +29,45 @@ export async function createUserSession(userId: number) {
     throw new Error("Failed to create session");
   }
 
-  // Clean this up later
-  const expiresAt = new Date(
-    session.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000, // 30 days
-  );
+  const expiresAt = new Date(session.createdAt.getTime() + ABSOLUTE_EXPIRY_MS);
 
   return { token: `${id}.${secret}`, session, expiresAt };
 }
 
 export async function validateSession(token: string) {
-  const parts = token.split(".");
+  const separatorIndex = token.indexOf(".");
+  if (separatorIndex <= 0 || separatorIndex === token.length - 1) return null;
 
-  if (parts.length !== 2) return null;
-
-  const [id, secret] = parts;
-  const now = new Date();
-
-  if (!id || !secret) return null;
+  const id = token.slice(0, separatorIndex);
+  const secret = token.slice(separatorIndex + 1);
 
   const session = await getSessionById(id);
 
   if (!session) return null;
 
-  // Absolute expiry
-  if (now.getTime() >= session.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000) {
+  const nowInMs = Date.now();
+  const createdAtInMs = session.createdAt.getTime();
+  const lastVerifiedAtInMs = session.lastVerifiedAt.getTime();
+
+  if (nowInMs >= createdAtInMs + ABSOLUTE_EXPIRY_MS) {
     await deleteSession(session.id);
     return null;
   }
 
-  // Idle timeout
-  if (now.getTime() - session.lastVerifiedAt.getTime() >= IDLE_TIMEOUT_MS) {
+  if (nowInMs - lastVerifiedAtInMs >= IDLE_TIMEOUT_MS) {
     await deleteSession(session.id);
     return null;
   }
 
-  // Verify secret
-  const incomingHash = hashSecret(secret);
-  if (!timingSafeCompare(incomingHash, session.secretHash)) {
+  const secretHash = hashSecret(secret);
+  if (!timingSafeCompare(secretHash, session.secretHash)) {
     return null;
   }
 
-  // Activity write-back after successful verification only
-  if (
-    now.getTime() - session.lastVerifiedAt.getTime() >=
-    ACTIVITY_WRITE_INTERVAL_MS
-  ) {
+  if (nowInMs - lastVerifiedAtInMs >= ACTIVITY_INTERVAL_MS) {
+    const now = new Date(nowInMs);
     await updateSessionById(session.id, { lastVerifiedAt: now });
-
-    session.lastVerifiedAt = now; // What does this do?
+    session.lastVerifiedAt = now;
   }
 
   return session;

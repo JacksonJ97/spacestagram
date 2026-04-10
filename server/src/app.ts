@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
 import router from "routes/index";
-import { PORT, APP_ORIGIN } from "constants/env";
+import { PORT, APP_ORIGIN } from "config/env";
 import errorHandler from "middlewares/error-handler";
 
 const app = express();

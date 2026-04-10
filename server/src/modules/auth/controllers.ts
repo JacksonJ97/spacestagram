@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
-import { setSessionCookie, clearSessionCookie } from "utils/cookies";
 import { loginSchema } from "modules/auth/schemas";
 import { loginUser, logoutUser } from "modules/auth/services";
+import { setSessionCookie, clearSessionCookie } from "modules/auth/cookies";
 
 interface UserLoginRequest extends Request {
   body: z.infer<typeof loginSchema>;

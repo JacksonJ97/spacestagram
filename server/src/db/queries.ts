@@ -1,6 +1,8 @@
 import { eq, and, desc } from "drizzle-orm";
-import db from "db/client";
+import db from "config/db";
 import { users, sessions, posts, likedPosts } from "db/schema";
+
+// USER QUERIES //
 
 async function createUser(input: typeof users.$inferInsert) {
   const [user] = await db.insert(users).values(input).returning();
@@ -11,7 +13,7 @@ async function getUserById(id: number) {
   const user = await db.query.users.findFirst({
     where: eq(users.id, id),
     columns: {
-      password: false, // renamed to passwordHash
+      passwordHash: false,
       createdAt: false,
       updatedAt: false,
     },
@@ -45,6 +47,8 @@ async function getUserByEmail(email: string) {
   return user;
 }
 
+// SESSION QUERIES //
+
 async function createSession(input: typeof sessions.$inferInsert) {
   const [session] = await db.insert(sessions).values(input).returning();
   return session;
@@ -58,10 +62,6 @@ async function getSessionById(id: string) {
   return session;
 }
 
-async function deleteSession(id: string) {
-  await db.delete(sessions).where(eq(sessions.id, id));
-}
-
 async function updateSessionById(
   id: string,
   updates: Partial<typeof sessions.$inferInsert>,
@@ -69,18 +69,11 @@ async function updateSessionById(
   await db.update(sessions).set(updates).where(eq(sessions.id, id));
 }
 
-async function getLikedPostsByUserId(userId: number) {
-  const liked = await db
-    .select()
-    .from(likedPosts)
-    .innerJoin(posts, eq(posts.id, likedPosts.postId))
-    .where(eq(likedPosts.userId, userId))
-    .orderBy(desc(likedPosts.likedAt));
-
-  const data = liked.map(({ posts }) => posts);
-
-  return data;
+async function deleteSession(id: string) {
+  await db.delete(sessions).where(eq(sessions.id, id));
 }
+
+// POST QUERIES //
 
 async function getOrCreatePost({
   date,
@@ -100,6 +93,29 @@ async function getOrCreatePost({
   });
 }
 
+async function getPostByDate(date: string) {
+  const post = await db.query.posts.findFirst({
+    where: eq(posts.date, date),
+  });
+
+  return post;
+}
+
+// LIKED POST QUERIES //
+
+async function getLikedPostsByUserId(userId: number) {
+  const liked = await db
+    .select()
+    .from(likedPosts)
+    .innerJoin(posts, eq(posts.id, likedPosts.postId))
+    .where(eq(likedPosts.userId, userId))
+    .orderBy(desc(likedPosts.likedAt));
+
+  const data = liked.map(({ posts }) => posts);
+
+  return data;
+}
+
 async function createOrTouchLikedPost({
   userId,
   postId,
@@ -114,14 +130,6 @@ async function createOrTouchLikedPost({
     .returning();
 
   return likedPost;
-}
-
-async function getPostByDate(date: string) {
-  const post = await db.query.posts.findFirst({
-    where: eq(posts.date, date),
-  });
-
-  return post;
 }
 
 async function deleteLikedPost({
@@ -140,16 +148,20 @@ async function deleteLikedPost({
 }
 
 export {
+  // User queries //
   createUser,
   getUserById,
   getUserByEmail,
+  // Session queries //
   createSession,
   getSessionById,
-  deleteSession,
   updateSessionById,
-  getLikedPostsByUserId,
+  deleteSession,
+  // Post queries //
   getOrCreatePost,
-  createOrTouchLikedPost,
   getPostByDate,
+  // Liked post queries //
+  getLikedPostsByUserId,
+  createOrTouchLikedPost,
   deleteLikedPost,
 };

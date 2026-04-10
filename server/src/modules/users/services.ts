@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
+import { ConflictError } from "utils/errors";
 import { createUser, getUserById, getUserByEmail } from "db/queries";
 import { createUserSession } from "modules/auth/services";
-import { ConflictError, NotFoundError } from "utils/errors";
 
 export async function createAccount({
   firstName,
@@ -41,10 +41,5 @@ export async function createAccount({
 
 export async function getCurrentUser(userId: number) {
   const user = await getUserById(userId);
-
-  if (!user) {
-    throw new NotFoundError("User not found");
-  }
-
   return user;
 }
