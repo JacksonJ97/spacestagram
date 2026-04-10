@@ -5,7 +5,7 @@ export const defaultOptions: CookieOptions = {
   path: "/",
   secure: true,
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: "none",
 };
 
 export function setSessionCookie({
