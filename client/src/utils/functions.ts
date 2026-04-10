@@ -11,8 +11,8 @@ export const cn = (...inputs: ClassValue[]) => {
 };
 
 export const getErrorMessage = (error: ServerError) => {
-  if (error.response) {
-    return error.response.data.message;
+  if (error.data && typeof error.data === "object") {
+    return error.data.message;
   }
   return "Something went wrong";
 };
