@@ -1,7 +1,8 @@
 export type Post = {
   date: string;
-  explanation: string;
   title: string;
-  url: string;
-  media_type: "image" | "video";
+  media_type: "image" | "video" | "iframe";
+  explanation: string;
+  alt: string;
+  hdurl: string;
 };

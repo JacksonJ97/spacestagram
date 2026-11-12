@@ -32,7 +32,7 @@ export default function PostCard({
     if (isLiked) {
       unlikePost(post.date);
     } else {
-      likePost({ date: post.date, title: post.title, url: post.url });
+      likePost({ date: post.date, title: post.title, url: post.hdurl });
     }
   };
 
@@ -40,6 +40,16 @@ export default function PostCard({
     navigator.clipboard.writeText(`${pathname}/posts/${post.date}`);
     toast("Link copied to your clipboard!");
   };
+
+  const cleanExplanation = (html: string) => {
+    return html
+      .replace(/<[^>]*>/g, "")
+      .replace(/^Explanation:\s*/, "")
+      .replace(/Tomorrow's picture:.*$/s, "")
+      .trim();
+  };
+
+  const explanation = cleanExplanation(post.explanation);
 
   return (
     <article
@@ -52,7 +62,7 @@ export default function PostCard({
       </header>
 
       <figure>
-        <img src={post.url} alt={post.title} />
+        <img src={post.hdurl} alt={post.alt} />
       </figure>
 
       <div className="flex items-center px-2 pt-2">
@@ -91,7 +101,7 @@ export default function PostCard({
 
       <section className="px-4 pt-2 pb-4">
         <h2 className="text-2xl font-medium text-(--text-color)">{post.title}</h2>
-        <p className="mt-4 text-sm text-(--text-color)">{post.explanation}</p>
+        <p className="mt-4 text-sm text-(--text-color)">{explanation}</p>
         <p className="mt-4 text-xs text-(--text-color)">{post.date}</p>
       </section>
     </article>

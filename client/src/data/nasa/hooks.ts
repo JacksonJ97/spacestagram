@@ -1,26 +1,27 @@
 import ky from "ky";
-import { format, subDays } from "date-fns";
+import { format, subDays, parseISO } from "date-fns";
 import { queryOptions, infiniteQueryOptions } from "@tanstack/react-query";
 import type { Post } from "data/nasa/types";
-import { NASA_API_KEY } from "utils/constants";
 
-const BASE_URL = `https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`;
+const BASE_URL = "https://science.nasa.gov/wp-json/wp/v2/apod-basic";
 
 export const infinitePostOptions = infiniteQueryOptions({
   queryKey: ["posts"],
   queryFn: async ({ pageParam }: { pageParam: Date }) => {
-    const endDate = format(pageParam, "yyyy-MM-dd");
-    const startDate = format(subDays(pageParam, 9), "yyyy-MM-dd");
+    const startDate = format(subDays(pageParam, 9), "yyMMdd");
+    const endDate = format(pageParam, "yyMMdd");
 
     const data = await ky
-      .get<Post[]>(`${BASE_URL}&start_date=${startDate}&end_date=${endDate}`)
+      .get<Post[]>(`${BASE_URL}?date_from=${startDate}&date_to=${endDate}`)
       .json();
 
-    return data.reverse();
+    return data;
   },
   initialPageParam: new Date(),
   getNextPageParam: (posts) => {
-    const oldest = new Date(posts[posts.length - 1].date);
+    if (posts.length === 0) return undefined;
+
+    const oldest = parseISO(posts[posts.length - 1].date);
     return subDays(oldest, 1);
   },
   select: (data) => {
@@ -31,13 +32,14 @@ export const infinitePostOptions = infiniteQueryOptions({
   staleTime: 15 * 60 * 1000, // 15 minutes
 });
 
-export const postOptions = (date: string) =>
+export const postOptions = (date: string | null) =>
   queryOptions({
     queryKey: ["post", date],
     queryFn: async () => {
-      const data = await ky.get<Post>(`${BASE_URL}&date=${date}`).json();
+      const data = await ky.get<Post>(`${BASE_URL}/${date}`).json();
       return data;
     },
+    enabled: !!date,
     gcTime: 60 * 60 * 1000, // 1 hour
     staleTime: Infinity,
   });

@@ -1,5 +1,5 @@
 import ky, { type HTTPError } from "ky";
-import { API_BASE_URL } from "utils/constants";
+import { env } from "utils/env";
 
 export type ServerError = HTTPError<{
   code: string;
@@ -11,7 +11,7 @@ export type ServerError = HTTPError<{
 }>;
 
 const api = ky.create({
-  prefix: API_BASE_URL,
+  prefix: env.API_BASE_URL,
   credentials: "include",
   headers: { Accept: "application/json" },
 });

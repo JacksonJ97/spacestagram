@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
+import { format, isValid, parseISO } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { postOptions } from "data/nasa/hooks";
 import { currentUserOptions } from "data/user/hooks";
@@ -12,13 +13,20 @@ export default function PostDetails() {
   const { date } = useParams();
   const [open, setOpen] = useState(false);
 
+  const parsedDate = date ? parseISO(date) : null;
+  const formattedDate = parsedDate && isValid(parsedDate) ? format(parsedDate, "yyMMdd") : null;
+
   const {
     data: post,
     isPending: isPostPending,
     isError: isPostError,
-  } = useQuery({ ...postOptions(date!) }); // The `date` is always defined in the route pattern (e.g., /posts/:date)
+  } = useQuery({ ...postOptions(formattedDate) });
 
   const { data: user } = useQuery({ ...currentUserOptions });
+
+  if (!formattedDate) {
+    return <ErrorMessage message="Invalid post date." />;
+  }
 
   if (isPostPending) {
     return (
