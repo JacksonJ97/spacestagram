@@ -46,13 +46,7 @@ export async function likePost({
   await createOrTouchLikedPost({ userId: user.id, postId: post.id });
 }
 
-export async function unlikePost({
-  userId,
-  date,
-}: {
-  userId: number;
-  date: string;
-}) {
+export async function unlikePost({ userId, date }: { userId: number; date: string }) {
   const user = await getUserById(userId);
 
   if (!user) {

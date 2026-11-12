@@ -31,9 +31,7 @@ async function getUserById(id: number) {
     },
   });
 
-  const dates = user
-    ? user.likedPosts.map((likedPost) => likedPost.post.date)
-    : [];
+  const dates = user ? user.likedPosts.map((likedPost) => likedPost.post.date) : [];
   const formattedUser = user ? { ...user, likedPosts: dates } : undefined;
 
   return formattedUser;
@@ -62,10 +60,7 @@ async function getSessionById(id: string) {
   return session;
 }
 
-async function updateSessionById(
-  id: string,
-  updates: Partial<typeof sessions.$inferInsert>,
-) {
+async function updateSessionById(id: string, updates: Partial<typeof sessions.$inferInsert>) {
   await db.update(sessions).set(updates).where(eq(sessions.id, id));
 }
 
@@ -75,11 +70,7 @@ async function deleteSession(id: string) {
 
 // POST QUERIES //
 
-async function getOrCreatePost({
-  date,
-  title,
-  url,
-}: typeof posts.$inferInsert) {
+async function getOrCreatePost({ date, title, url }: typeof posts.$inferInsert) {
   const [inserted] = await db
     .insert(posts)
     .values({ date, title, url })
@@ -116,10 +107,7 @@ async function getLikedPostsByUserId(userId: number) {
   return data;
 }
 
-async function createOrTouchLikedPost({
-  userId,
-  postId,
-}: typeof likedPosts.$inferInsert) {
+async function createOrTouchLikedPost({ userId, postId }: typeof likedPosts.$inferInsert) {
   const [likedPost] = await db
     .insert(likedPosts)
     .values({ userId, postId })
@@ -132,13 +120,7 @@ async function createOrTouchLikedPost({
   return likedPost;
 }
 
-async function deleteLikedPost({
-  userId,
-  postId,
-}: {
-  userId: number;
-  postId: number;
-}) {
+async function deleteLikedPost({ userId, postId }: { userId: number; postId: number }) {
   const deleted = await db
     .delete(likedPosts)
     .where(and(eq(likedPosts.userId, userId), eq(likedPosts.postId, postId)))

@@ -2,12 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "utils/errors";
 import { INTERNAL_SERVER_ERROR } from "constants/http";
 
-function errorHandler(
-  error: unknown,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+function errorHandler(error: unknown, req: Request, res: Response, _next: NextFunction) {
   console.error(`ERROR at ${req.method} ${req.path}:`, error);
 
   if (error instanceof AppError) {

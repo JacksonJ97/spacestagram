@@ -9,11 +9,7 @@ interface UserLoginRequest extends Request {
   body: z.infer<typeof loginSchema>;
 }
 
-async function handleUserLogin(
-  req: UserLoginRequest,
-  res: Response,
-  next: NextFunction,
-) {
+async function handleUserLogin(req: UserLoginRequest, res: Response, next: NextFunction) {
   try {
     const { email, password } = req.body;
     const { token, expiresAt } = await loginUser({ email, password });
@@ -31,9 +27,7 @@ async function handleUserLogout(req: Request, res: Response) {
 
   await logoutUser(sessionId);
 
-  return clearSessionCookie(res)
-    .status(OK)
-    .json({ message: "Logout successful" });
+  return clearSessionCookie(res).status(OK).json({ message: "Logout successful" });
 }
 
 export { handleUserLogin, handleUserLogout };

@@ -6,17 +6,9 @@ import {
   updateSessionById,
   deleteSession,
 } from "db/queries";
-import {
-  hashSecret,
-  timingSafeCompare,
-  generateRandomString,
-} from "utils/crypto";
+import { hashSecret, timingSafeCompare, generateRandomString } from "utils/crypto";
 import { UnauthorizedError } from "utils/errors";
-import {
-  IDLE_TIMEOUT_MS,
-  ABSOLUTE_EXPIRY_MS,
-  ACTIVITY_INTERVAL_MS,
-} from "modules/auth/constants";
+import { IDLE_TIMEOUT_MS, ABSOLUTE_EXPIRY_MS, ACTIVITY_INTERVAL_MS } from "modules/auth/constants";
 
 export async function createUserSession(userId: number) {
   const id = generateRandomString();
@@ -73,13 +65,7 @@ export async function validateSession(token: string) {
   return session;
 }
 
-export async function loginUser({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) {
+export async function loginUser({ email, password }: { email: string; password: string }) {
   const user = await getUserByEmail(email);
 
   if (!user) {

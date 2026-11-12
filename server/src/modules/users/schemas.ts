@@ -15,7 +15,5 @@ export const createAccountSchema = z.object({
   password: z
     .string()
     .max(72)
-    .refine((value) =>
-      passwordRequirements.every((regex) => regex.test(value)),
-    ),
+    .refine((value) => passwordRequirements.every((regex) => regex.test(value))),
 });

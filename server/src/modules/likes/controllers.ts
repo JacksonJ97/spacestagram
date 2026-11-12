@@ -2,17 +2,9 @@ import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
 import { likePostSchema } from "modules/likes/schemas";
-import {
-  getUserLikedPosts,
-  likePost,
-  unlikePost,
-} from "modules/likes/services";
+import { getUserLikedPosts, likePost, unlikePost } from "modules/likes/services";
 
-async function handleGetLikedPosts(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+async function handleGetLikedPosts(req: Request, res: Response, next: NextFunction) {
   try {
     const userId = req.auth!.userId;
     const posts = await getUserLikedPosts(userId);
@@ -27,11 +19,7 @@ interface LikePostRequest extends Request {
   body: z.infer<typeof likePostSchema>;
 }
 
-async function handleLikePost(
-  req: LikePostRequest,
-  res: Response,
-  next: NextFunction,
-) {
+async function handleLikePost(req: LikePostRequest, res: Response, next: NextFunction) {
   try {
     const userId = req.auth!.userId;
     const { date, title, url } = req.body;
@@ -48,11 +36,7 @@ interface UnlikePostRequest extends Request {
   params: { date: string };
 }
 
-async function handleUnlikePost(
-  req: UnlikePostRequest,
-  res: Response,
-  next: NextFunction,
-) {
+async function handleUnlikePost(req: UnlikePostRequest, res: Response, next: NextFunction) {
   try {
     const userId = req.auth!.userId;
 

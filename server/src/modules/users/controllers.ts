@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { OK, CREATED } from "constants/http";
-import { clearSessionCookie, setSessionCookie } from "modules/auth/cookies";
+import { setSessionCookie } from "modules/auth/cookies";
 import { createAccountSchema } from "modules/users/schemas";
 import { createAccount, getCurrentUser } from "modules/users/services";
 
@@ -9,11 +9,7 @@ interface CreateAccountRequest extends Request {
   body: z.infer<typeof createAccountSchema>;
 }
 
-async function handleCreateAccount(
-  req: CreateAccountRequest,
-  res: Response,
-  next: NextFunction,
-) {
+async function handleCreateAccount(req: CreateAccountRequest, res: Response, next: NextFunction) {
   try {
     const { firstName, lastName, email, password } = req.body;
 
@@ -35,11 +31,7 @@ async function handleCreateAccount(
   }
 }
 
-async function handleGetCurrentUser(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+async function handleGetCurrentUser(req: Request, res: Response, next: NextFunction) {
   try {
     const userId = req.auth?.userId;
 
