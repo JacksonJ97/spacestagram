@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { cx } from "utils/functions";
+import { cn } from "utils/functions";
 import { useUserLogout } from "data/auth/hooks";
 import logo from "assets/images/spacestagram-logo.ico";
 import MenuIcon from "components/common/Icons/Menu";
@@ -23,7 +23,7 @@ function HomeLink({ isActive }: { isActive: boolean }) {
         <HomeIcon width={24} height={24} aria-hidden="true" />
       )}
       <span
-        className={cx("sr-only xl:not-sr-only", { "font-medium": isActive })}
+        className={cn("sr-only xl:not-sr-only", { "font-medium": isActive })}
       >
         Home
       </span>
@@ -40,7 +40,7 @@ function LikesLink({ isActive }: { isActive: boolean }) {
         <HeartIcon width={24} height={24} aria-hidden="true" />
       )}
       <span
-        className={cx("sr-only xl:not-sr-only", { "font-medium": isActive })}
+        className={cn("sr-only xl:not-sr-only", { "font-medium": isActive })}
       >
         Likes
       </span>
@@ -68,14 +68,14 @@ function MenuButton() {
 export default function Sidebar() {
   return (
     <header
-      className={cx(
+      className={cn(
         "border-t border-(--border-color) bg-(--background-color) p-3",
         "sm:flex sm:flex-col sm:border-t-0 sm:border-r sm:py-8",
         "xl:w-full xl:max-w-xs",
       )}
     >
       <div
-        className={cx(
+        className={cn(
           "hidden pt-3 pb-4",
           "sm:flex sm:items-center sm:justify-center",
           "xl:justify-start xl:px-3",
