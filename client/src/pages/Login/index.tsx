@@ -52,7 +52,7 @@ export default function Login() {
             <PasswordInput required hideHints name="password" control={control} />
             <Button
               type="submit"
-              className="mt-3 w-full"
+              className="mt-3"
               isLoading={isLoggingIn}
               disabled={isSubmitButtonDisabled}
             >

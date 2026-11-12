@@ -39,15 +39,15 @@ function DialogPopup({ className, children, ...props }: DialogPrimitive.Popup.Pr
       <DialogPrimitive.Popup
         data-slot="dialog-popup"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-4xl bg-(--elevated-background-color) p-12",
+          "fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-1/2 rounded-4xl bg-(--elevated-background-color) p-12",
           "transition-[opacity,scale] data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0",
           className,
         )}
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute top-4 right-4 flex h-8 w-8 cursor-pointer items-center justify-center text-(--text-color) hover:text-(--text-color)/75">
-          <XIcon className="h-4 w-4" />
+        <DialogPrimitive.Close className="absolute top-4 right-4 flex size-8 cursor-pointer items-center justify-center text-(--text-color) hover:text-(--text-color)/75">
+          <XIcon className="size-4" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
       </DialogPrimitive.Popup>

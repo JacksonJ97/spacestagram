@@ -17,7 +17,7 @@ function UserLayout() {
   return (
     <div className="flex h-screen flex-col-reverse sm:flex-row">
       <Sidebar />
-      <main className="h-full w-full overflow-auto bg-(--background-color) px-4 py-8">
+      <main className="size-full overflow-auto bg-(--background-color) px-4 py-8">
         <Outlet />
       </main>
     </div>

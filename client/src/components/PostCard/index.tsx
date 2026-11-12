@@ -54,11 +54,11 @@ export default function PostCard({
   return (
     <article
       ref={ref}
-      className="max-w-xl rounded-xs border border-(--border-color) bg-(--background-color)"
+      className="max-w-xl rounded-xs border border-(--border-color) bg-(--background-color) text-(--text-color)"
     >
       <header className="flex items-center gap-3 p-4">
-        <img src={avatar} alt="User avatar" className="h-8 w-8 rounded-full" />
-        <p className="text-sm font-medium text-(--text-color)">nasa</p>
+        <img src={avatar} alt="User avatar" className="size-8 rounded-full" />
+        <p className="text-sm font-medium">nasa</p>
       </header>
 
       <figure>
@@ -71,7 +71,7 @@ export default function PostCard({
           onClick={toggleLike}
           data-loading={isLikingPost || isUnlikingPost}
           aria-label={isLiked ? "Unlike post" : "Like post"}
-          className="group flex h-10 w-10 cursor-pointer items-center justify-center data-[loading=true]:pointer-events-none"
+          className="group flex size-10 cursor-pointer items-center justify-center data-[loading=true]:pointer-events-none"
         >
           {isLiked ? (
             <FilledHeartIcon
@@ -85,7 +85,7 @@ export default function PostCard({
               width={24}
               height={24}
               aria-hidden="true"
-              className="text-(--text-color) group-hover:text-(--text-color)/75"
+              className="group-hover:text-(--text-color)/75"
             />
           )}
         </button>
@@ -93,16 +93,16 @@ export default function PostCard({
           type="button"
           onClick={handleShare}
           aria-label="Copy post link"
-          className="flex h-10 w-10 cursor-pointer items-center justify-center text-(--text-color) hover:text-(--text-color)/75"
+          className="flex size-10 cursor-pointer items-center justify-center hover:text-(--text-color)/75"
         >
           <ShareIcon width={24} height={24} aria-hidden="true" />
         </button>
       </div>
 
       <section className="px-4 pt-2 pb-4">
-        <h2 className="text-2xl font-medium text-(--text-color)">{post.title}</h2>
-        <p className="mt-4 text-sm text-(--text-color)">{explanation}</p>
-        <p className="mt-4 text-xs text-(--text-color)">{post.date}</p>
+        <h2 className="text-2xl font-medium">{post.title}</h2>
+        <p className="mt-4 text-sm">{explanation}</p>
+        <p className="mt-4 text-xs">{post.date}</p>
       </section>
     </article>
   );

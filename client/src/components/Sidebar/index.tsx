@@ -74,7 +74,7 @@ export default function Sidebar() {
         )}
       >
         <NavLink to="/">
-          <img src={logo} alt="Spacestagram logo" className="h-8 w-8 xl:hidden" />
+          <img src={logo} alt="Spacestagram logo" className="size-8 xl:hidden" />
           <span className="hidden font-lobster text-2xl text-(--text-color) xl:block">
             Spacestagram
           </span>

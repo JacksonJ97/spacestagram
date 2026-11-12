@@ -76,10 +76,7 @@ export default function Signup() {
             </NavLink>
           </div>
 
-          <form
-            onSubmit={onSubmit}
-            className="mx-auto my-6 flex max-w-2xs flex-col items-center gap-3"
-          >
+          <form onSubmit={onSubmit} className="mx-auto my-6 flex max-w-2xs flex-col gap-3">
             <TextInput
               required
               name="firstName"
@@ -107,7 +104,7 @@ export default function Signup() {
             <PasswordInput required name="password" control={control} />
             <Button
               type="submit"
-              className="mt-3 w-full"
+              className="mt-3"
               isLoading={isCreatingUser}
               disabled={isSubmitButtonDisabled}
             >

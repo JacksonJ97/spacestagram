@@ -21,13 +21,9 @@ export default function Likes() {
 
   if (posts.length === 0) {
     return (
-      <div className="py-6">
-        <h2 className="text-center text-2xl font-semibold text-(--text-color)">
-          You haven't liked any posts yet.
-        </h2>
-        <p className="mt-3 text-center text-(--text-color)">
-          Start exploring and tap the like button to save your favorites!
-        </p>
+      <div className="py-6 text-center text-(--text-color)">
+        <h2 className="text-2xl font-semibold">You haven't liked any posts yet.</h2>
+        <p className="mt-3">Start exploring and tap the like button to save your favorites!</p>
       </div>
     );
   }

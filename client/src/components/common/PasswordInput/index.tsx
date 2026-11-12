@@ -56,9 +56,9 @@ export default function PasswordInput<
   const strength = checkStrength(field.value);
 
   return (
-    <div className="w-full">
+    <div className="w-full text-(--text-color)">
       <div className="flex flex-col gap-1.5">
-        <label htmlFor={name} className="text-sm font-semibold text-(--text-color)">
+        <label htmlFor={name} className="text-sm font-semibold">
           Password
         </label>
         <div className="relative">
@@ -74,7 +74,7 @@ export default function PasswordInput<
             aria-invalid={error ? true : undefined}
             aria-errormessage={error ? `${name}-error` : undefined}
             className={cn(
-              "h-9 w-full rounded-xs border border-(--border-color) bg-(--secondary-background-color) p-2 text-sm text-(--text-color)",
+              "h-9 w-full rounded-xs border border-(--border-color) bg-(--secondary-background-color) p-2 text-sm",
               error && "border-(--error-color)",
               className,
             )}
@@ -87,7 +87,7 @@ export default function PasswordInput<
             aria-controls="password"
             aria-pressed={isVisible}
             aria-label={isVisible ? "Hide password" : "Show password"}
-            className="absolute inset-y-0 inset-e-0 flex w-9 cursor-pointer items-center justify-center rounded-e-xs text-(--text-color) hover:text-(--text-color)/75"
+            className="absolute inset-y-0 inset-e-0 flex w-9 cursor-pointer items-center justify-center rounded-e-xs hover:text-(--text-color)/75"
           >
             {isVisible ? (
               <EyeOffIcon width={16} height={16} aria-hidden="true" />
@@ -105,7 +105,7 @@ export default function PasswordInput<
 
       {!hideHints && (
         <>
-          <p id={`${name}-requirements`} className="mt-3 text-sm text-(--text-color)">
+          <p id={`${name}-requirements`} className="mt-3 text-sm">
             Password must contain:
           </p>
 
@@ -120,19 +120,9 @@ export default function PasswordInput<
                     className="text-emerald-500"
                   />
                 ) : (
-                  <XIcon
-                    width={16}
-                    height={16}
-                    aria-hidden="true"
-                    className="text-(--text-color)"
-                  />
+                  <XIcon width={16} height={16} aria-hidden="true" />
                 )}
-                <span
-                  className={cn(
-                    "text-sm",
-                    requirement.met ? "text-emerald-600" : "text-(--text-color)",
-                  )}
-                >
+                <span className={cn("text-sm", requirement.met && "text-emerald-600")}>
                   {requirement.text}
                   <span className="sr-only">
                     {requirement.met ? " - Requirement met" : " - Requirement not met"}

@@ -26,9 +26,9 @@ export default function Button({
       {...props}
     >
       {isLoading && (
-        <span className="absolute inset-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+        <span className="absolute inset-1/2 size-5 -translate-1/2 animate-spin rounded-full border-2 border-white border-t-transparent" />
       )}
-      <span className={isLoading ? "opacity-0" : "opacity-100"}>{children}</span>
+      <span className={isLoading ? "opacity-0" : undefined}>{children}</span>
     </button>
   );
 }
