@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light dark;
+  background-color: var(--background-color);
+
   --border-color: rgb(219, 219, 219);
   --background-color: rgb(255, 255, 255);
   --hover-background-color: rgb(0, 0, 0, 0.05);

@@ -23,7 +23,7 @@ function DialogBackdrop({ className, ...props }: DialogPrimitive.Backdrop.Props)
     <DialogPrimitive.Backdrop
       data-slot="dialog-backdrop"
       className={cn(
-        "fixed inset-0 z-50 bg-black/50",
+        "fixed inset-0 z-50 min-h-dvh bg-black/50 supports-[-webkit-touch-callout:none]:absolute",
         "transition-colors data-ending-style:bg-black/0 data-starting-style:bg-black/0",
         className,
       )}
