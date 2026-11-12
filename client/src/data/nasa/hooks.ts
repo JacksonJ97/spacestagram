@@ -24,9 +24,7 @@ export const infinitePostOptions = infiniteQueryOptions({
     return subDays(oldest, 1);
   },
   select: (data) => {
-    const pages = data.pages
-      .flat()
-      .filter((post) => post.media_type == "image");
+    const pages = data.pages.flat().filter((post) => post.media_type == "image");
     return { ...data, pages };
   },
   gcTime: 60 * 60 * 1000, // 1 hour

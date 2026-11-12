@@ -21,10 +21,7 @@ function DropdownMenuContent({
   sideOffset = 6,
   ...props
 }: MenuPrimitive.Popup.Props &
-  Pick<
-    MenuPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+  Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
   return (
     <DropdownMenuPortal>
       <MenuPrimitive.Positioner
@@ -62,9 +59,4 @@ function DropdownMenuItem({ className, ...props }: MenuPrimitive.Item.Props) {
   );
 }
 
-export {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-};
+export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem };

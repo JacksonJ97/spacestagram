@@ -1,9 +1,4 @@
-import {
-  Dialog,
-  DialogPopup,
-  DialogTitle,
-  DialogDescription,
-} from "components/common/Dialog";
+import { Dialog, DialogPopup, DialogTitle, DialogDescription } from "components/common/Dialog";
 import LinkButton from "components/common/LinkButton";
 
 export default function LikeAuthDialog({

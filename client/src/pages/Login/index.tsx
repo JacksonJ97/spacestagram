@@ -42,25 +42,14 @@ export default function Login() {
       <div className="mx-auto max-w-sm">
         <div className="rounded-xs border border-(--border-color) px-3 py-4">
           <div className="my-10 flex items-center justify-center">
-            <NavLink
-              to="/"
-              className="font-lobster text-5xl text-(--text-color)"
-            >
+            <NavLink to="/" className="font-lobster text-5xl text-(--text-color)">
               Spacestagram
             </NavLink>
           </div>
 
-          <form
-            onSubmit={onSubmit}
-            className="mx-auto my-6 flex max-w-2xs flex-col gap-3"
-          >
+          <form onSubmit={onSubmit} className="mx-auto my-6 flex max-w-2xs flex-col gap-3">
             <TextInput required name="email" label="Email" control={control} />
-            <PasswordInput
-              required
-              hideHints
-              name="password"
-              control={control}
-            />
+            <PasswordInput required hideHints name="password" control={control} />
             <Button
               type="submit"
               className="mt-3 w-full"

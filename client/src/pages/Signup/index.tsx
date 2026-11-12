@@ -27,16 +27,13 @@ const schema = z.object({
     .trim()
     .min(1, "This field is required")
     .max(50, "Last name must be under 50 characters"),
-  email: z
-    .email("Invalid email address")
-    .max(254, "Email must be under 254 characters"),
+  email: z.email("Invalid email address").max(254, "Email must be under 254 characters"),
   password: z
     .string()
     .max(72, "Password must be under 72 characters")
-    .refine(
-      (value) => passwordRequirements.every((regex) => regex.test(value)),
-      { error: "Invalid password" },
-    ),
+    .refine((value) => passwordRequirements.every((regex) => regex.test(value)), {
+      error: "Invalid password",
+    }),
 });
 
 export default function Signup() {
@@ -74,10 +71,7 @@ export default function Signup() {
       <div className="mx-auto max-w-sm">
         <div className="rounded-xs border border-(--border-color) px-3 py-4">
           <div className="my-10 flex items-center justify-center">
-            <NavLink
-              to="/"
-              className="font-lobster text-5xl text-(--text-color)"
-            >
+            <NavLink to="/" className="font-lobster text-5xl text-(--text-color)">
               Spacestagram
             </NavLink>
           </div>

@@ -1,9 +1,5 @@
 import { toast } from "sonner";
-import {
-  useMutation,
-  queryOptions,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, queryOptions, useQueryClient } from "@tanstack/react-query";
 import api from "config/api";
 import { getErrorMessage } from "utils/functions";
 import { currentUserOptions } from "data/user/hooks";
@@ -23,9 +19,7 @@ export function useLikePost() {
   const client = useQueryClient();
 
   const likePost = async (post: LikePostInput) => {
-    const data = await api
-      .post<{ message: string }>("/api/liked-posts", { json: post })
-      .json();
+    const data = await api.post<{ message: string }>("/api/liked-posts", { json: post }).json();
     return data;
   };
 
@@ -46,9 +40,7 @@ export function useUnlikePost() {
   const client = useQueryClient();
 
   const unlikePost = async (date: string) => {
-    const data = await api
-      .delete<{ message: string }>(`/api/liked-posts/${date}`)
-      .json();
+    const data = await api.delete<{ message: string }>(`/api/liked-posts/${date}`).json();
     return data;
   };
 

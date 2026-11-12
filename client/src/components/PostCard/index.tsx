@@ -90,9 +90,7 @@ export default function PostCard({
       </div>
 
       <section className="px-4 pt-2 pb-4">
-        <h2 className="text-2xl font-medium text-(--text-color)">
-          {post.title}
-        </h2>
+        <h2 className="text-2xl font-medium text-(--text-color)">{post.title}</h2>
         <p className="mt-4 text-sm text-(--text-color)">{post.explanation}</p>
         <p className="mt-4 text-xs text-(--text-color)">{post.date}</p>
       </section>

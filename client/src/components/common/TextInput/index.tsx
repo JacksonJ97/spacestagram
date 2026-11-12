@@ -43,10 +43,7 @@ export default function TextInput<
 
   return (
     <div className="flex w-full flex-col gap-1.5">
-      <label
-        htmlFor={name}
-        className="text-sm font-semibold text-(--text-color)"
-      >
+      <label htmlFor={name} className="text-sm font-semibold text-(--text-color)">
         {label}
       </label>
       <input

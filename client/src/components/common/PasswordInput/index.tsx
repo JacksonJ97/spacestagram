@@ -58,10 +58,7 @@ export default function PasswordInput<
   return (
     <div className="w-full">
       <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor={name}
-          className="text-sm font-semibold text-(--text-color)"
-        >
+        <label htmlFor={name} className="text-sm font-semibold text-(--text-color)">
           Password
         </label>
         <div className="relative">
@@ -72,9 +69,7 @@ export default function PasswordInput<
             autoCapitalize="off"
             aria-required={required}
             aria-describedby={
-              hideHints
-                ? undefined
-                : `${name}-requirements ${name}-requirements-list`
+              hideHints ? undefined : `${name}-requirements ${name}-requirements-list`
             }
             aria-invalid={error ? true : undefined}
             aria-errormessage={error ? `${name}-error` : undefined}
@@ -110,17 +105,11 @@ export default function PasswordInput<
 
       {!hideHints && (
         <>
-          <p
-            id={`${name}-requirements`}
-            className="mt-3 text-sm text-(--text-color)"
-          >
+          <p id={`${name}-requirements`} className="mt-3 text-sm text-(--text-color)">
             Password must contain:
           </p>
 
-          <ul
-            id={`${name}-requirements-list`}
-            className="mt-1.5 flex flex-col gap-1.5"
-          >
+          <ul id={`${name}-requirements-list`} className="mt-1.5 flex flex-col gap-1.5">
             {strength.map((requirement, index) => (
               <li key={index} className="flex items-center gap-2">
                 {requirement.met ? (
@@ -141,16 +130,12 @@ export default function PasswordInput<
                 <span
                   className={cn(
                     "text-sm",
-                    requirement.met
-                      ? "text-emerald-600"
-                      : "text-(--text-color)",
+                    requirement.met ? "text-emerald-600" : "text-(--text-color)",
                   )}
                 >
                   {requirement.text}
                   <span className="sr-only">
-                    {requirement.met
-                      ? " - Requirement met"
-                      : " - Requirement not met"}
+                    {requirement.met ? " - Requirement met" : " - Requirement not met"}
                   </span>
                 </span>
               </li>

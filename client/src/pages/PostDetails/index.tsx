@@ -29,9 +29,7 @@ export default function PostDetails() {
   }
 
   if (isPostError) {
-    return (
-      <ErrorMessage message="We couldn't load the post. Please try again shortly." />
-    );
+    return <ErrorMessage message="We couldn't load the post. Please try again shortly." />;
   }
 
   const isLoggedIn = !!user;

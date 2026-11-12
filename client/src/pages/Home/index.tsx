@@ -40,9 +40,7 @@ export default function Home() {
   }
 
   if (isPostsError) {
-    return (
-      <ErrorMessage message="We couldn't load the posts. Please try again shortly." />
-    );
+    return <ErrorMessage message="We couldn't load the posts. Please try again shortly." />;
   }
 
   const isLoggedIn = !!user;

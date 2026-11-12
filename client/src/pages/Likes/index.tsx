@@ -16,9 +16,7 @@ export default function Likes() {
   }
 
   if (isLikedPostsErorr) {
-    return (
-      <ErrorMessage message="We couldn't load the liked posts. Please try again shortly." />
-    );
+    return <ErrorMessage message="We couldn't load the liked posts. Please try again shortly." />;
   }
 
   if (posts.length === 0) {

@@ -6,11 +6,7 @@ interface LinkButtonProps extends React.ComponentProps<typeof NavLink> {
   className?: string;
 }
 
-export default function LinkButton({
-  variant,
-  className,
-  ...props
-}: LinkButtonProps) {
+export default function LinkButton({ variant, className, ...props }: LinkButtonProps) {
   return (
     <NavLink
       className={cn(

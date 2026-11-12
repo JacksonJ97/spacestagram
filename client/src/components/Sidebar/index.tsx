@@ -22,11 +22,7 @@ function HomeLink({ isActive }: { isActive: boolean }) {
       ) : (
         <HomeIcon width={24} height={24} aria-hidden="true" />
       )}
-      <span
-        className={cn("sr-only xl:not-sr-only", { "font-medium": isActive })}
-      >
-        Home
-      </span>
+      <span className={cn("sr-only xl:not-sr-only", { "font-medium": isActive })}>Home</span>
     </>
   );
 }
@@ -39,11 +35,7 @@ function LikesLink({ isActive }: { isActive: boolean }) {
       ) : (
         <HeartIcon width={24} height={24} aria-hidden="true" />
       )}
-      <span
-        className={cn("sr-only xl:not-sr-only", { "font-medium": isActive })}
-      >
-        Likes
-      </span>
+      <span className={cn("sr-only xl:not-sr-only", { "font-medium": isActive })}>Likes</span>
     </>
   );
 }
@@ -82,12 +74,8 @@ export default function Sidebar() {
         )}
       >
         <NavLink to="/">
-          <img
-            src={logo}
-            alt="Spacestagram logo"
-            className="h-8 w-8 xl:hidden"
-          />
-          <span className="font-lobster hidden text-2xl text-(--text-color) xl:block">
+          <img src={logo} alt="Spacestagram logo" className="h-8 w-8 xl:hidden" />
+          <span className="hidden font-lobster text-2xl text-(--text-color) xl:block">
             Spacestagram
           </span>
         </NavLink>

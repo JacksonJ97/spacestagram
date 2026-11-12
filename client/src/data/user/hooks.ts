@@ -1,10 +1,6 @@
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
-import {
-  useMutation,
-  queryOptions,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, queryOptions, useQueryClient } from "@tanstack/react-query";
 import api from "config/api";
 import { getErrorMessage } from "utils/functions";
 import type { User, CreateUserInput } from "data/user/types";
