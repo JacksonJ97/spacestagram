@@ -1,17 +1,16 @@
+import { z } from "zod";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const getEnv = (key: string, defaultValue?: string) => {
-  const value = process.env[key] ?? defaultValue;
+const schema = z.object({
+  PORT: z.string(),
+  APP_ORIGIN: z.url(),
+  DATABASE_URL: z.url(),
+});
 
-  if (value === undefined) {
-    throw new Error(`Missing environment variable ${key}`);
-  }
-
-  return value;
-};
-
-export const PORT = getEnv("PORT", "8000");
-export const APP_ORIGIN = getEnv("APP_ORIGIN");
-export const DATABASE_URL = getEnv("DATABASE_URL");
+export const env = schema.parse({
+  PORT: process.env.PORT,
+  APP_ORIGIN: process.env.APP_ORIGIN,
+  DATABASE_URL: process.env.DATABASE_URL,
+});
