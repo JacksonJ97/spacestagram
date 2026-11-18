@@ -1,4 +1,4 @@
-import { Response, CookieOptions } from "express";
+import type { Response, CookieOptions } from "express";
 import { SESSION_COOKIE_NAME } from "modules/auth/constants";
 
 export const defaultOptions: CookieOptions = {

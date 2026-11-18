@@ -1,8 +1,8 @@
-import { z } from "zod";
-import { Request, Response, NextFunction } from "express";
+import type { z } from "zod";
+import type { Request, Response, NextFunction } from "express";
 import { OK, CREATED } from "constants/http";
 import { setSessionCookie } from "modules/auth/cookies";
-import { createAccountSchema } from "modules/users/schemas";
+import type { createAccountSchema } from "modules/users/schemas";
 import { createAccount, getCurrentUser } from "modules/users/services";
 
 interface CreateAccountRequest extends Request {

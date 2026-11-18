@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { Request, Response, NextFunction } from "express";
+import type { z } from "zod";
+import type { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
-import { likePostSchema } from "modules/likes/schemas";
+import type { likePostSchema } from "modules/likes/schemas";
 import { getUserLikedPosts, likePost, unlikePost } from "modules/likes/services";
 
 async function handleGetLikedPosts(req: Request, res: Response, next: NextFunction) {

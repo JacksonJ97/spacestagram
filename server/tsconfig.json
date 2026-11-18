@@ -1,26 +1,37 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "node16",
-    "moduleResolution": "node16",
+    "target": "es2023",
+    "lib": ["ES2023"],
+    "module": "nodenext",
     "types": ["node"],
-
     "skipLibCheck": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "resolveJsonModule": true,
 
-    "rootDir": ".",
+    /* Node mode */
+    "verbatimModuleSyntax": true,
+    "noEmitOnError": true,
     "outDir": "dist",
     "paths": {
-      "config/*": ["./src/config/*"],
-      "constants/*": ["./src/constants/*"],
-      "controllers/*": ["./src/controllers/*"],
-      "db/*": ["./src/db/*"],
-      "middlewares/*": ["./src/middlewares/*"],
-      "modules/*": ["./src/modules/*"],
-      "routes/*": ["./src/routes/*"],
-      "utils/*": ["./src/utils/*"]
-    }
-  }
+      "config/*": ["./src/config/*.ts"],
+      "constants/*": ["./src/constants/*.ts"],
+      "controllers/*": ["./src/controllers/*.ts"],
+      "db/*": ["./src/db/*.ts"],
+      "middlewares/*": ["./src/middlewares/*.ts"],
+      "modules/*": ["./src/modules/*.ts"],
+      "routes/*": ["./src/routes/*.ts"],
+      "utils/*": ["./src/utils/*.ts"]
+    },
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "resolveFullExtension": ".js"
+  },
+  "include": ["src/**/*.ts", "drizzle.config.ts"]
 }

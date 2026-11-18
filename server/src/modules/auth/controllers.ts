@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { Request, Response, NextFunction } from "express";
+import type { z } from "zod";
+import type { Request, Response, NextFunction } from "express";
 import { OK } from "constants/http";
-import { loginSchema } from "modules/auth/schemas";
+import type { loginSchema } from "modules/auth/schemas";
 import { loginUser, logoutUser } from "modules/auth/services";
 import { setSessionCookie, clearSessionCookie } from "modules/auth/cookies";
 

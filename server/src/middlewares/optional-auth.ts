@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { validateSession } from "modules/auth/services";
 import { clearSessionCookie } from "modules/auth/cookies";
 import { SESSION_COOKIE_NAME } from "modules/auth/constants";

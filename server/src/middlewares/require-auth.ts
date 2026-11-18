@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { UnauthorizedError } from "utils/errors";
 import { validateSession } from "modules/auth/services";
 import { clearSessionCookie } from "modules/auth/cookies";

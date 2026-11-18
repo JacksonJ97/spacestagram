@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { AppError } from "utils/errors";
 import { INTERNAL_SERVER_ERROR } from "constants/http";
 
