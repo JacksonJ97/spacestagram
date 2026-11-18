@@ -19,9 +19,11 @@ export const infinitePostOptions = infiniteQueryOptions({
   },
   initialPageParam: new Date(),
   getNextPageParam: (posts) => {
-    if (posts.length === 0) return undefined;
+    const post = posts[posts.length - 1];
 
-    const oldest = parseISO(posts[posts.length - 1].date);
+    if (!post) return undefined;
+
+    const oldest = parseISO(post.date);
     return subDays(oldest, 1);
   },
   select: (data) => {

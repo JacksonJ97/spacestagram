@@ -47,9 +47,13 @@ export default function Login() {
             </NavLink>
           </div>
 
-          <form onSubmit={onSubmit} className="mx-auto my-6 flex max-w-2xs flex-col gap-3">
-            <TextInput required name="email" label="Email" control={control} />
-            <PasswordInput required hideHints name="password" control={control} />
+          <form
+            noValidate
+            onSubmit={onSubmit}
+            className="mx-auto my-6 flex max-w-2xs flex-col gap-3"
+          >
+            <TextInput required label="Email" controller={{ control, name: "email" }} />
+            <PasswordInput required hideHints controller={{ control, name: "password" }} />
             <Button
               type="submit"
               className="mt-3"

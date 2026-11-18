@@ -14,12 +14,6 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-
-    /* Linting */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
     "paths": {
       "assets/*": ["./src/assets/*"],
       "components/*": ["./src/components/*"],
@@ -27,7 +21,15 @@
       "data/*": ["./src/data/*"],
       "pages/*": ["./src/pages/*"],
       "utils/*": ["./src/utils/*"]
-    }
+    },
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
   },
   "include": ["src"]
 }

@@ -76,32 +76,33 @@ export default function Signup() {
             </NavLink>
           </div>
 
-          <form onSubmit={onSubmit} className="mx-auto my-6 flex max-w-2xs flex-col gap-3">
+          <form
+            noValidate
+            onSubmit={onSubmit}
+            className="mx-auto my-6 flex max-w-2xs flex-col gap-3"
+          >
             <TextInput
               required
-              name="firstName"
               label="First Name"
-              control={control}
               autoComplete="given-name"
               autoCapitalize="words"
+              controller={{ control, name: "firstName" }}
             />
             <TextInput
               required
-              name="lastName"
               label="Last Name"
-              control={control}
               autoComplete="family-name"
               autoCapitalize="words"
+              controller={{ control, name: "lastName" }}
             />
             <TextInput
               required
               type="email"
-              name="email"
               label="Email"
-              control={control}
               autoComplete="email"
+              controller={{ control, name: "email" }}
             />
-            <PasswordInput required name="password" control={control} />
+            <PasswordInput required controller={{ control, name: "password" }} />
             <Button
               type="submit"
               className="mt-3"

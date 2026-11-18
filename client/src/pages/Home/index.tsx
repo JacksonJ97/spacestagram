@@ -64,7 +64,7 @@ export default function Home() {
             isLoggedIn={isLoggedIn}
             isLiked={likedPosts.has(post.date)}
             handleOpenDialog={handleOpenDialog}
-            ref={isLast ? ref : undefined}
+            ref={isLast ? ref : null}
             key={post.date}
           />
         );

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   useController,
-  type FieldPath,
+  type FieldPathByValue,
   type FieldValues,
   type UseControllerProps,
 } from "react-hook-form";
@@ -11,32 +11,31 @@ import EyeIcon from "components/common/Icons/Eye";
 import CheckIcon from "components/common/Icons/Check";
 import EyeOffIcon from "components/common/Icons/EyeOff";
 
-interface PasswordInputProps extends Omit<
+type NativeInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "name" | "type" | "defaultValue"
-> {
+  "name" | "type" | "defaultValue" | "value" | "onChange" | "onBlur" | "disabled"
+>;
+
+type PasswordInputProps<
+  T extends FieldValues,
+  N extends FieldPathByValue<T, string>,
+> = NativeInputProps & {
+  controller: UseControllerProps<T, N>;
   hideHints?: boolean;
-}
+};
 
 export default function PasswordInput<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
-  required,
-  hideHints,
-  className,
-  // ControllerProps
-  name,
-  control,
-  defaultValue,
-  ...props
-}: PasswordInputProps & UseControllerProps<TFieldValues, TName>) {
+  T extends FieldValues,
+  N extends FieldPathByValue<T, string>,
+>({ hideHints = false, required, className, controller, ...props }: PasswordInputProps<T, N>) {
   const [isVisible, setIsVisible] = useState(false);
 
   const {
     field,
     fieldState: { error },
-  } = useController({ name, control, defaultValue });
+  } = useController(controller);
+
+  const { name } = controller;
 
   const checkStrength = (value: string) => {
     const requirements = [
@@ -67,6 +66,7 @@ export default function PasswordInput<
             type={isVisible ? "text" : "password"}
             autoCorrect="off"
             autoCapitalize="off"
+            required={required}
             aria-required={required}
             aria-describedby={
               hideHints ? undefined : `${name}-requirements ${name}-requirements-list`
@@ -84,7 +84,7 @@ export default function PasswordInput<
           <button
             type="button"
             onClick={() => setIsVisible((prev) => !prev)}
-            aria-controls="password"
+            aria-controls={name}
             aria-pressed={isVisible}
             aria-label={isVisible ? "Hide password" : "Show password"}
             className="absolute inset-y-0 inset-e-0 flex w-9 cursor-pointer items-center justify-center rounded-e-xs hover:text-(--text-color)/75"

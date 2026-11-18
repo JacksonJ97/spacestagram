@@ -1,45 +1,39 @@
 import {
   useController,
-  type FieldPath,
   type FieldValues,
+  type FieldPathByValue,
   type UseControllerProps,
 } from "react-hook-form";
 import { cn } from "utils/functions";
 
-interface TextInputProps extends Omit<
+type NativeInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "name" | "type" | "defaultValue"
-> {
-  label: string;
-  type?: "text" | "email";
-}
+  "name" | "type" | "defaultValue" | "value" | "onChange" | "onBlur" | "disabled"
+>;
 
-export default function TextInput<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
+type TextInputProps<
+  T extends FieldValues,
+  N extends FieldPathByValue<T, string>,
+> = NativeInputProps & {
+  label: string;
+  controller: UseControllerProps<T, N>;
+  type?: "text" | "email";
+};
+
+export default function TextInput<T extends FieldValues, N extends FieldPathByValue<T, string>>({
   type = "text",
   label,
   required,
   className,
-  // ControllerProps
-  name,
-  rules,
-  control,
-  defaultValue,
+  controller,
   ...props
-}: TextInputProps & UseControllerProps<TFieldValues, TName>) {
+}: TextInputProps<T, N>) {
   const {
     field,
     fieldState: { error },
-  } = useController({
-    name,
-    rules,
-    control,
-    defaultValue,
-  });
+  } = useController(controller);
 
-  const isRequired = required || !!rules?.required;
+  const { name } = controller;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
@@ -51,7 +45,8 @@ export default function TextInput<
         type={type}
         autoCorrect="off"
         autoCapitalize="off"
-        aria-required={isRequired ? true : undefined}
+        required={required}
+        aria-required={required}
         aria-invalid={error ? true : undefined}
         aria-errormessage={error ? `${name}-error` : undefined}
         className={cn(
