@@ -5,6 +5,7 @@ import api from "config/api";
 import type { Credentials } from "data/auth/types";
 import { getErrorMessage } from "utils/functions";
 import { currentUserOptions } from "data/user/hooks";
+import { getLikedPostsOptions } from "data/liked-posts/hooks";
 
 export function useUserLogin() {
   const navigate = useNavigate();
@@ -41,8 +42,10 @@ export function useUserLogout() {
 
   return useMutation({
     mutationFn: logoutUser,
-    onSuccess: () => {
-      client.resetQueries({ queryKey: currentUserOptions.queryKey });
+    onSuccess: async () => {
+      await client.cancelQueries({ queryKey: currentUserOptions.queryKey });
+      client.removeQueries({ queryKey: getLikedPostsOptions.queryKey });
+      client.setQueryData(currentUserOptions.queryKey, null);
       navigate("/login", { replace: true });
     },
   });
